@@ -1,0 +1,12 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "files.autoSave": "onFocusChange",
+  "css.customData": ["./.vscode/css-customData.json"]
+}
