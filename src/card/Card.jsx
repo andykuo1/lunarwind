@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 
 import BackgroundImageUrl from '@/assets/paper4.png';
 import { cn } from '../libs/react';
+import { getCardByName } from './Cards';
 import { useHoverTiltStyleEffect } from './UseHoverTiltStyleEffect';
 import { useOnDragMoveHandler } from './UseOnDragMoveHandler';
 import { useWorkspace } from './Workspace';
@@ -35,6 +36,7 @@ export function Card() {
         }
         innerRef={innerRef}
         overlayRef={overlayRef}
+        cardName=""
       />
     </div>
   );
@@ -46,8 +48,10 @@ export function Card() {
  * @param {import('react').CSSProperties} [props.style]
  * @param {import('react').RefObject<HTMLElement>} [props.innerRef]
  * @param {import('react').RefObject<HTMLDivElement>} [props.overlayRef]
+ * @param {import('./Cards').CardName} props.cardName
  */
-export function CardFace({ className, style, innerRef, overlayRef }) {
+export function CardFace({ className, style, innerRef, overlayRef, cardName }) {
+  const card = getCardByName(cardName);
   return (
     <article
       ref={innerRef}
@@ -71,7 +75,7 @@ export function CardFace({ className, style, innerRef, overlayRef }) {
           backgroundBlendMode: 'multiply',
         }}
       >
-        <h2>Title</h2>
+        <h2>{card.title}</h2>
         <section>
           <h3>There is more to be said here?</h3>
           <p></p>

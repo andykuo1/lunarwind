@@ -30,7 +30,7 @@ export function useHoverTiltStyleEffect(
     if (!container) {
       return;
     }
-    container.style.transform = 'perspective(800px)';
+    container.style.perspective = '800px';
 
     const mouseState = {
       hovering: false,

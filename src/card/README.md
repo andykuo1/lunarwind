@@ -39,3 +39,27 @@ Purple
 Hero
 
 Weapons
+
+Interesting mechanics
+
+- Play to the person to your left or right
+- Tapping cards to "use"
+- Always draw your entire hand
+- Group vote
+- Items
+- Land cards
+
+What is spicy? What is sweet?
+
+What if this is a cooking card game?
+
+Recipes
+
+Why is drafting fun?
+
+- Play with other people.
+- Banter: guessing what other people are making.
+- Trading afterwards.
+- It feels more relaxed? You make the decisions now.
+
+Customers.

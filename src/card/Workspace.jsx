@@ -4,16 +4,6 @@ const WorkspaceContext = createContext(
   /** @type {ReturnType<useWorkspaceContextAPI>|null} */ (null)
 );
 
-export function useWorkspace() {
-  let ctx = useContext(WorkspaceContext);
-  if (!ctx) {
-    throw new Error(
-      'Context not found for ancestor - are we missing the provider?'
-    );
-  }
-  return ctx;
-}
-
 /**
  * @param {object} props
  * @param {import('react').ReactNode} props.children
@@ -24,6 +14,16 @@ export function Workspace({ children }) {
       <WorkspaceContainer>{children}</WorkspaceContainer>
     </WorkspaceProvider>
   );
+}
+
+export function useWorkspace() {
+  let ctx = useContext(WorkspaceContext);
+  if (!ctx) {
+    throw new Error(
+      'Context not found for ancestor - are we missing the provider?'
+    );
+  }
+  return ctx;
 }
 
 /**
