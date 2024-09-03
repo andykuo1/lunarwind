@@ -1,9 +1,21 @@
 import './App.css';
 
+import { Card } from './card/Card';
+import { Handspace } from './card/Handspace';
+import { Workspace } from './card/Workspace';
+
 export default function App() {
   return (
     <>
-      <p className="bg-red-300 p-4">HELLO</p>
+      <header className="flex items-center">Cards</header>
+      <main id="workspace">
+        <Workspace>
+          <Card />
+          <Card />
+          <Card />
+          <Handspace />
+        </Workspace>
+      </main>
     </>
   );
 }
