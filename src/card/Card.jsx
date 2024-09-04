@@ -32,8 +32,6 @@ export function Card() {
         position: 'absolute',
         left: `${posX}px`,
         top: `${posY}px`,
-        transformStyle: 'preserve-3d',
-        transform: 'perspective(800px)',
       }}
     >
       <CardFace

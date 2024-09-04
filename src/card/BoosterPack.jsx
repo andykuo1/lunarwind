@@ -9,9 +9,10 @@ import {
 } from './UseHoverTiltStyleEffect';
 
 /**
- * @param {*} props
+ * @param {object} props
+ * @param {string} [props.className]
  */
-export function BoosterPackFace({ className = 'mx-80' }) {
+export function BoosterPack({ className }) {
   const frontfaceRef = useRef(null);
   const backfaceRef = useRef(null);
   const containerRef = useRef(null);
@@ -153,69 +154,24 @@ function BoosterPackFrontFace({ className, style }) {
  * @param {import('react').CSSProperties} [props.style]
  * @param {boolean} [props.peeled]
  */
-function BoosterPackBackFace({ className, style, peeled }) {
+function BoosterPackBackFace({ className, style, peeled = false }) {
   return (
     <article
       className={cn(
-        'relative flex h-[4.5in] w-[2.5in] flex-col bg-blue-400 px-1.5',
+        'relative flex h-[4.5in] w-[2.5in] bg-blue-400 px-1.5',
         className
       )}
       style={style}
     >
-      <BackFaceBarcode className="m-8" />
-      <CrinkleBackFlap />
-      <BackFaceCornerPeel peeled={peeled} />
-    </article>
-  );
-}
-
-/**
- * @param {object} props
- * @param {boolean} [props.peeled]
- */
-function BackFaceCornerPeel({ peeled }) {
-  return (
-    <div className="absolute -top-4 left-[calc(50%+2.25em)] z-10 h-full">
-      <div className="relative">
-        <div
-          className="w-4"
-          style={{
-            borderWidth: '0 16px 16px 0',
-            borderStyle: 'solid',
-            borderColor: 'red rgba(220,220,220,1)',
-          }}
-        />
-        <div
-          className="absolute right-0 top-0 bg-gray-300 transition-all"
-          style={
-            peeled
-              ? {
-                  width: '1.5in',
-                  height: '1.5in',
-                }
-              : {
-                  width: '10px',
-                  height: '10px',
-                }
-          }
-        >
-          <div
-            className="h-full w-full bg-gray-400"
-            style={
-              peeled
-                ? {
-                    borderColor: 'lightgray lightgray transparent transparent',
-                    borderStyle: 'solid',
-                    borderWidth: '0.75in',
-                  }
-                : {
-                    borderWidth: '0',
-                  }
-            }
-          />
-        </div>
+      <div className="relative -mt-4 w-[1.75in] bg-blue-400">
+        <BackFaceBarcode className="m-8" />
+        <CrinkleBackFlap />
+        <BackFaceLeftPeel peeled={peeled} />
       </div>
-    </div>
+      <div className="relative -mt-4 flex-1 bg-blue-400">
+        <BackFaceRightPeel peeled={peeled} />
+      </div>
+    </article>
   );
 }
 
@@ -241,9 +197,18 @@ function BackFaceBarcode({ className }) {
   );
 }
 
-function CrinkleBackFlap() {
+/**
+ * @param {object} props
+ * @param {string} [props.className]
+ */
+function CrinkleBackFlap({ className }) {
   return (
-    <div className="absolute -bottom-4 -top-4 left-[50%] flex bg-blue-400">
+    <div
+      className={cn(
+        'absolute -bottom-4 right-0 top-0 flex bg-blue-400',
+        className
+      )}
+    >
       <div
         className="mr-2 h-full w-10"
         style={{
@@ -289,5 +254,109 @@ function EmbossGlare() {
       <div className="absolute -bottom-1.5 h-1.5 w-full bg-gradient-to-b from-white/30 to-transparent" />
       <div className="absolute bottom-0 h-10 w-full bg-gradient-to-t from-white/10 to-transparent" />
     </>
+  );
+}
+
+/**
+ * @param {object} props
+ * @param {boolean} props.peeled
+ */
+function BackFaceLeftPeel({ peeled }) {
+  return (
+    <div className="absolute right-0 top-0 z-10">
+      <div
+        className="absolute right-0 top-0 bg-gray-200"
+        style={{
+          transition: 'width 150ms, height 150ms',
+          clipPath: 'polygon(0 0, 0 100%, 100% 100%)',
+          ...(peeled
+            ? {
+                width: 'calc(1.75in)',
+                height: 'calc(1.75in)',
+              }
+            : {
+                width: '10px',
+                height: '10px',
+              }),
+        }}
+      />
+      <div
+        className="absolute right-0 top-0 bg-gray-400"
+        style={{
+          transition: 'width 150ms, height 150ms',
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
+          ...(peeled
+            ? {
+                width: 'calc(1.75in)',
+                height: 'calc(1.75in)',
+              }
+            : {
+                width: '10px',
+                height: '10px',
+              }),
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          borderWidth: '0 2em 2em 0',
+          borderStyle: 'solid',
+          borderColor: 'red rgb(229 231 235)',
+          transition: 'right 150ms, top 150ms',
+          ...(peeled
+            ? {
+                right: 'calc(1.75in - 2em)',
+                top: 'calc(1.75in - 2em)',
+              }
+            : {
+                right: '0',
+                top: '0',
+              }),
+        }}
+      />
+    </div>
+  );
+}
+
+/**
+ * @param {object} props
+ * @param {boolean} props.peeled
+ */
+function BackFaceRightPeel({ peeled }) {
+  return (
+    <div className="absolute left-0 top-0 z-10">
+      <div
+        className="absolute left-0 top-0 bg-gray-200"
+        style={{
+          transition: 'width 150ms, height 150ms',
+          clipPath: 'polygon(100% 0, 100% 100%, 0 100%)',
+          ...(peeled
+            ? {
+                width: 'calc(0.65in)',
+                height: 'calc(1.75in)',
+              }
+            : {
+                width: '0',
+                height: '0',
+              }),
+        }}
+      />
+      <div
+        className="absolute left-0 top-0 bg-gray-400"
+        style={{
+          transition: 'width 150ms, height 150ms',
+          clipPath: 'polygon(100% 0, 0 0, 0 100%)',
+          ...(peeled
+            ? {
+                width: 'calc(0.65in)',
+                height: 'calc(1.75in)',
+              }
+            : {
+                width: '0',
+                height: '0',
+              }),
+        }}
+      />
+    </div>
   );
 }

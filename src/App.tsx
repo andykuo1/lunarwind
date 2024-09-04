@@ -1,6 +1,6 @@
 import './App.css';
 
-import { BoosterPackFace } from './card/BoosterPack';
+import { BoosterPack } from './card/BoosterPack';
 import { Card } from './card/Card';
 import { Handspace } from './card/Handspace';
 import { Workspace } from './card/Workspace';
@@ -10,7 +10,19 @@ export default function App() {
     <>
       <header className="flex items-center">Cards</header>
       <main id="workspace" className="bg-white px-10 py-40">
-        <BoosterPackFace />
+        <Workspace>
+          <Card />
+          <Handspace />
+        </Workspace>
+        <div className="absolute left-10 top-10">
+          <BoosterPack />
+        </div>
+        <div className="absolute left-20 top-20">
+          <BoosterPack />
+        </div>
+        <div className="absolute left-40 top-40">
+          <BoosterPack />
+        </div>
       </main>
     </>
   );
