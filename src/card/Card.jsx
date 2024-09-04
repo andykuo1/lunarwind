@@ -3,7 +3,11 @@ import { useRef, useState } from 'react';
 import BackgroundImageUrl from '@/assets/paper4.png';
 import { cn } from '../libs/react';
 import { getCardByName } from './Cards';
-import { useHoverTiltStyleEffect } from './UseHoverTiltStyleEffect';
+import {
+  useHoverTiltGlareStyleEffect,
+  useHoverTiltShadowStyleEffect,
+  useHoverTiltStyleEffect,
+} from './UseHoverTiltStyleEffect';
 import { useOnDragMoveHandler } from './UseOnDragMoveHandler';
 import { useWorkspace } from './Workspace';
 
@@ -17,7 +21,9 @@ export function Card() {
     /** @type {import('./UseOnDragMoveHandler').Position} */ ([0, 0])
   );
   const { grabbing } = useOnDragMoveHandler(ref, containerRef, setPos);
-  useHoverTiltStyleEffect(innerRef, ref, overlayRef, grabbing);
+  const effectStateRef = useHoverTiltStyleEffect(innerRef, ref, grabbing);
+  useHoverTiltGlareStyleEffect(effectStateRef, overlayRef);
+  useHoverTiltShadowStyleEffect(effectStateRef, innerRef);
 
   return (
     <div
