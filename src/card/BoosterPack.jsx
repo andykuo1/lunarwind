@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { cn } from '@/libs/react';
+import { playBoosterPackTouch } from './Sounds';
 import {
   useHoverTiltBackfaceStyleEffect,
   useHoverTiltGlareStyleEffect,
@@ -32,6 +33,12 @@ export function BoosterPack({ className }) {
     <div
       ref={containerRef}
       className={cn('relative w-min select-none', className)}
+      onMouseEnter={() => {
+        playBoosterPackTouch();
+      }}
+      onMouseLeave={() => {
+        playBoosterPackTouch();
+      }}
     >
       <div className="absolute right-0 top-0 z-10 flex flex-col gap-2">
         <FlipButton onClick={() => setFlipped((prev) => !prev)} />
@@ -123,14 +130,17 @@ function BoosterPackFrontFace({ className, style }) {
   return (
     <article
       className={cn(
-        'relative flex h-[4.5in] w-[2.5in] flex-col bg-blue-400 px-1.5',
+        'relative flex h-[3.5in] w-[2.5in] flex-col bg-blue-400 px-1.5',
         className
       )}
       style={style}
     >
       <header className="absolute left-[50%] top-[20%] -translate-x-[50%]">
         <h1>
-          <div className="text-8xl" style={{ textShadow: '3px 3px 0 black' }}>
+          <div
+            className="text-8xl text-white"
+            style={{ textShadow: '3px 3px 0 black' }}
+          >
             RAGU
           </div>
           <div className="border bg-blue-600 text-center uppercase text-white">
@@ -158,7 +168,7 @@ function BoosterPackBackFace({ className, style, peeled = false }) {
   return (
     <article
       className={cn(
-        'relative flex h-[4.5in] w-[2.5in] bg-blue-400 px-1.5',
+        'relative flex h-[3.5in] w-[2.5in] bg-blue-400 px-1.5',
         className
       )}
       style={style}

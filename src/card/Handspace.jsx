@@ -1,10 +1,9 @@
-import { Howl } from 'howler';
 import { createContext, useContext, useRef, useState } from 'react';
 
-import CardSoundUrl from '@/assets/cardFlip.ogg';
 import { cn } from '@/libs/react';
 import { CardFace } from './Card';
-import { getRandomCard } from './Cards';
+import { playCardTouch } from './Sounds';
+import { getRandomCard } from './values/Cards';
 
 const HandspaceContext = createContext(
   /** @type {ReturnType<useHandspaceContextAPI>|null} */ (null)
@@ -47,7 +46,7 @@ function HandspaceProvider({ children }) {
 function useHandspaceContextAPI() {
   const containerRef = useRef(/** @type {HTMLDivElement|null} */ (null));
   const [cards, updateCards] = useState(
-    /** @type {Array<import('./Cards').CardName>} */ ([])
+    /** @type {Array<import('./values').CardName>} */ ([])
   );
   return {
     containerRef,
@@ -106,7 +105,7 @@ const ANY_CARD_MARGIN = '-ml-20';
 
 /**
  * @param {object} props
- * @param {import('./Cards').CardName} props.cardName
+ * @param {import('./values').CardName} props.cardName
  * @param {number} props.handIndex
  * @param {number} props.handCount
  */
@@ -123,7 +122,7 @@ function CardInHand({ cardName, handIndex, handCount }) {
     <div
       className={cn(
         // DEBUG: 'border bg-green-300',
-        'translate-y-[60%] transition-transform hover:z-10 hover:translate-y-[30%]'
+        'translate-y-[60%] transition-transform hover:z-10 hover:translate-y-[10%]'
       )}
       style={
         !isLast
@@ -157,19 +156,4 @@ function CardInHand({ cardName, handIndex, handCount }) {
       />
     </div>
   );
-}
-
-const CardSound = new Howl({
-  src: [CardSoundUrl],
-});
-CardSound.pos(0, 2, 0);
-let CardSoundLastPlayedMillis = Number.NEGATIVE_INFINITY;
-function playCardTouch() {
-  let now = performance.now();
-  if (now - CardSoundLastPlayedMillis > 60) {
-    CardSound.rate(1 + Math.random() * 1);
-    CardSound.volume(1);
-    CardSound.play();
-    CardSoundLastPlayedMillis = now;
-  }
 }

@@ -63,3 +63,9 @@ Why is drafting fun?
 - It feels more relaxed? You make the decisions now.
 
 Customers.
+
+Drawing cards is like gaining knowledge?
+
+Prep Time, Cooking Time
+Ingredients, Servings
+Instructions,

@@ -17,12 +17,6 @@ export default function App() {
         <div className="absolute left-10 top-10">
           <BoosterPack />
         </div>
-        <div className="absolute left-20 top-20">
-          <BoosterPack />
-        </div>
-        <div className="absolute left-40 top-40">
-          <BoosterPack />
-        </div>
       </main>
     </>
   );
