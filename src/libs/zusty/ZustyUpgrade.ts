@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 
-import { CreateStore, StoreAndDispatch } from '../ZustyStoreHelper';
+import { CreateStore, StoreAndDispatch } from './ZustyStoreHelper';
 
 type ZustyUpgradeSchemaFunction<T> = (prev: Partial<T>, curr?: Partial<T>) => T;
 type ZustyUpgradeSchema<Keys extends string | symbol | number> = Partial<
@@ -11,7 +11,7 @@ const GET_STORE_UPGRADE_SCHEMA_KEY = Symbol('getStore$UpgradeSchema');
 
 export function attachZustyUpgradeSchema<Store>(
   createStore: CreateStore<Store>,
-  schema: ZustyUpgradeSchema<keyof Store>,
+  schema: ZustyUpgradeSchema<keyof Store>
 ) {
   Object.defineProperty(createStore, GET_STORE_UPGRADE_SCHEMA_KEY, {
     value: schema,
@@ -29,20 +29,20 @@ export function extractZustyUpgradeSchema<T>(factory: (...args: any) => T) {
 export function performZustyUpgradeOnStore<Store, Dispatch>(
   createStore: CreateStore<Store>,
   persistedState: unknown,
-  currentState: StoreAndDispatch<Store, Dispatch>,
+  currentState: StoreAndDispatch<Store, Dispatch>
 ) {
   const upgradeSchema = extractZustyUpgradeSchema(createStore);
   return performZustyUpgradeOnSchema(
     upgradeSchema,
     persistedState,
-    currentState,
+    currentState
   ) as StoreAndDispatch<Store, Dispatch>;
 }
 
 export function performZustyUpgradeOnSchema(
   upgradeSchema: ZustyUpgradeSchema<any>,
   persistedState: unknown,
-  currentState: Record<string, any>,
+  currentState: Record<string, any>
 ) {
   let persistedKeys = Object.keys(persistedState ?? {});
   for (let persistedKey of persistedKeys) {
@@ -59,12 +59,12 @@ export function performZustyUpgradeOnSchema(
           if (Array.isArray(persistedValue)) {
             currentState[persistedKey] = ArrayUnique(
               persistedValue,
-              currentValue ?? [],
+              currentValue ?? []
             );
           } else {
             currentState[persistedKey] = ObjectDeepMerge(
               persistedValue,
-              currentValue ?? {},
+              currentValue ?? {}
             );
           }
           break;
@@ -86,7 +86,7 @@ export function performZustyUpgradeOnSchema(
               // TODO: This does not yet merge arrays-of-objects. Only shallow copies top-level arrays.
               currentState[persistedKey] = upgradeFunction(
                 persistedValue,
-                currentValue ?? [],
+                currentValue ?? []
               );
             } else {
               // TODO: This does not yet merge top-level objects. Only deep copies child-level entries.
@@ -95,7 +95,7 @@ export function performZustyUpgradeOnSchema(
               for (let key of Object.keys(persistedValue)) {
                 currentValue[key] = upgradeFunction(
                   persistedValue[key],
-                  currentValue[key],
+                  currentValue[key]
                 );
               }
               let childUpgradeSchema =
@@ -104,7 +104,7 @@ export function performZustyUpgradeOnSchema(
                 currentValue = performZustyUpgradeOnSchema(
                   childUpgradeSchema,
                   persistedValue,
-                  currentValue,
+                  currentValue
                 );
               }
               currentState[persistedKey] = currentValue;
@@ -113,7 +113,7 @@ export function performZustyUpgradeOnSchema(
           break;
         default:
           throw new Error(
-            `Unsupported data type '${typeof persistedValue}' for upgrade schema.`,
+            `Unsupported data type '${typeof persistedValue}' for upgrade schema.`
           );
       }
     }

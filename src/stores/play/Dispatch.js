@@ -1,27 +1,48 @@
 import { cuid } from '@/libs/math';
-import { createHand, createPlayCard } from './State';
+import {
+  createHand,
+  createHandCard,
+  createPlay,
+  createPlayCard,
+} from './State';
 
 /**
  * @param {import('./State').Store} store
- * @param {string} objectId
+ * @param {import('./State').PlayId} playId
  * @param {Partial<import('./State').PlayCard>} values
  */
-export function updatePlayCard(store, objectId, values) {
-  let result = store.playCards[objectId];
+export function updatePlay(store, playId, values) {
+  let result = store.plays[playId];
   if (!result) {
-    result = createPlayCard(objectId);
-    store.playCards[objectId] = result;
+    result = createPlay(playId);
+    store.plays[playId] = result;
   }
   Object.assign(result, values);
 }
 
 /**
  * @param {import('./State').Store} store
- * @param {string} objectId
+ * @param {import('./State').PlayId} playId
+ * @param {import('./State').PlayCardId} playCardId
+ * @param {Partial<import('./State').PlayCard>} values
+ */
+export function updatePlayCard(store, playId, playCardId, values) {
+  let result = store.plays[playId]?.playCards[playCardId];
+  if (!result) {
+    result = createPlayCard(playCardId);
+    store.plays[playId].playCards[playCardId] = result;
+  }
+  Object.assign(result, values);
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').PlayId} playId
+ * @param {import('./State').PlayCardId} playCardId
  * @param {import('@/card/UseOnDragMoveHandler').Position} position
  */
-export function movePlayCard(store, objectId, position) {
-  let result = store.playCards[objectId];
+export function movePlayCard(store, playId, playCardId, position) {
+  let result = store.plays[playId]?.playCards[playCardId];
   result.position[0] = position[0];
   result.position[1] = position[1];
   result.lastTouchedMillis = performance.now();
@@ -29,10 +50,12 @@ export function movePlayCard(store, objectId, position) {
 
 /**
  * @param {import('./State').Store} store
+ * @param {import('./State').PlayId} playId
  */
-export function clearCards(store) {
-  for (let key of Object.keys(store.playCards)) {
-    delete store.playCards[key];
+export function clearCards(store, playId) {
+  let play = store.plays[playId];
+  for (let key of Object.keys(play)) {
+    delete play.playCards[key];
   }
 }
 
@@ -53,32 +76,42 @@ export function updateHand(store, handId, values) {
 /**
  * @param {import('./State').Store} store
  * @param {import('./State').HandId} handId
- * @param {string} cardName
+ * @param {string} cardId
  */
-export function drawCardToHand(store, handId, cardName) {
-  let target = store.hands[handId];
-  let handCardId = cuid();
-  target.cardOrder.push(handCardId);
-  target.handCards[handCardId] = cardName;
+export function drawCardToHand(store, handId, cardId) {
+  let hand = store.hands[handId];
+  let handCard = createHandCard();
+  handCard.cardId = cardId;
+  hand.handCards[handCard.handCardId] = handCard;
+  hand.cardOrder.push(handCard.handCardId);
 }
 
 /**
  * @param {import('./State').Store} store
  * @param {import('./State').HandId} handId
  * @param {number} handIndex
+ * @param {import('./State').PlayId} playId
  * @param {import('@/card/UseOnDragMoveHandler').Position} initialPosition
  */
-export function playCardFromHand(store, handId, handIndex, initialPosition) {
-  let target = store.hands[handId];
-  if (!target) {
+export function playCardFromHand(
+  store,
+  handId,
+  handIndex,
+  playId,
+  initialPosition
+) {
+  let hand = store.hands[handId];
+  if (!hand) {
     throw new Error(`Missing existing hand for id - got ${handId}.`);
   }
-  let handCardId = target.cardOrder[handIndex];
-  target.cardOrder.splice(handIndex, 1);
-  let cardName = target.handCards[handCardId];
-  delete target.handCards[handCardId];
-  updatePlayCard(store, cuid(), {
-    cardName,
+  // Remove it from hand.
+  const handCardId = hand.cardOrder[handIndex];
+  const handCard = hand.handCards[handCardId];
+  hand.cardOrder.splice(handIndex, 1);
+  delete hand.handCards[handCardId];
+  // Add it to play.
+  updatePlayCard(store, playId, cuid(), {
+    cardId: handCard.cardId,
     position: initialPosition,
   });
 }

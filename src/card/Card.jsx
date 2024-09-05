@@ -11,10 +11,10 @@ import { getCardByName } from './values/Cards';
  * @param {import('react').CSSProperties} [props.style]
  * @param {import('react').RefObject<HTMLElement>} [props.innerRef]
  * @param {import('react').RefObject<HTMLDivElement>} [props.overlayRef]
- * @param {import('@/card/values').CardName} props.cardName
+ * @param {import('@/card/values').CardId} props.cardId
  */
-export function CardFace({ className, style, innerRef, overlayRef, cardName }) {
-  const card = getCardByName(cardName);
+export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
+  const card = getCardByName(cardId);
   return (
     <article
       ref={innerRef}

@@ -20,14 +20,15 @@ const PlayspaceContext = createContext(
 
 /**
  * @param {object} props
+ * @param {import('@/stores/play/State').PlayId} props.playId
  * @param {import('react').ReactNode} [props.children]
  */
-export function Playspace({ children }) {
+export function Playspace({ playId, children }) {
   return (
     <PlayspaceProvider>
       <PlayspaceContainer>
-        <CardsInPlay />
-        <ClearBoardButton />
+        <PlayCards playId={playId} />
+        <ClearBoardButton playId={playId} />
         {children}
       </PlayspaceContainer>
     </PlayspaceProvider>
@@ -84,40 +85,48 @@ function PlayspaceContainer({ children }) {
   );
 }
 
-function CardsInPlay() {
-  const objectIds = usePlayStore(
+/**
+ * @param {object} props
+ * @param {import('@/stores/play/State').PlayId} props.playId
+ */
+function PlayCards({ playId }) {
+  const playCardIds = usePlayStore(
     useShallow((ctx) =>
-      Object.values(ctx.playCards)
+      Object.values(ctx.plays[playId]?.playCards ?? {})
         .sort((a, b) => a.lastTouchedMillis - b.lastTouchedMillis)
-        .map((card) => card.objectId)
+        .map((card) => card.playCardId)
     )
   );
   return (
     <>
-      {objectIds.map((objectId) => (
-        <CardInPlay key={objectId} objectId={objectId} />
+      {playCardIds.map((playCardId) => (
+        <PlayCard key={playCardId} playId={playId} playCardId={playCardId} />
       ))}
     </>
   );
 }
 
 /**
- * @param {*} props
+ * @param {object} props
+ * @param {import('@/stores/play/State').PlayId} props.playId
+ * @param {import('@/stores/play/State').PlayCardId} props.playCardId
  */
-function CardInPlay({ objectId }) {
+function PlayCard({ playId, playCardId }) {
   const ref = useRef(null);
   const innerRef = useRef(null);
   const overlayRef = useRef(null);
   const { containerRef, handlerStateRef } = usePlayspace();
-  const cardName = usePlayStore((ctx) => ctx.playCards[objectId]?.cardName);
+  const cardId = usePlayStore(
+    (ctx) => ctx.plays[playId]?.playCards[playCardId]?.cardId
+  );
   const [posX, posY] = usePlayStore(
-    useShallow((ctx) => ctx.playCards[objectId]?.position)
+    useShallow((ctx) => ctx.plays[playId]?.playCards[playCardId]?.position)
   );
   const movePlayCard = usePlayDispatch((ctx) => ctx.movePlayCard);
   const setPosition = useCallback(
     /** @param {import('./UseOnDragMoveHandler').Position} pos */
-    (pos) => movePlayCard(objectId, pos),
-    [objectId, movePlayCard]
+    (pos) => movePlayCard(playId, playCardId, pos),
+    [playCardId, movePlayCard]
   );
   const [grabbing, setGrabbing] = useState(false);
   useOnDragMoveHandler(
@@ -144,16 +153,20 @@ function CardInPlay({ objectId }) {
         )}
         innerRef={innerRef}
         overlayRef={overlayRef}
-        cardName={cardName}
+        cardId={cardId}
       />
     </div>
   );
 }
 
-function ClearBoardButton() {
+/**
+ * @param {object} props
+ * @param {import('@/stores/play/State').PlayId} props.playId
+ */
+function ClearBoardButton({ playId }) {
   const clearCards = usePlayDispatch((ctx) => ctx.clearCards);
   function onClick() {
-    clearCards();
+    clearCards(playId);
   }
   return (
     <button

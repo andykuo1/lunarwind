@@ -1,14 +1,14 @@
 import { RarityValues } from './Rarity';
 
-/** @typedef {string} CardName */
+/** @typedef {string} CardId */
 /** @typedef {ReturnType<createCard>} Card */
 
 /**
- * @param {CardName} cardName
+ * @param {CardId} cardId
  */
-export function createCard(cardName) {
+export function createCard(cardId) {
   return {
-    cardName,
+    cardId,
     cardNumber: -1,
     /** @type {string} */
     title: '',

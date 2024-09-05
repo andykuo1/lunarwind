@@ -238,7 +238,7 @@ export function extractDispatch(useStore) {
  */
 export function extractGetStore(useStore) {
   /**
-   * @returns {() => import('@/utils/DeepReadonly').DeepReadonly<Store>}
+   * @returns {() => import('@/libs/type/DeepReadonly').DeepReadonly<Store>}
    */
   return function useGetStore() {
     return useStore((ctx) => ctx.dispatch.getStore);

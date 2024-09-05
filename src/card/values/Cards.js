@@ -164,32 +164,32 @@ registerCard('sunWorm', {
 });
 
 /**
- * @param {import('./Card').CardName} cardName
+ * @param {import('./Card').CardId} cardId
  * @param {Partial<import('./Card').Card>} card
  */
-export function registerCard(cardName, card) {
-  let result = createCard(cardName);
+export function registerCard(cardId, card) {
+  let result = createCard(cardId);
   Object.assign(result, card);
   let nextCardNumber = Object.keys(CARDS_REGISTRY).length;
   result.cardNumber = nextCardNumber;
   if (result.title.length <= 0) {
-    result.title = cardName;
+    result.title = cardId;
   }
   if (result.portraitUrl.length <= 0) {
     result.portraitUrl = Creature01;
   }
   if (result.portraitAlt.length <= 0) {
-    result.portraitAlt = cardName;
+    result.portraitAlt = cardId;
   }
-  CARDS_REGISTRY[result.cardName] = result;
-  return cardName;
+  CARDS_REGISTRY[result.cardId] = result;
+  return cardId;
 }
 
 /**
- * @param {import('./Card').CardName} cardName
+ * @param {import('./Card').CardId} cardId
  */
-export function getCardByName(cardName) {
-  return CARDS_REGISTRY[cardName] ?? CARDS_REGISTRY[''];
+export function getCardByName(cardId) {
+  return CARDS_REGISTRY[cardId] ?? CARDS_REGISTRY[''];
 }
 
 export function getRandomCard() {
