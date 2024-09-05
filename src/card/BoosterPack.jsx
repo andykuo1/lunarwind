@@ -91,10 +91,7 @@ export function BoosterPack({ className }) {
 function FlipButton({ className, onClick }) {
   return (
     <button
-      className={cn(
-        'rounded-full bg-black/30 bg-red-300 px-4 text-white',
-        className
-      )}
+      className={cn('rounded-full bg-black/30 px-4 text-white', className)}
       onClick={onClick}
     >
       Flip
@@ -110,10 +107,7 @@ function FlipButton({ className, onClick }) {
 function OpenButton({ className, onClick }) {
   return (
     <button
-      className={cn(
-        'rounded-full bg-black/30 bg-red-300 px-4 text-white',
-        className
-      )}
+      className={cn('rounded-full bg-black/30 px-4 text-white', className)}
       onClick={onClick}
     >
       Open

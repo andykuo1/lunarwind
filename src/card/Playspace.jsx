@@ -6,7 +6,7 @@ import { usePlayDispatch, usePlayStore } from '@/stores/play/PlayStore';
 import { CardFace } from './Card';
 import { useOnDragMoveHandler } from './UseOnDragMoveHandler';
 
-const DEBUG = true;
+const DEBUG = false;
 
 const PlayspaceContext = createContext(
   /** @type {ReturnType<usePlayspaceContextAPI>|null} */ (null)
@@ -77,7 +77,7 @@ function PlayspaceContainer({ children }) {
 function CardsInPlay() {
   const objectIds = usePlayStore(
     useShallow((ctx) =>
-      Object.values(ctx.cards)
+      Object.values(ctx.playCards)
         .sort((a, b) => a.lastTouchedMillis - b.lastTouchedMillis)
         .map((card) => card.objectId)
     )
@@ -99,9 +99,9 @@ function CardInPlay({ objectId }) {
   const innerRef = useRef(null);
   const overlayRef = useRef(null);
   const { containerRef } = usePlayspace();
-  const cardName = usePlayStore((ctx) => ctx.cards[objectId]?.cardName);
+  const cardName = usePlayStore((ctx) => ctx.playCards[objectId]?.cardName);
   const [posX, posY] = usePlayStore(
-    useShallow((ctx) => ctx.cards[objectId]?.position)
+    useShallow((ctx) => ctx.playCards[objectId]?.position)
   );
   const movePlayCard = usePlayDispatch((ctx) => ctx.movePlayCard);
   const setPos = useCallback(

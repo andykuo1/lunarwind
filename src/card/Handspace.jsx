@@ -1,83 +1,38 @@
-import { createContext, useContext, useRef, useState } from 'react';
+import { useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
 import { cn } from '@/libs/react';
-import { usePlayDispatch } from '@/stores/play/PlayStore';
+import { usePlayDispatch, usePlayStore } from '@/stores/play/PlayStore';
 import { CardFace } from './Card';
+import { HandspaceContainer, HandspaceProvider } from './HandspaceContainer';
 import { playCardTouch } from './Sounds';
 import { getRandomCard } from './values/Cards';
 
 const DEBUG = false;
 
-const HandspaceContext = createContext(
-  /** @type {ReturnType<useHandspaceContextAPI>|null} */ (null)
-);
-
-export function Handspace() {
+/**
+ * @param {object} props
+ * @param {import('@/stores/play/State').HandId} props.handId
+ */
+export function Handspace({ handId }) {
   return (
     <HandspaceProvider>
       <HandspaceContainer>
-        <CardsInHand />
-        <DrawCardButton />
+        <CardsInHand handId={handId} />
+        <DrawCardButton handId={handId} />
       </HandspaceContainer>
     </HandspaceProvider>
   );
 }
 
-export function useHandspace() {
-  let ctx = useContext(HandspaceContext);
-  if (!ctx) {
-    throw new Error(
-      'Context not found for ancestor - are we missing the provider?'
-    );
-  }
-  return ctx;
-}
-
 /**
  * @param {object} props
- * @param {import('react').ReactNode} props.children
+ * @param {import('@/stores/play/State').HandId} props.handId
  */
-function HandspaceProvider({ children }) {
-  const api = useHandspaceContextAPI();
-  return (
-    <HandspaceContext.Provider value={api}>
-      {children}
-    </HandspaceContext.Provider>
-  );
-}
-
-function useHandspaceContextAPI() {
-  const containerRef = useRef(/** @type {HTMLDivElement|null} */ (null));
-  const [cards, updateCards] = useState(
-    /** @type {Array<import('./values').CardName>} */ ([])
-  );
-  return {
-    containerRef,
-    cards,
-    updateCards,
-  };
-}
-
-/**
- * @param {object} props
- * @param {import('react').ReactNode} props.children
- */
-function HandspaceContainer({ children }) {
-  const { containerRef } = useHandspace();
-  return (
-    <div
-      ref={containerRef}
-      className="pointer-events-none absolute bottom-0 left-0 right-0"
-    >
-      {children}
-    </div>
-  );
-}
-
-function DrawCardButton() {
-  const { updateCards } = useHandspace();
+function DrawCardButton({ handId }) {
+  const drawCardToHand = usePlayDispatch((ctx) => ctx.drawCardToHand);
   function onClick() {
-    updateCards((prev) => [...prev, getRandomCard().cardName]);
+    drawCardToHand(handId, getRandomCard().cardName);
   }
   return (
     <button
@@ -89,17 +44,23 @@ function DrawCardButton() {
   );
 }
 
-function CardsInHand() {
-  const { cards } = useHandspace();
-  const handCount = cards.length;
+/**
+ * @param {object} props
+ * @param {import('@/stores/play/State').HandId} props.handId
+ */
+function CardsInHand({ handId }) {
+  const cardOrder = usePlayStore(
+    useShallow((ctx) => ctx.hands[handId]?.cardOrder ?? [])
+  );
   return (
     <ul className="flex">
       <div className="flex-1" />
-      {cards.map((cardName, index) => (
+      {cardOrder.map((cardName, handIndex) => (
         <CardInHand
+          handId={handId}
           cardName={cardName}
-          handIndex={index}
-          handCount={handCount}
+          handIndex={handIndex}
+          handCount={cardOrder.length}
         />
       ))}
       <div className="flex-1" />
@@ -111,11 +72,12 @@ const ANY_CARD_MARGIN = '-ml-20';
 
 /**
  * @param {object} props
+ * @param {import('@/stores/play/State').HandId} props.handId
  * @param {import('./values').CardName} props.cardName
  * @param {number} props.handIndex
  * @param {number} props.handCount
  */
-function CardInHand({ cardName, handIndex, handCount }) {
+function CardInHand({ handId, cardName, handIndex, handCount }) {
   const [peeking, setPeeking] = useState(false);
 
   const yOffset = Math.trunc(Math.min(handCount / 8, 1) * 240);
@@ -125,7 +87,7 @@ function CardInHand({ cardName, handIndex, handCount }) {
   const isLast = handIndex === handCount;
 
   const playCard = usePlayDispatch((ctx) => ctx.playCard);
-  const { updateCards } = useHandspace();
+  const removeCardFromHand = usePlayDispatch((ctx) => ctx.removeCardFromHand);
 
   return (
     <div
@@ -152,11 +114,7 @@ function CardInHand({ cardName, handIndex, handCount }) {
           e.clientX - rect.width / 2,
           e.clientY - rect.height,
         ]);
-        updateCards((prev) => {
-          let result = [...prev];
-          result.splice(handIndex, 1);
-          return result;
-        });
+        removeCardFromHand(handId, handIndex);
       }}
     >
       <CardFace
