@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 
 import BackgroundImageUrl from '@/assets/paper4.png';
 import { cn } from '../libs/react';
+import { usePlayspace } from './Playspace';
 import { CoinSymbol } from './symbols/CoinSymbol';
 import { RaritySymbol } from './symbols/RaritySymbol';
 import { TasteSymbol } from './symbols/TasteSymbol';
@@ -12,13 +13,12 @@ import {
 } from './UseHoverTiltStyleEffect';
 import { useOnDragMoveHandler } from './UseOnDragMoveHandler';
 import { getCardByName } from './values/Cards';
-import { useWorkspace } from './Workspace';
 
 export function Card() {
   const ref = useRef(null);
   const innerRef = useRef(null);
   const overlayRef = useRef(null);
-  const { containerRef } = useWorkspace();
+  const { containerRef } = usePlayspace();
 
   const [[posX, posY], setPos] = useState(
     /** @type {import('./UseOnDragMoveHandler').Position} */ ([0, 0])
@@ -75,8 +75,9 @@ export function CardFace({ className, style, innerRef, overlayRef, cardName }) {
             count > 0
               ? new Array(count)
                   .fill(0)
-                  .map(() => (
+                  .map((_, j) => (
                     <TasteSymbol
+                      key={`${i}:${j}`}
                       taste={/** @type {import('./values/Taste').Taste}*/ (i)}
                     />
                   ))

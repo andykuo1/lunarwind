@@ -1,9 +1,12 @@
 import { createContext, useContext, useRef, useState } from 'react';
 
 import { cn } from '@/libs/react';
+import { usePlayDispatch } from '@/stores/play/PlayStore';
 import { CardFace } from './Card';
 import { playCardTouch } from './Sounds';
 import { getRandomCard } from './values/Cards';
+
+const DEBUG = false;
 
 const HandspaceContext = createContext(
   /** @type {ReturnType<useHandspaceContextAPI>|null} */ (null)
@@ -62,7 +65,10 @@ function useHandspaceContextAPI() {
 function HandspaceContainer({ children }) {
   const { containerRef } = useHandspace();
   return (
-    <div ref={containerRef} className="absolute bottom-0 left-0 right-0">
+    <div
+      ref={containerRef}
+      className="pointer-events-none absolute bottom-0 left-0 right-0"
+    >
       {children}
     </div>
   );
@@ -75,7 +81,7 @@ function DrawCardButton() {
   }
   return (
     <button
-      className="absolute bottom-4 right-4 z-20 rounded-xl bg-black p-4 text-2xl hover:bg-white hover:text-black"
+      className="pointer-events-auto absolute bottom-4 right-4 z-20 rounded-xl bg-black p-4 text-2xl hover:bg-white hover:text-black"
       onClick={onClick}
     >
       DRAW
@@ -118,11 +124,14 @@ function CardInHand({ cardName, handIndex, handCount }) {
   const handRatioSquared = handRatio * handRatio;
   const isLast = handIndex === handCount;
 
+  const playCard = usePlayDispatch((ctx) => ctx.playCard);
+  const { updateCards } = useHandspace();
+
   return (
     <div
       className={cn(
-        // DEBUG: 'border bg-green-300',
-        'translate-y-[60%] transition-transform hover:z-10 hover:translate-y-[10%]'
+        DEBUG && 'border bg-green-500',
+        'pointer-events-auto translate-y-[60%] transition-transform hover:z-10 hover:translate-y-[10%]'
       )}
       style={
         !isLast
@@ -135,16 +144,27 @@ function CardInHand({ cardName, handIndex, handCount }) {
         setPeeking(true);
         playCardTouch();
       }}
-      onMouseLeave={() => {
-        setPeeking(false);
+      onMouseLeave={() => setPeeking(false)}
+      onClick={(e) => {
+        let element = /** @type {HTMLElement} */ (e.target);
+        let rect = element.getBoundingClientRect();
+        playCard(cardName, [
+          e.clientX - rect.width / 2,
+          e.clientY - rect.height,
+        ]);
+        updateCards((prev) => {
+          let result = [...prev];
+          result.splice(handIndex, 1);
+          return result;
+        });
       }}
     >
       <CardFace
         cardName={cardName}
         className={cn(
           'pointer-events-none',
-          ANY_CARD_MARGIN
-          // DEBUG: 'opacity-10'
+          ANY_CARD_MARGIN,
+          DEBUG && 'opacity-50'
         )}
         style={
           !peeking

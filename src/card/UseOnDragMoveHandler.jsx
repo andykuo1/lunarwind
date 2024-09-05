@@ -8,14 +8,16 @@ const MOUSE_DRAG_START_IN_PLACE_RADIUS = 5;
 const MOUSE_DRAG_START_IN_PLACE_RADIUS_SQUARED =
   MOUSE_DRAG_START_IN_PLACE_RADIUS * MOUSE_DRAG_START_IN_PLACE_RADIUS;
 
+/*
 const TOUCH_DRAG_START_IN_PLACE_RADIUS = 25;
 const TOUCH_DRAG_START_IN_PLACE_RADIUS_SQUARED =
   TOUCH_DRAG_START_IN_PLACE_RADIUS * TOUCH_DRAG_START_IN_PLACE_RADIUS;
+*/
 
 /**
  * @param {import('react').RefObject<HTMLElement>} ref
  * @param {import('react').RefObject<HTMLElement>} containerRef
- * @param {import('react').Dispatch<import('react').SetStateAction<Position>>} setPos
+ * @param {(pos: [number, number]) => void} setPos
  */
 export function useOnDragMoveHandler(ref, containerRef, setPos) {
   const [grabbing, setGrabbing] = useState(false);
@@ -56,10 +58,19 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
       );
       setPos([clientX + offsetX, clientY + offsetY]);
       setGrabbing(true);
+
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
     }
 
     /** @param {MouseEvent} e */
     function onMouseUp(e) {
+      if (!initialRef.current?.grabbing) {
+        // Not yet grabbing. Skip this.
+        return;
+      }
+
       let clientX = e.clientX;
       let clientY = e.clientY;
 
@@ -89,6 +100,10 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
       initialRef.current = {}; // And reset this.
       setPos([e.clientX + offsetX, e.clientY + offsetY]);
       setGrabbing(false);
+
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
     }
 
     /** @param {MouseEvent} e */
@@ -97,6 +112,7 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
         // Not yet grabbing. Skip this.
         return;
       }
+
       let clientX = e.clientX;
       let clientY = e.clientY;
 
@@ -131,7 +147,7 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
       document.removeEventListener('mouseup', onMouseUp);
       document.removeEventListener('mousemove', onMouseMove);
     };
-  }, [ref, containerRef]);
+  }, [ref, containerRef, setPos]);
 
   return {
     grabbing,

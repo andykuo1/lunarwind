@@ -58,27 +58,32 @@ registerCard('beeWorm', {
   tastes: createTastePalette(TasteValues.SWEET, TasteValues.BITTER),
   portraitUrl: Creature02,
 });
-registerCard('c03', {
+registerCard('bird', {
+  title: 'Confused Pecker',
   portraitUrl: Creature03,
   tastes: createTastePalette(TasteValues.BITTER, TasteValues.SALTY),
   rarity: RarityValues.RARE,
 });
-registerCard('c04', {
+registerCard('hotCarrot', {
+  title: 'Hot Carrot',
   portraitUrl: Creature04,
   tastes: createTastePalette(TasteValues.BITTER),
   rarity: RarityValues.FABLED,
 });
-registerCard('c05', {
+registerCard('timeCat', {
+  title: 'Cat of Time',
   portraitUrl: Creature05,
   tastes: createTastePalette(TasteValues.SOUR, TasteValues.SWEET),
   rarity: RarityValues.RARE,
 });
-registerCard('c06', {
+registerCard('shapeChef', {
+  title: 'Abstract Chef',
   portraitUrl: Creature06,
   tastes: createTastePalette(TasteValues.SWEET),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('c07', {
+registerCard('royalElephant', {
+  title: 'Royal Elephant',
   portraitUrl: Creature07,
   tastes: createTastePalette(
     TasteValues.SOUR,
@@ -87,17 +92,20 @@ registerCard('c07', {
   ),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('c08', {
+registerCard('mawFarm', {
+  title: 'Maw of the Farm',
   portraitUrl: Creature08,
   tastes: createTastePalette(TasteValues.SWEET, TasteValues.SWEET),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('c09', {
+registerCard('lostSquiggle', {
+  title: 'Lost in the Weeds',
   portraitUrl: Creature09,
   tastes: createTastePalette(TasteValues.SOUR, TasteValues.SWEET),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('c10', {
+registerCard('rugAndFlower', {
+  title: 'A Flower on Rug',
   portraitUrl: Creature10,
   tastes: createTastePalette(
     TasteValues.SAVORY,
@@ -106,42 +114,50 @@ registerCard('c10', {
   ),
   rarity: RarityValues.RARE,
 });
-registerCard('c11', {
+registerCard('mirrorShadow', {
+  title: 'Mirror-Mirror',
   portraitUrl: Creature11,
   tastes: createTastePalette(TasteValues.SAVORY, TasteValues.SALTY),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('c12', {
+registerCard('moonShore', {
+  title: 'Moonlit Night',
   portraitUrl: Creature12,
   tastes: createTastePalette(TasteValues.SAVORY, TasteValues.SWEET),
   rarity: RarityValues.RARE,
 });
-registerCard('c13', {
+registerCard('baguetteSlug', {
+  title: 'Baguette Slug',
   portraitUrl: Creature13,
   tastes: createTastePalette(TasteValues.SAVORY),
   rarity: RarityValues.RARE,
 });
-registerCard('c14', {
+registerCard('spiderArrows', {
+  title: 'Spider Queen',
   portraitUrl: Creature14,
   tastes: createTastePalette(TasteValues.SAVORY),
   rarity: RarityValues.RARE,
 });
-registerCard('c15', {
+registerCard('tabletOfMystery', {
+  title: 'Tablet of the Forgotten',
   portraitUrl: Creature15,
   tastes: createTastePalette(TasteValues.SALTY),
   rarity: RarityValues.RARE,
 });
-registerCard('c16', {
+registerCard('concernedMan', {
+  title: 'Concerned Man',
   portraitUrl: Creature16,
   tastes: createTastePalette(TasteValues.SALTY, TasteValues.SALTY),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('c17', {
+registerCard('turtleOver', {
+  title: 'Turtle of Fun',
   portraitUrl: Creature17,
   tastes: createTastePalette(TasteValues.SALTY),
   rarity: RarityValues.FABLED,
 });
-registerCard('c18', {
+registerCard('sunWorm', {
+  title: 'Sun-bathed Worm',
   portraitUrl: Creature18,
   tastes: createTastePalette(TasteValues.SALTY),
   rarity: RarityValues.FABLED,
@@ -173,7 +189,7 @@ export function registerCard(cardName, card) {
  * @param {import('./Card').CardName} cardName
  */
 export function getCardByName(cardName) {
-  return CARDS_REGISTRY[cardName];
+  return CARDS_REGISTRY[cardName] ?? CARDS_REGISTRY[''];
 }
 
 export function getRandomCard() {
