@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 
 const HandspaceContext = createContext(
   /** @type {ReturnType<useHandspaceContextAPI>|null} */ (null)
@@ -13,7 +13,7 @@ export function HandspaceContainer({ children }) {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none absolute bottom-0 left-0 right-0"
+      className="pointer-events-none absolute bottom-0 left-0 right-0 select-none"
     >
       {children}
     </div>
@@ -45,7 +45,14 @@ export function useHandspace() {
 
 function useHandspaceContextAPI() {
   const containerRef = useRef(/** @type {HTMLDivElement|null} */ (null));
+  const handlerStateRef = useRef(
+    /** @type {Partial<import('./UseOnDragMoveHandler').DragHandlerState>} */ ({})
+  );
+  const [anyGrabbing, setAnyGrabbing] = useState(false);
   return {
     containerRef,
+    handlerStateRef,
+    anyGrabbing,
+    setAnyGrabbing,
   };
 }

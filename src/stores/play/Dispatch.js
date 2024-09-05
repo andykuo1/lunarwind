@@ -29,18 +29,6 @@ export function movePlayCard(store, objectId, position) {
 
 /**
  * @param {import('./State').Store} store
- * @param {string} cardName
- * @param {import('@/card/UseOnDragMoveHandler').Position} [initialPosition]
- */
-export function playCard(store, cardName, initialPosition = [0, 0]) {
-  updatePlayCard(store, cuid(), {
-    cardName,
-    position: initialPosition,
-  });
-}
-
-/**
- * @param {import('./State').Store} store
  */
 export function clearCards(store) {
   for (let key of Object.keys(store.playCards)) {
@@ -76,8 +64,33 @@ export function drawCardToHand(store, handId, cardName) {
  * @param {import('./State').Store} store
  * @param {import('./State').HandId} handId
  * @param {number} handIndex
+ * @param {import('@/card/UseOnDragMoveHandler').Position} initialPosition
  */
-export function removeCardFromHand(store, handId, handIndex) {
+export function playCardFromHand(store, handId, handIndex, initialPosition) {
   let target = store.hands[handId];
+  if (!target) {
+    throw new Error(`Missing existing hand for id - got ${handId}.`);
+  }
+  let cardName = target.cardOrder[handIndex];
   target.cardOrder.splice(handIndex, 1);
+  updatePlayCard(store, cuid(), {
+    cardName,
+    position: initialPosition,
+  });
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').HandId} handId
+ * @param {number} handIndex
+ * @param {number} toHandIndex
+ */
+export function moveCardThroughHand(store, handId, handIndex, toHandIndex) {
+  let target = store.hands[handId];
+  if (!target) {
+    throw new Error(`Missing existing hand for id - got ${handId}.`);
+  }
+  let card = target.cardOrder[handIndex];
+  target.cardOrder.splice(handIndex, 1);
+  target.cardOrder.splice(toHandIndex + 1, 0, card);
 }

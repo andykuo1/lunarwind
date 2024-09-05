@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 
 import { distSquared } from '@/libs/math';
 
@@ -13,22 +13,30 @@ const TOUCH_DRAG_START_IN_PLACE_RADIUS = 25;
 const TOUCH_DRAG_START_IN_PLACE_RADIUS_SQUARED =
   TOUCH_DRAG_START_IN_PLACE_RADIUS * TOUCH_DRAG_START_IN_PLACE_RADIUS;
 */
+/**
+ * @typedef {ReturnType<createDragHandlerState>} DragHandlerState
+ */
 
 /**
  * @param {import('react').RefObject<HTMLElement>} ref
  * @param {import('react').RefObject<HTMLElement>} containerRef
- * @param {(pos: [number, number]) => void} setPos
+ * @param {import('react').MutableRefObject<Partial<DragHandlerState>>} handlerStateRef
+ * @param {(pos: [number, number]) => void} setPosition
+ * @param {(value: boolean, target: HTMLElement|null) => void} setGrabbing
+ * @param {boolean} originFixed
  */
-export function useOnDragMoveHandler(ref, containerRef, setPos) {
-  const [grabbing, setGrabbing] = useState(false);
-  const initialRef = useRef(
-    /** @type {Partial<ReturnType<createInitialGrabState>>} */ ({})
-  );
-
+export function useOnDragMoveHandler(
+  ref,
+  containerRef,
+  handlerStateRef,
+  setPosition,
+  setGrabbing,
+  originFixed = false
+) {
   useEffect(() => {
     /** @param {MouseEvent} e */
     function onMouseDown(e) {
-      if (initialRef.current?.grabbing) {
+      if (handlerStateRef.current?.grabbing) {
         // Already grabbing. Don't do it again.
         return;
       }
@@ -47,26 +55,23 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
 
       let clientX = e.clientX;
       let clientY = e.clientY;
-      let offsetX = elementX - containerX - clientX;
-      let offsetY = elementY - containerY - clientY;
-      initialRef.current = createInitialGrabState(
+      let offsetX = originFixed ? containerX : elementX - containerX - clientX;
+      let offsetY = originFixed ? -containerY : elementY - containerY - clientY;
+      handlerStateRef.current = createDragHandlerState(
+        element,
         clientX,
         clientY,
         offsetX,
         offsetY,
         performance.now()
       );
-      setPos([clientX + offsetX, clientY + offsetY]);
-      setGrabbing(true);
-
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
+      setPosition([clientX + offsetX, clientY + offsetY]);
+      setGrabbing(true, element);
     }
 
     /** @param {MouseEvent} e */
     function onMouseUp(e) {
-      if (!initialRef.current?.grabbing) {
+      if (!handlerStateRef.current?.grabbing) {
         // Not yet grabbing. Skip this.
         return;
       }
@@ -75,14 +80,16 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
       let clientY = e.clientY;
 
       // Is this an in-place click?
-      let firstX = initialRef.current?.first?.[0] ?? Number.POSITIVE_INFINITY;
-      let firstY = initialRef.current?.first?.[1] ?? Number.POSITIVE_INFINITY;
+      let firstX =
+        handlerStateRef.current?.first?.[0] ?? Number.POSITIVE_INFINITY;
+      let firstY =
+        handlerStateRef.current?.first?.[1] ?? Number.POSITIVE_INFINITY;
       if (
         distSquared(firstX, firstY, clientX, clientY) <
         MOUSE_DRAG_START_IN_PLACE_RADIUS_SQUARED
       ) {
         // ...yes! Forget about the first click...
-        initialRef.current.first = [
+        handlerStateRef.current.first = [
           Number.POSITIVE_INFINITY,
           Number.POSITIVE_INFINITY,
         ];
@@ -95,20 +102,16 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
       document.removeEventListener('mousemove', onMouseMove);
 
       // Just to be sure, update position one-last-time.
-      let offsetX = initialRef.current?.offset?.[0] ?? 0;
-      let offsetY = initialRef.current?.offset?.[1] ?? 0;
-      initialRef.current = {}; // And reset this.
-      setPos([e.clientX + offsetX, e.clientY + offsetY]);
-      setGrabbing(false);
-
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
+      let offsetX = handlerStateRef.current?.offset?.[0] ?? 0;
+      let offsetY = handlerStateRef.current?.offset?.[1] ?? 0;
+      handlerStateRef.current = {}; // And reset this.
+      setPosition([clientX + offsetX, clientY + offsetY]);
+      setGrabbing(false, element);
     }
 
     /** @param {MouseEvent} e */
     function onMouseMove(e) {
-      if (!initialRef.current?.grabbing) {
+      if (!handlerStateRef.current?.grabbing) {
         // Not yet grabbing. Skip this.
         return;
       }
@@ -117,23 +120,25 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
       let clientY = e.clientY;
 
       // Did this leave in-place click zone?
-      let firstX = initialRef.current?.first?.[0] ?? Number.POSITIVE_INFINITY;
-      let firstY = initialRef.current?.first?.[1] ?? Number.POSITIVE_INFINITY;
+      let firstX =
+        handlerStateRef.current?.first?.[0] ?? Number.POSITIVE_INFINITY;
+      let firstY =
+        handlerStateRef.current?.first?.[1] ?? Number.POSITIVE_INFINITY;
       if (
         Number.isFinite(firstX) &&
         distSquared(firstX, firstY, clientX, clientY) >
           MOUSE_DRAG_START_IN_PLACE_RADIUS_SQUARED
       ) {
         // ...yes! Forget about the first click...
-        initialRef.current.first = [
+        handlerStateRef.current.first = [
           Number.POSITIVE_INFINITY,
           Number.POSITIVE_INFINITY,
         ];
       }
 
-      let offsetX = initialRef.current?.offset?.[0] ?? 0;
-      let offsetY = initialRef.current?.offset?.[1] ?? 0;
-      setPos([clientX + offsetX, clientY + offsetY]);
+      let offsetX = handlerStateRef.current?.offset?.[0] ?? 0;
+      let offsetY = handlerStateRef.current?.offset?.[1] ?? 0;
+      setPosition([clientX + offsetX, clientY + offsetY]);
     }
 
     let element = ref.current;
@@ -146,23 +151,31 @@ export function useOnDragMoveHandler(ref, containerRef, setPos) {
       // These shouldn't exist yet, but clean-up just in case...
       document.removeEventListener('mouseup', onMouseUp);
       document.removeEventListener('mousemove', onMouseMove);
+      // NOTE: Sometimes if the element dies before mouse is up, we need to reset state.
+      handlerStateRef.current = {};
+      setGrabbing(false, element);
     };
-  }, [ref, containerRef, setPos]);
-
-  return {
-    grabbing,
-  };
+  }, [ref, containerRef, setPosition, setGrabbing]);
 }
 
 /**
+ * @param {HTMLElement|null} target
  * @param {number} firstX
  * @param {number} firstY
  * @param {number} offsetX
  * @param {number} offsetY
  * @param {number} now
  */
-function createInitialGrabState(firstX, firstY, offsetX, offsetY, now) {
+export function createDragHandlerState(
+  target,
+  firstX,
+  firstY,
+  offsetX,
+  offsetY,
+  now
+) {
   return {
+    target,
     grabbing: true,
     /** @type {Position} */
     first: [firstX, firstY],
@@ -170,4 +183,49 @@ function createInitialGrabState(firstX, firstY, offsetX, offsetY, now) {
     offset: [offsetX, offsetY],
     startMillis: now,
   };
+}
+
+/**
+ * @param {import('react').RefObject<HTMLElement>} dropZoneRef
+ * @param {import('react').RefObject<HTMLElement>} containerRef
+ * @param {import('react').MutableRefObject<Partial<DragHandlerState>>} handlerStateRef
+ * @param {(e: MouseEvent, target: HTMLElement) => void} dropCallback
+ */
+export function useOnDragDropHandler(
+  dropZoneRef,
+  containerRef,
+  handlerStateRef,
+  dropCallback
+) {
+  useEffect(() => {
+    let dropZone = dropZoneRef.current;
+    if (!dropZone) {
+      return;
+    }
+
+    /**
+     * @param {MouseEvent} e
+     */
+    function onMouseUp(e) {
+      let container = containerRef.current;
+      if (!container) {
+        return;
+      }
+      let handlerState = handlerStateRef.current;
+      if (!handlerState) {
+        return;
+      }
+      let target = handlerState.target;
+      if (!target) {
+        return;
+      }
+      dropCallback(e, target);
+      // NOTE: Clean-up is handled by the original drag handler.
+    }
+
+    dropZone.addEventListener('mouseup', onMouseUp);
+    return () => {
+      dropZone.removeEventListener('mouseup', onMouseUp);
+    };
+  }, [dropCallback, dropZoneRef, containerRef, handlerStateRef]);
 }

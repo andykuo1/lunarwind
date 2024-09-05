@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useRef } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import { cn } from '@/libs/react';
@@ -53,8 +59,12 @@ function PlayspaceProvider({ children }) {
 
 function usePlayspaceContextAPI() {
   const containerRef = useRef(/** @type {HTMLDivElement|null} */ (null));
+  const handlerStateRef = useRef(
+    /** @type {Partial<import('./UseOnDragMoveHandler').DragHandlerState>} */ ({})
+  );
   return {
     containerRef,
+    handlerStateRef,
   };
 }
 
@@ -98,18 +108,25 @@ function CardInPlay({ objectId }) {
   const ref = useRef(null);
   const innerRef = useRef(null);
   const overlayRef = useRef(null);
-  const { containerRef } = usePlayspace();
+  const { containerRef, handlerStateRef } = usePlayspace();
   const cardName = usePlayStore((ctx) => ctx.playCards[objectId]?.cardName);
   const [posX, posY] = usePlayStore(
     useShallow((ctx) => ctx.playCards[objectId]?.position)
   );
   const movePlayCard = usePlayDispatch((ctx) => ctx.movePlayCard);
-  const setPos = useCallback(
+  const setPosition = useCallback(
     /** @param {import('./UseOnDragMoveHandler').Position} pos */
     (pos) => movePlayCard(objectId, pos),
     [objectId, movePlayCard]
   );
-  const { grabbing } = useOnDragMoveHandler(ref, containerRef, setPos);
+  const [grabbing, setGrabbing] = useState(false);
+  useOnDragMoveHandler(
+    ref,
+    containerRef,
+    handlerStateRef,
+    setPosition,
+    setGrabbing
+  );
 
   return (
     <div

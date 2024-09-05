@@ -1,53 +1,9 @@
-import { useRef, useState } from 'react';
-
 import BackgroundImageUrl from '@/assets/paper4.png';
 import { cn } from '../libs/react';
-import { usePlayspace } from './Playspace';
 import { CoinSymbol } from './symbols/CoinSymbol';
 import { RaritySymbol } from './symbols/RaritySymbol';
 import { TasteSymbol } from './symbols/TasteSymbol';
-import {
-  useHoverTiltGlareStyleEffect,
-  useHoverTiltShadowStyleEffect,
-  useHoverTiltStyleEffect,
-} from './UseHoverTiltStyleEffect';
-import { useOnDragMoveHandler } from './UseOnDragMoveHandler';
 import { getCardByName } from './values/Cards';
-
-export function Card() {
-  const ref = useRef(null);
-  const innerRef = useRef(null);
-  const overlayRef = useRef(null);
-  const { containerRef } = usePlayspace();
-
-  const [[posX, posY], setPos] = useState(
-    /** @type {import('./UseOnDragMoveHandler').Position} */ ([0, 0])
-  );
-  const { grabbing } = useOnDragMoveHandler(ref, containerRef, setPos);
-  const effectStateRef = useHoverTiltStyleEffect(innerRef, ref, grabbing);
-  useHoverTiltGlareStyleEffect(effectStateRef, overlayRef);
-  useHoverTiltShadowStyleEffect(effectStateRef, innerRef);
-
-  return (
-    <div
-      ref={ref}
-      style={{
-        position: 'absolute',
-        left: `${posX}px`,
-        top: `${posY}px`,
-      }}
-    >
-      <CardFace
-        className={
-          grabbing ? 'cursor-grabbing shadow-2xl' : 'cursor-grab shadow'
-        }
-        innerRef={innerRef}
-        overlayRef={overlayRef}
-        cardName=""
-      />
-    </div>
-  );
-}
 
 /**
  * @param {object} props
