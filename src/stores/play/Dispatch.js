@@ -57,7 +57,9 @@ export function updateHand(store, handId, values) {
  */
 export function drawCardToHand(store, handId, cardName) {
   let target = store.hands[handId];
-  target.cardOrder.push(cardName);
+  let handCardId = cuid();
+  target.cardOrder.push(handCardId);
+  target.handCards[handCardId] = cardName;
 }
 
 /**
@@ -71,8 +73,10 @@ export function playCardFromHand(store, handId, handIndex, initialPosition) {
   if (!target) {
     throw new Error(`Missing existing hand for id - got ${handId}.`);
   }
-  let cardName = target.cardOrder[handIndex];
+  let handCardId = target.cardOrder[handIndex];
   target.cardOrder.splice(handIndex, 1);
+  let cardName = target.handCards[handCardId];
+  delete target.handCards[handCardId];
   updatePlayCard(store, cuid(), {
     cardName,
     position: initialPosition,
@@ -84,13 +88,28 @@ export function playCardFromHand(store, handId, handIndex, initialPosition) {
  * @param {import('./State').HandId} handId
  * @param {number} handIndex
  * @param {number} toHandIndex
+ * @param {boolean} after
  */
-export function moveCardThroughHand(store, handId, handIndex, toHandIndex) {
+export function moveCardThroughHand(
+  store,
+  handId,
+  handIndex,
+  toHandIndex,
+  after
+) {
   let target = store.hands[handId];
   if (!target) {
     throw new Error(`Missing existing hand for id - got ${handId}.`);
   }
+  if (handIndex === toHandIndex) {
+    // Already in the correct position.
+    return;
+  }
+  if (toHandIndex === -1) {
+    // Send to the front.
+    toHandIndex = target.cardOrder.length;
+  }
   let card = target.cardOrder[handIndex];
   target.cardOrder.splice(handIndex, 1);
-  target.cardOrder.splice(toHandIndex + 1, 0, card);
+  target.cardOrder.splice(toHandIndex + (after ? 1 : 0), 0, card);
 }

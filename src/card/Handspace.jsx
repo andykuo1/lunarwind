@@ -91,16 +91,24 @@ function DropZoneToHand({ className, handId }) {
   const moveCardThroughHand = usePlayDispatch((ctx) => ctx.moveCardThroughHand);
   const dropCallback = useCallback(
     /**
-     * @param {MouseEvent} _e
+     * @param {MouseEvent} e
      * @param {HTMLElement} target
      */
-    function onDragHandlerDrop(_e, target) {
+    function onDragHandlerDrop(e, target) {
       // Return to hand.
       let droppedHandIndex = Number(target.getAttribute('data-hand-index'));
       if (!Number.isFinite(droppedHandIndex)) {
         return;
       }
-      moveCardThroughHand(handId, droppedHandIndex, -1);
+      // Check if before or after the midpoint of the previous position...
+      let rect = target.getBoundingClientRect();
+      if (rect.x < e.clientX) {
+        // ... if after position, send to front of hand.
+        moveCardThroughHand(handId, droppedHandIndex, -1, false);
+      } else {
+        // ... if before position, send to back of hand.
+        moveCardThroughHand(handId, droppedHandIndex, 0, false);
+      }
     },
     [handId, moveCardThroughHand]
   );
@@ -148,11 +156,11 @@ function CardsInHand({ handId }) {
   return (
     <ul className="flex">
       <div className="flex-1" />
-      {cardOrder.map((cardName, handIndex) => (
+      {cardOrder.map((handCardId, handIndex) => (
         <CardInHand
-          key={`${handIndex}:${cardName}`}
+          key={handCardId}
           handId={handId}
-          cardName={cardName}
+          handCardId={handCardId}
           handIndex={handIndex}
           handCount={cardOrder.length}
         />
@@ -165,11 +173,11 @@ function CardsInHand({ handId }) {
 /**
  * @param {object} props
  * @param {import('@/stores/play/State').HandId} props.handId
- * @param {import('./values').CardName} props.cardName
+ * @param {import('@/stores/play/State').HandCardId} props.handCardId
  * @param {number} props.handIndex
  * @param {number} props.handCount
  */
-function CardInHand({ handId, cardName, handIndex, handCount }) {
+function CardInHand({ handId, handCardId, handIndex, handCount }) {
   const [peeking, setPeeking] = useState(false);
 
   const yOffset = Math.trunc(Math.min(handCount / 8, 1) * 240);
@@ -204,19 +212,35 @@ function CardInHand({ handId, cardName, handIndex, handCount }) {
   const moveCardThroughHand = usePlayDispatch((ctx) => ctx.moveCardThroughHand);
   const dropCallback = useCallback(
     /**
-     * @param {MouseEvent} _e
+     * @param {MouseEvent} e
      * @param {HTMLElement} target
      */
-    function onDragHandlerDrop(_e, target) {
-      let droppedHandIndex = Number(target.getAttribute('data-hand-index'));
-      if (!Number.isFinite(droppedHandIndex)) {
+    function onDragHandlerDrop(e, target) {
+      let fromHandIndex = Number(target.getAttribute('data-hand-index'));
+      if (!Number.isFinite(fromHandIndex)) {
         return;
       }
-      moveCardThroughHand(handId, droppedHandIndex, handIndex);
+      // Check if before or after the midpoint of the target card...
+      let after = false;
+      let container = containerRef.current;
+      if (container) {
+        let toElement = /** @type {HTMLElement|null} */ (
+          container.querySelector(`[data-hand-index='${handIndex}']`)
+        );
+        let rect = toElement?.getBoundingClientRect();
+        let x = (rect?.x ?? 0) + (rect?.width ?? 0) / 2;
+        after = x < e.clientX;
+      }
+      // ...then actually move it.
+      moveCardThroughHand(handId, fromHandIndex, handIndex, after);
     },
     [handId, handIndex, moveCardThroughHand]
   );
   useOnDragDropHandler(elementRef, containerRef, handlerStateRef, dropCallback);
+
+  const cardName = usePlayStore(
+    (ctx) => ctx.hands[handId]?.handCards[handCardId]
+  );
 
   return (
     <div

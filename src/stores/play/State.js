@@ -10,6 +10,8 @@ import { attachZustyUpgradeSchema } from '@/libs/zusty';
 /** @typedef {string} HandId */
 /** @typedef {ReturnType<createHand>} Hand */
 
+/** @typedef {string} HandCardId */
+
 export function createStore() {
   return {
     /** @type {Record<ObjectId, PlayCard>} */
@@ -29,8 +31,10 @@ attachZustyUpgradeSchema(createStore, {
 export function createHand(handId = cuid()) {
   return {
     handId,
-    /** @type {Array<import('@/card/values').CardName>} */
+    /** @type {Array<HandCardId>} */
     cardOrder: [],
+    /** @type {Record<HandCardId, import('@/card/values').CardName>} */
+    handCards: {},
   };
 }
 
