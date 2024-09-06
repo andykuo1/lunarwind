@@ -16,7 +16,7 @@ const CARD_IDS = [
 
 export function Lootspace() {
   return (
-    <div className="pointer-events-none fixed right-10 top-40">
+    <div className="pointer-events-none fixed -bottom-[2.25in] -left-[1.75in]">
       <div className="relative h-full w-full">
         <Stack cardIds={CARD_IDS} />
       </div>

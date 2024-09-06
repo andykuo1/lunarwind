@@ -4,6 +4,7 @@ import { cn } from '@/libs/react';
 import { usePlayDispatch } from '@/stores/play/PlayStore';
 import { CardBack } from './Card';
 import DeckCardStyle from './DeckCard.module.css';
+import { playCardTouch } from './Sounds';
 import { getRandomCard } from './values';
 
 /**
@@ -13,18 +14,27 @@ import { getRandomCard } from './values';
  */
 export function Deck({ handId, cardCount }) {
   const topCardRef = useRef(/** @type {HTMLDivElement|null} */ (null));
+  const timeoutHandleRef = useRef(/** @type {NodeJS.Timeout|null} */ (null));
   const drawCardToHand = usePlayDispatch((ctx) => ctx.drawCardToHand);
   function onClick() {
-    drawCardToHand(handId, getRandomCard().cardId);
     let element = topCardRef.current;
     element?.classList.toggle(DeckCardStyle.exit, true);
-    setTimeout(() => element?.classList.toggle(DeckCardStyle.exit, false), 300);
+    if (timeoutHandleRef.current) {
+      return;
+    }
+    playCardTouch();
+    timeoutHandleRef.current = setTimeout(() => {
+      drawCardToHand(handId, getRandomCard().cardId);
+      element?.classList.toggle(DeckCardStyle.exit, false);
+      timeoutHandleRef.current = null;
+    }, 300);
   }
   return (
     <div className="absolute -bottom-[2.25in] -right-[1.75in]">
       <button
         className="group relative rounded-2xl border-2 border-white bg-transparent p-4"
         onClick={onClick}
+        onMouseEnter={() => playCardTouch()}
       >
         <DeckCards topCardRef={topCardRef} cardCount={cardCount} />
       </button>

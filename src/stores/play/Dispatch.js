@@ -50,12 +50,21 @@ export function movePlayCard(store, playId, playCardId, position) {
 
 /**
  * @param {import('./State').Store} store
- * @param {import('./State').PlayId} playId
+ * @param {import('./State').PlayId} _playId
  */
-export function clearCards(store, playId) {
-  let play = store.plays[playId];
-  for (let key of Object.keys(play.playCards)) {
-    delete play.playCards[key];
+export function clearCards(store, _playId) {
+  for (let playId of Object.keys(store.plays)) {
+    let play = store.plays[playId];
+    for (let key of Object.keys(play.playCards)) {
+      delete play.playCards[key];
+    }
+  }
+  for (let handId of Object.keys(store.hands)) {
+    let hand = store.hands[handId];
+    hand.cardOrder.length = 0;
+    for (let key of Object.keys(hand.handCards)) {
+      delete hand.handCards[key];
+    }
   }
 }
 
