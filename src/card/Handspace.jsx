@@ -14,7 +14,6 @@ import {
   useOnDragDropHandler,
   useOnDragMoveHandler,
 } from './UseOnDragMoveHandler';
-import { getRandomCard } from './values/Cards';
 
 const DEBUG = false;
 
@@ -37,8 +36,7 @@ export function Handspace({ handId, playId }) {
             className="absolute bottom-0 left-0 right-0 top-0"
             handId={handId}
           />
-          <CardsInHand handId={handId} />
-          <DrawCardButton handId={handId} />
+          <HandCards handId={handId} />
         </HandspaceContainer>
       </HandspaceProvider>
     </>
@@ -103,26 +101,7 @@ function DropZoneToHand({ className, handId }) {
  * @param {object} props
  * @param {import('@/stores/play/State').HandId} props.handId
  */
-function DrawCardButton({ handId }) {
-  const drawCardToHand = usePlayDispatch((ctx) => ctx.drawCardToHand);
-  function onClick() {
-    drawCardToHand(handId, getRandomCard().cardId);
-  }
-  return (
-    <button
-      className="pointer-events-auto absolute bottom-4 right-4 z-20 rounded-xl bg-black p-4 text-2xl hover:bg-white hover:text-black"
-      onClick={onClick}
-    >
-      DRAW
-    </button>
-  );
-}
-
-/**
- * @param {object} props
- * @param {import('@/stores/play/State').HandId} props.handId
- */
-function CardsInHand({ handId }) {
+function HandCards({ handId }) {
   const cardOrder = usePlayStore(
     useShallow((ctx) => ctx.hands[handId]?.cardOrder ?? [])
   );
@@ -130,7 +109,7 @@ function CardsInHand({ handId }) {
     <ul className="flex">
       <div className="flex-1" />
       {cardOrder.map((handCardId, handIndex) => (
-        <CardInHand
+        <HandCard
           key={handCardId}
           handId={handId}
           handCardId={handCardId}
@@ -150,7 +129,7 @@ function CardsInHand({ handId }) {
  * @param {number} props.handIndex
  * @param {number} props.handCount
  */
-function CardInHand({ handId, handCardId, handIndex, handCount }) {
+function HandCard({ handId, handCardId, handIndex, handCount }) {
   const [peeking, setPeeking] = useState(false);
   const elementRef = useRef(null);
   const [[posX, posY], setPosition] = useState(

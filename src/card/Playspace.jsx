@@ -20,13 +20,14 @@ const PlayspaceContext = createContext(
 
 /**
  * @param {object} props
+ * @param {string} props.className
  * @param {import('@/stores/play/State').PlayId} props.playId
  * @param {import('react').ReactNode} [props.children]
  */
-export function Playspace({ playId, children }) {
+export function Playspace({ className, playId, children }) {
   return (
     <PlayspaceProvider>
-      <PlayspaceContainer>
+      <PlayspaceContainer className={className}>
         <PlayCards playId={playId} />
         <ClearBoardButton playId={playId} />
         {children}
@@ -71,15 +72,13 @@ function usePlayspaceContextAPI() {
 
 /**
  * @param {object} props
+ * @param {string} props.className
  * @param {import('react').ReactNode} props.children
  */
-function PlayspaceContainer({ children }) {
+function PlayspaceContainer({ className, children }) {
   const { containerRef } = usePlayspace();
   return (
-    <div
-      ref={containerRef}
-      className="fixed bottom-0 left-0 right-0 top-0 bg-green-800/60"
-    >
+    <div ref={containerRef} className={className}>
       {children}
     </div>
   );

@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import './App.css';
-
 import { BoosterPack } from './card/BoosterPack';
+import { Deck } from './card/Deck';
 import { Handspace } from './card/Handspace';
 import { Lootspace } from './card/Lootspace';
 import { Playspace } from './card/Playspace';
@@ -44,8 +43,12 @@ export default function App() {
   return (
     <>
       <header className="flex items-center">Cards</header>
-      <main id="workspace" className="px-10 py-40">
-        <Playspace playId={playId} />
+      <main id="workspace" className="h-full w-full overflow-hidden">
+        <Playspace
+          className="absolute bottom-0 left-0 right-0 top-0 bg-green-800/60"
+          playId={playId}
+        />
+        <Deck handId={handId} cardCount={10} />
         <Handspace handId={handId} playId={playId} />
         <div className="absolute left-10 top-10">
           <BoosterPack />

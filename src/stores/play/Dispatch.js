@@ -54,7 +54,7 @@ export function movePlayCard(store, playId, playCardId, position) {
  */
 export function clearCards(store, playId) {
   let play = store.plays[playId];
-  for (let key of Object.keys(play)) {
+  for (let key of Object.keys(play.playCards)) {
     delete play.playCards[key];
   }
 }

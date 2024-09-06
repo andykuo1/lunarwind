@@ -1,3 +1,5 @@
+import { AudioWaveform, Carrot, Cat } from 'lucide-react';
+
 import BackgroundImageUrl from '@/assets/paper4.png';
 import { cn } from '../libs/react';
 import { CoinSymbol } from './symbols/CoinSymbol';
@@ -19,13 +21,13 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
     <article
       ref={innerRef}
       className={cn(
-        'relative z-0 flex h-[3.5in] min-h-[3.5in] w-[2.5in] min-w-[2.5in] select-none flex-col overflow-hidden rounded-xl bg-black',
+        'relative z-0 flex h-[3.5in] min-h-[3.5in] w-[2.5in] min-w-[2.5in] select-none flex-col overflow-hidden rounded-xl bg-neutral-800 text-white',
         className
       )}
       style={style}
     >
-      <header className="rounded bg-black">
-        <h2 className="flex gap-1 px-4 py-1 font-bold text-white">
+      <header>
+        <h2 className="flex gap-1 px-4 py-1 font-bold">
           <span className="flex-1">{card.title}</span>
           {card.tastes.flatMap((count, i) =>
             count > 0
@@ -41,7 +43,7 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
           )}
         </h2>
         <div className="flex gap-1">
-          <figure className="relative ml-4 mr-2 flex flex-col items-center bg-black">
+          <figure className="relative ml-4 mr-2 flex flex-col items-center">
             <CoinSymbol coin={4} />
           </figure>
           <figure className="relative mr-4 h-[1.5in] w-full rounded-xl bg-white">
@@ -50,7 +52,7 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
               src={card.portraitUrl}
               alt={card.portraitAlt}
             />
-            <figcaption className="absolute -bottom-4 left-0 right-0 flex px-1 text-xs text-white">
+            <figcaption className="absolute -bottom-4 left-0 right-0 flex px-1 text-xs">
               <div className="flex-1">{card.portraitAlt}</div>
               <div>
                 <RaritySymbol rarity={card.rarity} />
@@ -72,5 +74,36 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
         className="absolute bottom-0 left-0 right-0 top-0"
       />
     </article>
+  );
+}
+
+export function CardBack() {
+  return (
+    <div className="relative z-0 flex h-[3.5in] min-h-[3.5in] w-[2.5in] min-w-[2.5in] select-none flex-col overflow-hidden rounded-xl bg-neutral-800">
+      <div className="flex flex-1">
+        <div className="m-auto flex flex-col">
+          <Cat />
+          <AudioWaveform />
+          <Carrot />
+        </div>
+        <div className="m-auto flex flex-col">
+          <Cat />
+          <AudioWaveform />
+          <Carrot />
+        </div>
+      </div>
+      <div className="flex flex-1">
+        <div className="m-auto flex flex-col">
+          <Cat />
+          <AudioWaveform />
+          <Carrot />
+        </div>
+        <div className="m-auto flex flex-col">
+          <Cat />
+          <AudioWaveform />
+          <Carrot />
+        </div>
+      </div>
+    </div>
   );
 }
