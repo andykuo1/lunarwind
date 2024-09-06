@@ -1,0 +1,13 @@
+.exit {
+  animation-name: animate-deck-card-exit;
+  animation-duration: 200ms;
+}
+
+@keyframes animate-deck-card-exit {
+  30% {
+    transform: translate(0, 20%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}

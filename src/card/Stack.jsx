@@ -88,7 +88,7 @@ function StackCard({ cardId, stackPosition, stackSize }) {
     <div
       className={cn(
         'absolute left-0 top-0',
-        stackPosition === 0 && StackCardStyle.stackCardLeaves
+        stackPosition === 0 && StackCardStyle.exit
       )}
       style={{
         // NOTE: Arbitrary 100 card stack.
