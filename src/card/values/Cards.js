@@ -188,7 +188,7 @@ export function registerCard(cardId, card) {
 /**
  * @param {import('./Card').CardId} cardId
  */
-export function getCardByName(cardId) {
+export function getCardById(cardId) {
   return CARDS_REGISTRY[cardId] ?? CARDS_REGISTRY[''];
 }
 

@@ -4,6 +4,7 @@ import './App.css';
 
 import { BoosterPack } from './card/BoosterPack';
 import { Handspace } from './card/Handspace';
+import { Lootspace } from './card/Lootspace';
 import { Playspace } from './card/Playspace';
 import { cuid } from './libs/math';
 import {
@@ -49,6 +50,7 @@ export default function App() {
         <div className="absolute left-10 top-10">
           <BoosterPack />
         </div>
+        <Lootspace />
       </main>
     </>
   );

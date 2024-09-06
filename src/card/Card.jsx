@@ -3,7 +3,7 @@ import { cn } from '../libs/react';
 import { CoinSymbol } from './symbols/CoinSymbol';
 import { RaritySymbol } from './symbols/RaritySymbol';
 import { TasteSymbol } from './symbols/TasteSymbol';
-import { getCardByName } from './values/Cards';
+import { getCardById } from './values/Cards';
 
 /**
  * @param {object} props
@@ -14,7 +14,7 @@ import { getCardByName } from './values/Cards';
  * @param {import('@/card/values').CardId} props.cardId
  */
 export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
-  const card = getCardByName(cardId);
+  const card = getCardById(cardId);
   return (
     <article
       ref={innerRef}
