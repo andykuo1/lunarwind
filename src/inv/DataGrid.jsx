@@ -1,6 +1,6 @@
 import { Square } from 'lucide-react';
 
-import { cn } from './libs/react';
+import { cn } from '@/libs/react';
 
 /**
  * @param {object} props

@@ -69,3 +69,14 @@ Drawing cards is like gaining knowledge?
 Prep Time, Cooking Time
 Ingredients, Servings
 Instructions,
+
+What's missing for MVP?
+
+- A deck builder
+- A pack opener
+- A collection viewer
+- Multiplayer
+- A discard pile
+- The game itself
+
+RAGU

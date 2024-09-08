@@ -4,20 +4,94 @@ import {
   createHandCard,
   createPlay,
   createPlayCard,
+  createSession,
+  createUser,
 } from './State';
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').SessionId} sessionId
+ * @param {Partial<import('./State').Session>} values
+ */
+export function resolveSession(store, sessionId, values) {
+  let session = store.sessions[sessionId];
+  if (!session) {
+    session = createSession(sessionId);
+    store.sessions[sessionId] = session;
+  }
+  Object.assign(session, values);
+  if (!session.localUserId) {
+    let userId = cuid();
+    resolveUser(store, userId, {});
+    session.localUserId = userId;
+  }
+  if (!session.localPlayId) {
+    let playId = cuid();
+    resolvePlay(store, playId, {});
+    session.localPlayId = playId;
+  }
+  if (!session.localHandId) {
+    let handId = cuid();
+    resolveHand(store, handId, {});
+    session.localHandId = handId;
+  }
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').UserId} userId
+ * @param {Partial<import('./State').User>} values
+ */
+export function resolveUser(store, userId, values) {
+  let user = store.users[userId];
+  if (!user) {
+    user = createUser(userId);
+    store.users[userId] = user;
+  }
+  Object.assign(user, values);
+}
 
 /**
  * @param {import('./State').Store} store
  * @param {import('./State').PlayId} playId
  * @param {Partial<import('./State').PlayCard>} values
  */
-export function updatePlay(store, playId, values) {
-  let result = store.plays[playId];
-  if (!result) {
-    result = createPlay(playId);
-    store.plays[playId] = result;
+export function resolvePlay(store, playId, values) {
+  let play = store.plays[playId];
+  if (!play) {
+    play = createPlay(playId);
+    store.plays[playId] = play;
   }
-  Object.assign(result, values);
+  Object.assign(play, values);
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {string} handId
+ * @param {Partial<import('./State').Hand>} values
+ */
+export function resolveHand(store, handId, values) {
+  let hand = store.hands[handId];
+  if (!hand) {
+    hand = createHand(handId);
+    store.hands[handId] = hand;
+  }
+  Object.assign(hand, values);
+}
+
+/**
+ * @param {import('./State').Store} store
+ */
+export function clearSessions(store) {
+  let keys = Object.keys(store.sessions);
+  for (let key of keys) {
+    delete store.sessions[key];
+  }
+  // HACK: Just reset everything for now.
+  store.sessions = {};
+  store.hands = {};
+  store.users = {};
+  store.plays = {};
 }
 
 /**
@@ -66,20 +140,6 @@ export function clearCards(store, _playId) {
       delete hand.handCards[key];
     }
   }
-}
-
-/**
- * @param {import('./State').Store} store
- * @param {string} handId
- * @param {Partial<import('./State').Hand>} values
- */
-export function updateHand(store, handId, values) {
-  let result = store.hands[handId];
-  if (!result) {
-    result = createHand(handId);
-    store.hands[handId] = result;
-  }
-  Object.assign(result, values);
 }
 
 /**

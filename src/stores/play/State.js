@@ -3,6 +3,18 @@ import { attachZustyUpgradeSchema } from '@/libs/zusty';
 
 /** @typedef {ReturnType<createStore>} Store */
 
+/** @typedef {string} SessionId */
+/** @typedef {ReturnType<createSession>} Session */
+
+/** @typedef {string} UserId */
+/** @typedef {ReturnType<createUser>} User */
+
+/** @typedef {string} CollectionId */
+/** @typedef {ReturnType<createCollection>} Collection */
+
+/** @typedef {string} CollectionCardId */
+/** @typedef {ReturnType<createCollectionCard>} CollectionCard */
+
 /** @typedef {string} PlayId */
 /** @typedef {ReturnType<createPlay>} Play */
 
@@ -15,8 +27,18 @@ import { attachZustyUpgradeSchema } from '@/libs/zusty';
 /** @typedef {string} HandCardId */
 /** @typedef {ReturnType<createHandCard>} HandCard */
 
+/** @typedef {string} StackId */
+/** @typedef {ReturnType<createStack>} Stack */
+
+/** @typedef {string} StackCardId */
+/** @typedef {ReturnType<createStackCard>} StackCard */
+
 export function createStore() {
   return {
+    /** @type {Record<SessionId, Session>} */
+    sessions: {},
+    /** @type {Record<UserId, User>} */
+    users: {},
     /** @type {Record<PlayId, Play>} */
     plays: {},
     /** @type {Record<HandId, Hand>} */
@@ -24,9 +46,88 @@ export function createStore() {
   };
 }
 attachZustyUpgradeSchema(createStore, {
+  sessions: (prev) => createSession(prev.sessionId),
+  users: (prev) => createUser(prev.userId),
   plays: (prev) => createPlay(prev.playId),
   hands: (prev) => createHand(prev.handId),
 });
+
+/**
+ * @param {CollectionId} collectionId
+ */
+export function createCollection(collectionId = cuid()) {
+  return {
+    collectionId,
+    /** @type {Record<import('@/card/values').CardId, CollectionCard>} */
+    ownedCards: {},
+  };
+}
+attachZustyUpgradeSchema(createCollection, {
+  ownedCards: (prev) => createCollectionCard(prev.collectionCardId),
+});
+
+/**
+ * @param {CollectionCardId} collectionCardId
+ */
+export function createCollectionCard(collectionCardId = cuid()) {
+  return {
+    collectionCardId,
+    cardId: '',
+    cardCount: 1,
+  };
+}
+
+/**
+ * @param {SessionId} sessionId
+ */
+export function createSession(sessionId = cuid()) {
+  return {
+    sessionId,
+    /** @type {UserId} */
+    localUserId: '',
+    /** @type {HandId} */
+    localHandId: '',
+    /** @type {PlayId} */
+    localPlayId: '',
+    lastActiveTimeMillis: 0,
+  };
+}
+
+/**
+ * @param {UserId} userId
+ */
+export function createUser(userId = cuid()) {
+  return {
+    userId,
+    displayName: '',
+  };
+}
+
+/**
+ * @param {PlayId} playId
+ */
+export function createPlay(playId = cuid()) {
+  return {
+    playId,
+    /** @type {Record<PlayCardId, PlayCard>} */
+    playCards: {},
+  };
+}
+attachZustyUpgradeSchema(createPlay, {
+  playCards: (prev) => createPlayCard(prev.playCardId),
+});
+
+/**
+ * @param {PlayCardId} playCardId
+ */
+export function createPlayCard(playCardId = cuid()) {
+  return {
+    playCardId,
+    cardId: '',
+    position: [0, 0],
+    lastTouchedMillis: performance.now(),
+  };
+}
 
 /**
  * @param {HandId} handId
@@ -55,27 +156,25 @@ export function createHandCard(handCardId = cuid()) {
 }
 
 /**
- * @param {PlayId} playId
+ * @param {StackId} stackId
  */
-export function createPlay(playId = cuid()) {
+export function createStack(stackId = cuid()) {
   return {
-    playId,
-    /** @type {Record<PlayCardId, PlayCard>} */
-    playCards: {},
+    stackId,
+    /** @type {Record<StackCardId, StackCard>} */
+    stackCards: {},
   };
 }
-attachZustyUpgradeSchema(createPlay, {
-  playCards: (prev) => createPlayCard(prev.playCardId),
+attachZustyUpgradeSchema(createStack, {
+  stackCards: (prev) => createStackCard(prev.stackCardId),
 });
 
 /**
- * @param {PlayCardId} playCardId
+ * @param {StackCardId} stackCardId
  */
-export function createPlayCard(playCardId = cuid()) {
+export function createStackCard(stackCardId = cuid()) {
   return {
-    playCardId,
+    stackCardId,
     cardId: '',
-    position: [0, 0],
-    lastTouchedMillis: performance.now(),
   };
 }

@@ -39,9 +39,9 @@ export function BoosterPack({ className }) {
       onMouseLeave={() => {
         playBoosterPackTouch();
       }}
+      onClick={() => setFlipped((prev) => !prev)}
     >
       <div className="absolute right-0 top-0 z-10 flex flex-col gap-2">
-        <FlipButton onClick={() => setFlipped((prev) => !prev)} />
         <OpenButton onClick={() => setPeeled((prev) => !prev)} />
       </div>
       <div
@@ -80,22 +80,6 @@ export function BoosterPack({ className }) {
         </div>
       </div>
     </div>
-  );
-}
-
-/**
- * @param {object} props
- * @param {string} [props.className]
- * @param {import('react').MouseEventHandler} props.onClick
- */
-function FlipButton({ className, onClick }) {
-  return (
-    <button
-      className={cn('rounded-full bg-black/30 px-4 text-white', className)}
-      onClick={onClick}
-    >
-      Flip
-    </button>
   );
 }
 
