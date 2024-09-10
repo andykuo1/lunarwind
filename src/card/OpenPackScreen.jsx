@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { cn } from '@/libs/react';
+import FlyAnimationStyle from '@/libs/style/FlyAnimation.module.css';
 import { BoosterPack } from './BoosterPack';
 import OpenPackScreenStyle from './OpenPackScreen.module.css';
 import { CardTouchSound, PackOpenSound } from './sounds/Sounds';
@@ -32,7 +33,7 @@ export function OpenPackScreen({ onOpen, onDone }) {
           )}
         >
           <Stack
-            className={flipped && OpenPackScreenStyle.flyinBottom}
+            className={flipped && FlyAnimationStyle.animateFlyInBottom}
             cardIds={cardIds}
             stackIndex={stackIndex}
             splayed={splayed}
@@ -43,7 +44,7 @@ export function OpenPackScreen({ onOpen, onDone }) {
                 setStackIndex((prev) => prev + 1);
               }
               if (stackIndex + 1 === cardIds.length) {
-                setTimeout(onDone, 500);
+                onDone();
               }
             }}
           />
@@ -57,8 +58,8 @@ export function OpenPackScreen({ onOpen, onDone }) {
       >
         <BoosterPack
           className={cn(
-            OpenPackScreenStyle.flyinRight,
-            flipped && OpenPackScreenStyle.flyoutBottom
+            FlyAnimationStyle.animateFlyInRight,
+            flipped && FlyAnimationStyle.animateFlyOutBottom
           )}
           flipped={flipped}
           onClick={() => {

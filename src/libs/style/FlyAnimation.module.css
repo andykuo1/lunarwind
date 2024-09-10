@@ -1,0 +1,53 @@
+.animateFlyInRight {
+  animation: flyin-right 0.5s ease both;
+}
+
+.animateFlyInBottom {
+  animation: flyin-bottom 0.5s ease both;
+  animation-delay: 200ms;
+}
+
+.animateFlyOutLeft {
+  animation: flyout-left 0.5s ease both;
+}
+
+.animateFlyOutBottom {
+  animation: flyout-bottom 0.5s ease both;
+  animation-delay: 250ms;
+}
+
+@keyframes flyin-right {
+  0% {
+    transform: translate(100vw, 0) scale(0.3);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes flyin-bottom {
+  0% {
+    transform: translate(0, 100vh) scale(0.3);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes flyout-left {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-100vw, 0) scale(0.3);
+  }
+}
+
+@keyframes flyout-bottom {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 100vh);
+  }
+}

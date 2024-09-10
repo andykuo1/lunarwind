@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 
 import { cn } from '@/libs/react';
+import FlyAnimationStyle from '@/libs/style/FlyAnimation.module.css';
 import { CardFace } from './Card';
-import StackCardStyle from './StackCard.module.css';
 import {
   useHoverTiltGlareStyleEffect,
   useHoverTiltShadowStyleEffect,
@@ -169,7 +169,7 @@ function StackCard({ cardId, positionFromFront, positionFromBack, splayed }) {
       ref={containerRef}
       className={cn(
         'absolute left-0 top-0',
-        positionFromFront === -1 && StackCardStyle.exit
+        positionFromFront === -1 && FlyAnimationStyle.animateFlyOutLeft
       )}
       style={{
         // NOTE: Arbitrary 100 card stack.
