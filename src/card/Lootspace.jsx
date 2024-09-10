@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 
 import { Stack } from './Stack';
-import { getRandomCard } from './values';
+import { getRandomCardId } from './values';
 
 const CARD_IDS = [
-  getRandomCard().cardId,
-  getRandomCard().cardId,
-  getRandomCard().cardId,
-  getRandomCard().cardId,
-  getRandomCard().cardId,
-  getRandomCard().cardId,
-  getRandomCard().cardId,
-  getRandomCard().cardId,
-  getRandomCard().cardId,
-  getRandomCard().cardId,
+  getRandomCardId(),
+  getRandomCardId(),
+  getRandomCardId(),
+  getRandomCardId(),
+  getRandomCardId(),
+  getRandomCardId(),
+  getRandomCardId(),
+  getRandomCardId(),
 ];
 
 export function Lootspace() {
@@ -32,6 +30,8 @@ export function Lootspace() {
           className="rounded-2xl border-2 border-transparent hover:border-white/30"
           cardIds={CARD_IDS}
           stackIndex={currentStackIndex}
+          cycled={true}
+          splayed={true}
         />
       </div>
     </div>

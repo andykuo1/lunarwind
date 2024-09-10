@@ -16,18 +16,16 @@ import Creature15 from '@/assets/cards/squiggleTablet.png';
 import Creature16 from '@/assets/cards/stagHead.png';
 import Creature17 from '@/assets/cards/turtle.png';
 import Creature18 from '@/assets/cards/wormSun.png';
-import { createCard, createTastePalette } from './Card';
+import { createTastePalette } from './Card';
+import { registerCard } from './CardRegistry';
 import { RarityValues } from './Rarity';
 import { TasteValues } from './Taste';
 
-/** @type {Record<string, import('./Card').Card>} */
-const CARDS_REGISTRY = {};
-
-registerCard('', {
+export const THE_VOID = registerCard('', {
   title: 'The Void',
   rarity: RarityValues.FABLED,
 });
-registerCard('theRedDragon', {
+export const THE_RED_DRAGON = registerCard('theRedDragon', {
   title: 'The Red Dragon',
   rarity: RarityValues.FABLED,
   tastes: createTastePalette(
@@ -36,53 +34,53 @@ registerCard('theRedDragon', {
     TasteValues.BITTER
   ),
 });
-registerCard('cabbage', {
+export const CABBAGE = registerCard('cabbage', {
   title: 'Cabbage',
   rarity: RarityValues.COMMON,
   tastes: createTastePalette(TasteValues.BLAND),
 });
-registerCard('chopAction', {
+export const CHOP_ACTION = registerCard('chopAction', {
   title: 'Chop!',
   rarity: RarityValues.COMMON,
   tastes: createTastePalette(TasteValues.BLAND, TasteValues.BLAND),
 });
-registerCard('threeEyedCone', {
+export const THREE_EYED_CONE = registerCard('threeEyedCone', {
   title: 'Three-Eyed Cone',
   rarity: RarityValues.COMMON,
   tastes: createTastePalette(TasteValues.SAVORY, TasteValues.SWEET),
   portraitUrl: Creature01,
 });
-registerCard('beeWorm', {
+export const BEE_WORM = registerCard('beeWorm', {
   title: 'Sap Leecher',
   rarity: RarityValues.RARE,
   tastes: createTastePalette(TasteValues.SWEET, TasteValues.BITTER),
   portraitUrl: Creature02,
 });
-registerCard('bird', {
+export const BIRD = registerCard('bird', {
   title: 'Confused Pecker',
   portraitUrl: Creature03,
   tastes: createTastePalette(TasteValues.BITTER, TasteValues.SALTY),
   rarity: RarityValues.RARE,
 });
-registerCard('hotCarrot', {
+export const HOT_CARROT = registerCard('hotCarrot', {
   title: 'Hot Carrot',
   portraitUrl: Creature04,
   tastes: createTastePalette(TasteValues.BITTER),
   rarity: RarityValues.FABLED,
 });
-registerCard('timeCat', {
+export const TIME_CAT = registerCard('timeCat', {
   title: 'Cat of Time',
   portraitUrl: Creature05,
   tastes: createTastePalette(TasteValues.SOUR, TasteValues.SWEET),
   rarity: RarityValues.RARE,
 });
-registerCard('shapeChef', {
+export const SHAPE_CHEF = registerCard('shapeChef', {
   title: 'Abstract Chef',
   portraitUrl: Creature06,
   tastes: createTastePalette(TasteValues.SWEET),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('royalElephant', {
+export const ROYAL_ELEPHANT = registerCard('royalElephant', {
   title: 'Royal Elephant',
   portraitUrl: Creature07,
   tastes: createTastePalette(
@@ -92,19 +90,19 @@ registerCard('royalElephant', {
   ),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('mawFarm', {
+export const MAW_FARM = registerCard('mawFarm', {
   title: 'Maw of the Farm',
   portraitUrl: Creature08,
   tastes: createTastePalette(TasteValues.SWEET, TasteValues.SWEET),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('lostSquiggle', {
+export const LOST_SQUIGGLE = registerCard('lostSquiggle', {
   title: 'Lost in the Weeds',
   portraitUrl: Creature09,
   tastes: createTastePalette(TasteValues.SOUR, TasteValues.SWEET),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('rugAndFlower', {
+export const RUG_AND_FLOWER = registerCard('rugAndFlower', {
   title: 'A Flower on Rug',
   portraitUrl: Creature10,
   tastes: createTastePalette(
@@ -114,87 +112,51 @@ registerCard('rugAndFlower', {
   ),
   rarity: RarityValues.RARE,
 });
-registerCard('mirrorShadow', {
+export const MIRROR_SHADOW = registerCard('mirrorShadow', {
   title: 'Mirror-Mirror',
   portraitUrl: Creature11,
   tastes: createTastePalette(TasteValues.SAVORY, TasteValues.SALTY),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('moonShore', {
+export const MOON_SHORE = registerCard('moonShore', {
   title: 'Moonlit Night',
   portraitUrl: Creature12,
   tastes: createTastePalette(TasteValues.SAVORY, TasteValues.SWEET),
   rarity: RarityValues.RARE,
 });
-registerCard('baguetteSlug', {
+export const BAGUETTE_SLUG = registerCard('baguetteSlug', {
   title: 'Baguette Slug',
   portraitUrl: Creature13,
   tastes: createTastePalette(TasteValues.SAVORY),
   rarity: RarityValues.RARE,
 });
-registerCard('spiderArrows', {
+export const SPIDER_ARROWS = registerCard('spiderArrows', {
   title: 'Spider Queen',
   portraitUrl: Creature14,
   tastes: createTastePalette(TasteValues.SAVORY),
   rarity: RarityValues.RARE,
 });
-registerCard('tabletOfMystery', {
+export const TABLET_OF_MYSTERY = registerCard('tabletOfMystery', {
   title: 'Tablet of the Forgotten',
   portraitUrl: Creature15,
   tastes: createTastePalette(TasteValues.SALTY),
   rarity: RarityValues.RARE,
 });
-registerCard('concernedMan', {
+export const CONCERNED_MAN = registerCard('concernedMan', {
   title: 'Concerned Man',
   portraitUrl: Creature16,
   tastes: createTastePalette(TasteValues.SALTY, TasteValues.SALTY),
   rarity: RarityValues.UNCOMMON,
 });
-registerCard('turtleOver', {
+export const TURTLE_OVER = registerCard('turtleOver', {
   title: 'Turtle of Fun',
   portraitUrl: Creature17,
   tastes: createTastePalette(TasteValues.SALTY),
   rarity: RarityValues.FABLED,
 });
-registerCard('sunWorm', {
+export const SUN_WORM = registerCard('sunWorm', {
   title: 'Sun-bathed Worm',
   portraitUrl: Creature18,
   tastes: createTastePalette(TasteValues.SALTY),
   rarity: RarityValues.FABLED,
 });
-
-/**
- * @param {import('./Card').CardId} cardId
- * @param {Partial<import('./Card').Card>} card
- */
-export function registerCard(cardId, card) {
-  let result = createCard(cardId);
-  Object.assign(result, card);
-  let nextCardNumber = Object.keys(CARDS_REGISTRY).length;
-  result.cardNumber = nextCardNumber;
-  if (result.title.length <= 0) {
-    result.title = cardId;
-  }
-  if (result.portraitUrl.length <= 0) {
-    result.portraitUrl = Creature01;
-  }
-  if (result.portraitAlt.length <= 0) {
-    result.portraitAlt = cardId;
-  }
-  CARDS_REGISTRY[result.cardId] = result;
-  return cardId;
-}
-
-/**
- * @param {import('./Card').CardId} cardId
- */
-export function getCardById(cardId) {
-  return CARDS_REGISTRY[cardId] ?? CARDS_REGISTRY[''];
-}
-
-export function getRandomCard() {
-  let keys = Object.keys(CARDS_REGISTRY);
-  let index = Math.trunc(Math.random() * keys.length);
-  let key = keys[index];
-  return CARDS_REGISTRY[key];
-}

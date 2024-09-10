@@ -12,7 +12,6 @@ import {
 /**
  * @param {object} props
  * @param {string} [props.className]
- * @param {string} [props.firstClassName]
  * @param {Array<import('./values').CardId>} props.cardIds
  * @param {number} props.stackIndex
  * @param {boolean} props.splayed
@@ -103,27 +102,26 @@ function CycledStackCards({ cardIds, index, count, splayed }) {
  */
 function RemainingStackCards({ cardIds, index, count, splayed }) {
   let elements = [];
-  let j = 0;
   elements.push(
     <StackCard
-      key={index}
-      cardId={cardIds[index]}
+      key={index - 1}
+      cardId={cardIds[index - 1]}
       positionFromFront={-1}
-      positionFromBack={count - index}
+      positionFromBack={count - index - 1}
       splayed={splayed}
     />
   );
-  for (let i = index + 1; i <= count; ++i) {
+  for (let i = index, position = 0; i < count; ++i) {
     elements.push(
       <StackCard
         key={i}
         cardId={cardIds[i]}
-        positionFromFront={j}
+        positionFromFront={position}
         positionFromBack={count - i}
         splayed={splayed}
       />
     );
-    j++;
+    ++position;
   }
   return elements;
 }

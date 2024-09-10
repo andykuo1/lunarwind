@@ -15,6 +15,9 @@ import { attachZustyUpgradeSchema } from '@/libs/zusty';
 /** @typedef {string} CollectionCardId */
 /** @typedef {ReturnType<createCollectionCard>} CollectionCard */
 
+/** @typedef {string} CollectionPackId */
+/** @typedef {ReturnType<createCollectionPack>} CollectionPack */
+
 /** @typedef {string} PlayId */
 /** @typedef {ReturnType<createPlay>} Play */
 
@@ -60,10 +63,13 @@ export function createCollection(collectionId = cuid()) {
     collectionId,
     /** @type {Record<import('@/card/values').CardId, CollectionCard>} */
     ownedCards: {},
+    /** @type {Record<import('@/card/values').PackId, CollectionPack>} */
+    ownedPacks: {},
   };
 }
 attachZustyUpgradeSchema(createCollection, {
   ownedCards: (prev) => createCollectionCard(prev.collectionCardId),
+  ownedPacks: (prev) => createCollectionPack(prev.collectionPackId),
 });
 
 /**
@@ -74,6 +80,17 @@ export function createCollectionCard(collectionCardId = cuid()) {
     collectionCardId,
     cardId: '',
     cardCount: 1,
+  };
+}
+
+/**
+ * @param {CollectionPackId} collectionPackId
+ */
+export function createCollectionPack(collectionPackId = cuid()) {
+  return {
+    collectionPackId,
+    packId: '',
+    packCount: 1,
   };
 }
 

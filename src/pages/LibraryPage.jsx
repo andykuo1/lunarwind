@@ -1,3 +1,11 @@
 export function LibraryPage() {
-  return <h1>Library</h1>;
+  return (
+    <>
+      <header>
+        <h1>Library</h1>
+      </header>
+      <p></p>
+      <footer></footer>
+    </>
+  );
 }

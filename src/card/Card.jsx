@@ -5,7 +5,7 @@ import { cn } from '../libs/react';
 import { CoinSymbol } from './symbols/CoinSymbol';
 import { RaritySymbol } from './symbols/RaritySymbol';
 import { TasteSymbol } from './symbols/TasteSymbol';
-import { getCardById } from './values/Cards';
+import { getCardById } from './values/CardRegistry';
 
 /**
  * @param {object} props
