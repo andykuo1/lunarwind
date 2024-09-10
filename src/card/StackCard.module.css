@@ -1,7 +1,5 @@
 .exit {
-  animation-name: animate-stack-card-exit;
-  animation-duration: 0.5s;
-  animation-fill-mode: forwards;
+  animation: flyout-left 0.5s ease both;
 }
 
 @keyframes animate-stack-card-exit {
@@ -13,5 +11,14 @@
   }
   100% {
     transform: rotate(0deg) translate(0, 0);
+  }
+}
+
+@keyframes flyout-left {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-100vw, 0) scale(0.3);
   }
 }

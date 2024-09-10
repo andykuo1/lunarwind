@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import { cn } from '@/libs/react';
-import { playBoosterPackTouch } from './Sounds';
+import { PackTouchSound } from './sounds/Sounds';
 import {
   useHoverTiltBackfaceStyleEffect,
   useHoverTiltGlareStyleEffect,
@@ -12,14 +12,15 @@ import {
 /**
  * @param {object} props
  * @param {string} [props.className]
+ * @param {boolean} props.flipped
+ * @param {import('react').MouseEventHandler} [props.onClick]
+ * @param {import('react').ReactNode} [props.children]
  */
-export function BoosterPack({ className }) {
+export function BoosterPack({ className, flipped, onClick, children }) {
   const frontfaceRef = useRef(null);
   const backfaceRef = useRef(null);
   const containerRef = useRef(null);
   const overlayRef = useRef(null);
-  const [flipped, setFlipped] = useState(false);
-  const [peeled, setPeeled] = useState(false);
   const effectStateRef = useHoverTiltStyleEffect(
     frontfaceRef,
     containerRef,
@@ -33,16 +34,12 @@ export function BoosterPack({ className }) {
     <div
       ref={containerRef}
       className={cn('relative w-min select-none', className)}
-      onMouseEnter={() => {
-        playBoosterPackTouch();
-      }}
-      onMouseLeave={() => {
-        playBoosterPackTouch();
-      }}
-      onClick={() => setFlipped((prev) => !prev)}
+      onMouseEnter={() => PackTouchSound.play()}
+      onMouseLeave={() => PackTouchSound.play()}
+      onClick={onClick}
     >
       <div className="absolute right-0 top-0 z-10 flex flex-col gap-2">
-        <OpenButton onClick={() => setPeeled((prev) => !prev)} />
+        {children}
       </div>
       <div
         ref={frontfaceRef}
@@ -74,28 +71,12 @@ export function BoosterPack({ className }) {
       >
         <div className="relative h-full w-full border-x-[0.2em] border-y-[1em] border-x-transparent border-y-blue-400">
           <CrinkleTop className="absolute left-[-0.2em] top-[-3em] bg-blue-400 pb-0" />
-          <BoosterPackBackFace peeled={peeled} />
+          <BoosterPackBackFace peeled={false} />
           <CrinkleTop className="absolute bottom-[-3em] left-[-0.2em] bg-blue-400 pt-0" />
           <EmbossGlare />
         </div>
       </div>
     </div>
-  );
-}
-
-/**
- * @param {object} props
- * @param {string} [props.className]
- * @param {import('react').MouseEventHandler} props.onClick
- */
-function OpenButton({ className, onClick }) {
-  return (
-    <button
-      className={cn('rounded-full bg-black/30 px-4 text-white', className)}
-      onClick={onClick}
-    >
-      Open
-    </button>
   );
 }
 

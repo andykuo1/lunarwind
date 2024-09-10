@@ -33,8 +33,6 @@ export function useHoverTiltStyleEffect(
   // NOTE: Instead of consuming state, we pass-by-ref
   //  since hover-tilt uses animationframes to
   //  update itself.
-  const disabledRef = useRef(false);
-  disabledRef.current = disabled;
   const flippedRef = useRef(false);
   flippedRef.current = flipped ?? false;
 
@@ -59,19 +57,22 @@ export function useHoverTiltStyleEffect(
       prevFrameMillis: performance.now(),
     };
 
-    /** @param {MouseEvent} _e */
-    function onMouseEnter(_e) {
+    /** @param {MouseEvent} e */
+    function onMouseEnter(e) {
       mouseState.hovering = true;
-
+      mouseState.position[0] = e.clientX;
+      mouseState.position[1] = e.clientY;
       let element = elementRef.current;
       if (element) {
         element.addEventListener('mousemove', onMouseMove);
       }
     }
 
-    /** @param {MouseEvent} _e */
-    function onMouseLeave(_e) {
+    /** @param {MouseEvent} e */
+    function onMouseLeave(e) {
       mouseState.hovering = false;
+      mouseState.position[0] = e.clientX;
+      mouseState.position[1] = e.clientY;
       let element = elementRef.current;
       if (element) {
         element.removeEventListener('mousemove', onMouseMove);
@@ -99,7 +100,6 @@ export function useHoverTiltStyleEffect(
       const deltaTime = now - mouseState.prevFrameMillis;
       mouseState.prevFrameMillis = now;
       const flipped = flippedRef.current ?? false; // NOTE: Must use value from REF!
-      const disabled = disabledRef.current ?? false; // NOTE: Must use value from REF!
 
       let containerRect = container.getBoundingClientRect();
       let containerX = containerRect?.x ?? 0;
@@ -161,7 +161,7 @@ export function useHoverTiltStyleEffect(
   }, [
     elementRef,
     animationFrameHandleRef,
-    disabledRef,
+    disabled,
     flippedRef,
     effectStateRef,
   ]);

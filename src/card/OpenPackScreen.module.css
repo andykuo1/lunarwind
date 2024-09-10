@@ -1,0 +1,45 @@
+.background {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 3rem,
+    rgba(0, 0, 0, 0.1) 3rem,
+    rgba(0, 0, 0, 0.1) 8rem
+  );
+  background-size: 200% 200%;
+  animation: barberpole 60s linear infinite;
+}
+
+.flyinBottom {
+  animation: flyin-bottom 0.5s ease both;
+  animation-delay: 200ms;
+}
+
+.flyoutBottom {
+  animation: flyout-bottom 0.5s ease both;
+  animation-delay: 250ms;
+}
+
+@keyframes barberpole {
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes flyin-bottom {
+  0% {
+    transform: translate(0, 100vh) scale(0.3);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes flyout-bottom {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 100vh);
+  }
+}

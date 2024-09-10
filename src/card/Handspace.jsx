@@ -9,7 +9,7 @@ import {
   HandspaceProvider,
   useHandspace,
 } from './HandspaceContainer';
-import { playCardTouch } from './Sounds';
+import { CardTouchSound } from './sounds/Sounds';
 import {
   useOnDragDropHandler,
   useOnDragMoveHandler,
@@ -188,7 +188,7 @@ function HandCard({ handId, handCardId, handIndex, handCount }) {
       }}
       onMouseEnter={() => {
         setPeeking(true);
-        playCardTouch();
+        CardTouchSound.play();
       }}
       onMouseLeave={() => setPeeking(false)}
     >
