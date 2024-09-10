@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import deepmerge from 'deepmerge';
 
 import { CreateStore, StoreAndDispatch } from './ZustyStoreHelper';
@@ -44,9 +46,9 @@ export function performZustyUpgradeOnSchema(
   persistedState: unknown,
   currentState: Record<string, any>
 ) {
-  let persistedKeys = Object.keys(persistedState ?? {});
-  for (let persistedKey of persistedKeys) {
-    let persistedValue = (persistedState as any)[persistedKey];
+  const persistedKeys = Object.keys(persistedState ?? {});
+  for (const persistedKey of persistedKeys) {
+    const persistedValue = (persistedState as any)[persistedKey];
     let currentValue = currentState[persistedKey];
     if (persistedValue === currentValue) {
       continue;
@@ -75,7 +77,7 @@ export function performZustyUpgradeOnSchema(
       }
     } else {
       // This IS upgradeable, so use overridden copy behavior...
-      let upgradeFunction =
+      const upgradeFunction =
         upgradeSchema[persistedKey] ?? UPGRADE_FUNCTIONS.ObjectDeepMerge;
       // TODO: This shouldn't be by persisted value type, but by schema type.
       //  But this is how we are doing it for now.
@@ -92,13 +94,13 @@ export function performZustyUpgradeOnSchema(
               // TODO: This does not yet merge top-level objects. Only deep copies child-level entries.
               currentValue = currentValue ?? {};
               // It's time to upgrade.
-              for (let key of Object.keys(persistedValue)) {
+              for (const key of Object.keys(persistedValue)) {
                 currentValue[key] = upgradeFunction(
                   persistedValue[key],
                   currentValue[key]
                 );
               }
-              let childUpgradeSchema =
+              const childUpgradeSchema =
                 extractZustyUpgradeSchema(upgradeFunction);
               if (childUpgradeSchema) {
                 currentValue = performZustyUpgradeOnSchema(
@@ -132,11 +134,11 @@ function ObjectDeepMerge(prev: any, curr: any) {
 }
 
 function ArrayUnique(prev: any, curr: any) {
-  let result = new Set();
-  for (let value of prev) {
+  const result = new Set();
+  for (const value of prev) {
     result.add(value);
   }
-  for (let value of curr) {
+  for (const value of curr) {
     result.add(value);
   }
   return Array.from(result);

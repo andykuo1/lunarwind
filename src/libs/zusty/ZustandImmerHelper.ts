@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { produce } from 'immer';
 
 type Set<T> = import('zustand').StoreApi<T>['setState'];
@@ -9,7 +11,7 @@ type Get<T> = import('zustand').StoreApi<T>['getState'];
  */
 export function zi<Store, Args extends Array<any>>(
   set: Set<any>,
-  applier: (store: Store, ...args: Args) => void,
+  applier: (store: Store, ...args: Args) => void
 ) {
   return (...args: Args) =>
     set(produce((draft) => applier(draft as Store, ...(args as Args))));
@@ -22,7 +24,7 @@ export function zi<Store, Args extends Array<any>>(
  */
 export function ziget<Store, ReturnType, Args extends Array<any>>(
   get: Get<any>,
-  applier: (store: Store, ...args: Args) => ReturnType,
+  applier: (store: Store, ...args: Args) => ReturnType
 ) {
   return (...args: Args) =>
     applier(get(), ...(args as Args)) as Readonly<ReturnType>;

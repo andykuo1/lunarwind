@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { StoreApi } from 'zustand';
 
 import { zi } from './ZustandImmerHelper';
@@ -27,9 +29,9 @@ export function createZustyDispatch<
     set: StoreApi<any>['setState'],
     _get: StoreApi<any>['getState']
   ): ZustyDispatchMap<Store, Dispatch> {
-    let result: any = {};
-    for (let key in dispatch) {
-      let value: (...args: any) => void = dispatch[key as keyof Dispatch];
+    const result: any = {};
+    for (const key in dispatch) {
+      const value: (...args: any) => void = dispatch[key as keyof Dispatch];
       result[key] = zi(set, value);
     }
     return result;
