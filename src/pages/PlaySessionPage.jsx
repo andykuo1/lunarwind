@@ -1,4 +1,3 @@
-import { BoosterPack } from '../card/BoosterPack';
 import { Deck } from '../card/Deck';
 import { Handspace } from '../card/Handspace';
 import { Lootspace } from '../card/Lootspace';
@@ -40,9 +39,6 @@ function SessionContainer({ sessionId }) {
         />
         <Deck handId={localHandId} cardCount={10} />
         <Handspace handId={localHandId} playId={localPlayId} />
-        <div className="absolute left-10 top-10">
-          <BoosterPack />
-        </div>
         <Lootspace />
       </main>
     </>
