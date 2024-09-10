@@ -1,5 +1,8 @@
 import { cuid } from '@/libs/math';
 import {
+  createCollection,
+  createCollectionCard,
+  createCollectionPack,
   createHand,
   createHandCard,
   createPlay,
@@ -49,6 +52,11 @@ export function resolveUser(store, userId, values) {
     store.users[userId] = user;
   }
   Object.assign(user, values);
+  if (!user.ownedCollectionId) {
+    let collectionId = cuid();
+    resolveCollection(store, collectionId, {});
+    user.ownedCollectionId = collectionId;
+  }
 }
 
 /**
@@ -67,7 +75,7 @@ export function resolvePlay(store, playId, values) {
 
 /**
  * @param {import('./State').Store} store
- * @param {string} handId
+ * @param {import('./State').HandId} handId
  * @param {Partial<import('./State').Hand>} values
  */
 export function resolveHand(store, handId, values) {
@@ -77,6 +85,20 @@ export function resolveHand(store, handId, values) {
     store.hands[handId] = hand;
   }
   Object.assign(hand, values);
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').CollectionId} collectionId
+ * @param {Partial<import('./State').Collection>} values
+ */
+export function resolveCollection(store, collectionId, values) {
+  let collection = store.collections[collectionId];
+  if (!collection) {
+    collection = createCollection(collectionId);
+    store.collections[collectionId] = collection;
+  }
+  Object.assign(collection, values);
 }
 
 /**
@@ -214,4 +236,34 @@ export function moveCardThroughHand(
   const card = target.cardOrder[handIndex];
   target.cardOrder.splice(handIndex, 1);
   target.cardOrder.splice(toHandIndex + (after ? 1 : 0), 0, card);
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').CollectionId} collectionId
+ * @param {Array<import('@/card/values').CardId>} cardIds
+ */
+export function addCardsToCollection(store, collectionId, cardIds) {
+  let collection = store.collections[collectionId];
+  for (let cardId of cardIds) {
+    let collectedCard =
+      collection.ownedCards[cardId] ?? createCollectionCard(cardId);
+    ++collectedCard.cardCount;
+    collection.ownedCards[cardId] = collectedCard;
+  }
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').CollectionId} collectionId
+ * @param {Array<import('@/card/values').PackId>} packIds
+ */
+export function addPacksToCollection(store, collectionId, packIds) {
+  let collection = store.collections[collectionId];
+  for (let packId of packIds) {
+    let collectedPack =
+      collection.ownedPacks[packId] ?? createCollectionPack(packId);
+    ++collectedPack.packCount;
+    collection.ownedPacks[packId] = collectedPack;
+  }
 }

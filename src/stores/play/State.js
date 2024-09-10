@@ -11,11 +11,7 @@ import { attachZustyUpgradeSchema } from '@/libs/zusty';
 
 /** @typedef {string} CollectionId */
 /** @typedef {ReturnType<createCollection>} Collection */
-
-/** @typedef {string} CollectionCardId */
 /** @typedef {ReturnType<createCollectionCard>} CollectionCard */
-
-/** @typedef {string} CollectionPackId */
 /** @typedef {ReturnType<createCollectionPack>} CollectionPack */
 
 /** @typedef {string} PlayId */
@@ -46,6 +42,8 @@ export function createStore() {
     plays: {},
     /** @type {Record<HandId, Hand>} */
     hands: {},
+    /** @type {Record<CollectionId, Collection>} */
+    collections: {},
   };
 }
 attachZustyUpgradeSchema(createStore, {
@@ -53,6 +51,7 @@ attachZustyUpgradeSchema(createStore, {
   users: (prev) => createUser(prev.userId),
   plays: (prev) => createPlay(prev.playId),
   hands: (prev) => createHand(prev.handId),
+  collections: (prev) => createCollection(prev.collectionId),
 });
 
 /**
@@ -68,29 +67,27 @@ export function createCollection(collectionId = cuid()) {
   };
 }
 attachZustyUpgradeSchema(createCollection, {
-  ownedCards: (prev) => createCollectionCard(prev.collectionCardId),
-  ownedPacks: (prev) => createCollectionPack(prev.collectionPackId),
+  ownedCards: (prev) => createCollectionCard(prev.cardId),
+  ownedPacks: (prev) => createCollectionPack(prev.packId),
 });
 
 /**
- * @param {CollectionCardId} collectionCardId
+ * @param {import('@/card/values').CardId} cardId
  */
-export function createCollectionCard(collectionCardId = cuid()) {
+export function createCollectionCard(cardId = cuid()) {
   return {
-    collectionCardId,
-    cardId: '',
-    cardCount: 1,
+    cardId,
+    cardCount: 0,
   };
 }
 
 /**
- * @param {CollectionPackId} collectionPackId
+ * @param {import('@/card/values').PackId} packId
  */
-export function createCollectionPack(collectionPackId = cuid()) {
+export function createCollectionPack(packId = cuid()) {
   return {
-    collectionPackId,
-    packId: '',
-    packCount: 1,
+    packId,
+    packCount: 0,
   };
 }
 
@@ -117,6 +114,8 @@ export function createUser(userId = cuid()) {
   return {
     userId,
     displayName: '',
+    /** @type {CollectionId} */
+    ownedCollectionId: '',
   };
 }
 

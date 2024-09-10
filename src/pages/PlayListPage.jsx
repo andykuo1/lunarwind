@@ -1,14 +1,16 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
-import { Home, Plus, RefreshCcw, Users } from 'lucide-react';
+import { Plus, RefreshCcw, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import { cn } from '@/libs/react';
 import { usePlayDispatch, usePlayStore } from '@/stores/play/PlayStore';
 import { cuid } from '../libs/math';
+import { HomeButton } from './components/HomeButton';
+import { LAST_USER_ID_STORAGE_KEY } from './HomePage';
 import { Router } from './Router';
 
-const LAST_SESSION_ID_STORAGE_KEY = 'lastSessionId';
+export const LAST_SESSION_ID_STORAGE_KEY = 'lastSessionId';
 
 export function PlayListPage() {
   const clearSessions = usePlayDispatch((ctx) => ctx.clearSessions);
@@ -25,49 +27,36 @@ export function PlayListPage() {
   }, [lastSessionId]);
 
   return (
-    <>
-      <div className="flex flex-col gap-2 p-2">
-        <header className="flex items-center">
-          <GoHomeButton />
-          <h1 className="flex-1 text-center">Available Sessions</h1>
-          <button
-            className="flex items-center gap-2 rounded-xl border p-4 text-xl disabled:opacity-30"
-            onClick={() => {
-              setLastSessionId('');
-              clearSessions();
-            }}
-          >
-            <RefreshCcw /> Refresh
-          </button>
-        </header>
-        <SessionList
-          className="flex-1 rounded-xl border p-4"
-          listClassName="border-b border-white/30 select-none hover:bg-white/10"
-          selectedClassName="bg-white/10"
-          value={selectedSessionId}
-          onChange={(sessionId) => setSelectedSessionId(sessionId)}
-        />
-        <nav className="mx-auto flex gap-2">
-          <EnterSessionButton nextSessionId={cuid()}>
-            <Plus /> New Game
-          </EnterSessionButton>
-          <EnterSessionButton nextSessionId={selectedSessionId}>
-            <Users /> Join Game
-          </EnterSessionButton>
-        </nav>
-      </div>
-    </>
-  );
-}
-
-function GoHomeButton() {
-  return (
-    <button
-      className="flex items-center gap-2 rounded-xl border p-4 text-xl disabled:opacity-30"
-      onClick={() => Router.push('Home')}
-    >
-      <Home /> Home
-    </button>
+    <div className="flex flex-col gap-2 p-2">
+      <header className="flex items-center">
+        <HomeButton />
+        <h1 className="flex-1 text-center">Available Sessions</h1>
+        <button
+          className="flex items-center gap-2 rounded-xl border p-4 text-xl disabled:opacity-30"
+          onClick={() => {
+            setLastSessionId('');
+            clearSessions();
+          }}
+        >
+          <RefreshCcw /> Refresh
+        </button>
+      </header>
+      <SessionList
+        className="flex-1 rounded-xl border p-4"
+        listClassName="border-b border-white/30 select-none hover:bg-white/10"
+        selectedClassName="bg-white/10"
+        value={selectedSessionId}
+        onChange={(sessionId) => setSelectedSessionId(sessionId)}
+      />
+      <nav className="mx-auto flex gap-2">
+        <EnterSessionButton nextSessionId={cuid()}>
+          <Plus /> New Game
+        </EnterSessionButton>
+        <EnterSessionButton nextSessionId={selectedSessionId}>
+          <Users /> Join Game
+        </EnterSessionButton>
+      </nav>
+    </div>
   );
 }
 
@@ -82,6 +71,10 @@ function EnterSessionButton({ nextSessionId, children }) {
     LAST_SESSION_ID_STORAGE_KEY,
     ''
   );
+  const [lastUserId, _setLastUserId] = useLocalStorage(
+    LAST_USER_ID_STORAGE_KEY,
+    ''
+  );
   return (
     <button
       className="flex items-center gap-2 rounded-xl border p-4 text-xl disabled:opacity-30"
@@ -89,6 +82,7 @@ function EnterSessionButton({ nextSessionId, children }) {
       onClick={() => {
         setLastSessionId(nextSessionId);
         resolveSession(nextSessionId, {
+          localUserId: lastUserId,
           lastActiveTimeMillis: Date.now(),
         });
         Router.push('PlaySession', { sessionId: nextSessionId });

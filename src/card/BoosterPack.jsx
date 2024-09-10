@@ -33,7 +33,7 @@ export function BoosterPack({ className, flipped, onClick, children }) {
   return (
     <div
       ref={containerRef}
-      className={cn('relative w-min select-none', className)}
+      className={cn('relative w-min select-none py-8', className)}
       onMouseEnter={() => PackTouchSound.play()}
       onMouseLeave={() => PackTouchSound.play()}
       onClick={onClick}
@@ -60,7 +60,7 @@ export function BoosterPack({ className, flipped, onClick, children }) {
       </div>
       <div
         ref={backfaceRef}
-        className="pointer-events-none absolute left-0 top-0 h-full w-full"
+        className="pointer-events-none absolute left-0 top-0 h-full w-full py-8"
         style={{
           backfaceVisibility: 'hidden',
           transitionProperty: 'transform',
@@ -100,7 +100,7 @@ function BoosterPackFrontFace({ className, style }) {
             className="text-8xl text-white"
             style={{ textShadow: '3px 3px 0 black' }}
           >
-            RAGU
+            RAGÚ
           </div>
           <div className="border bg-blue-600 text-center uppercase text-white">
             Trading Card Game
