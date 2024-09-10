@@ -41,8 +41,9 @@ export function OpenPackScreen({ onOpen, onDone }) {
               if (stackIndex < cardIds.length) {
                 CardTouchSound.play();
                 setStackIndex((prev) => prev + 1);
-              } else {
-                onDone();
+              }
+              if (stackIndex + 1 === cardIds.length) {
+                setTimeout(onDone, 500);
               }
             }}
           />
@@ -55,7 +56,10 @@ export function OpenPackScreen({ onOpen, onDone }) {
         )}
       >
         <BoosterPack
-          className={cn(flipped && OpenPackScreenStyle.flyoutBottom)}
+          className={cn(
+            OpenPackScreenStyle.flyinRight,
+            flipped && OpenPackScreenStyle.flyoutBottom
+          )}
           flipped={flipped}
           onClick={() => {
             let result = onOpen();

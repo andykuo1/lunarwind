@@ -10,6 +10,10 @@
   animation: barberpole 60s linear infinite;
 }
 
+.flyinRight {
+  animation: flyin-right 0.5s ease both;
+}
+
 .flyinBottom {
   animation: flyin-bottom 0.5s ease both;
   animation-delay: 200ms;
@@ -23,6 +27,15 @@
 @keyframes barberpole {
   100% {
     background-position: 100% 100%;
+  }
+}
+
+@keyframes flyin-right {
+  0% {
+    transform: translate(100vw, 0) scale(0.3);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
   }
 }
 
