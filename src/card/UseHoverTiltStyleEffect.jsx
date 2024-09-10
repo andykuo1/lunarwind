@@ -160,6 +160,7 @@ export function useHoverTiltStyleEffect(
     };
   }, [
     elementRef,
+    containerRef,
     animationFrameHandleRef,
     disabled,
     flippedRef,

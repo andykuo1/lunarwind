@@ -199,7 +199,7 @@ export function moveCardThroughHand(
   toHandIndex,
   after
 ) {
-  let target = store.hands[handId];
+  const target = store.hands[handId];
   if (!target) {
     throw new Error(`Missing existing hand for id - got ${handId}.`);
   }
@@ -211,7 +211,7 @@ export function moveCardThroughHand(
     // Send to the front.
     toHandIndex = target.cardOrder.length;
   }
-  let card = target.cardOrder[handIndex];
+  const card = target.cardOrder[handIndex];
   target.cardOrder.splice(handIndex, 1);
   target.cardOrder.splice(toHandIndex + (after ? 1 : 0), 0, card);
 }

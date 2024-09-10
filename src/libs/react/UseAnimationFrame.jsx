@@ -2,9 +2,17 @@ import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * @param {(now: number) => void} callback
- * @param {import('react').DependencyList} [deps]
+ * @param {import('react').DependencyList} deps
  */
-export function useAnimationFrame(callback, deps = [callback]) {
+export function useAnimationFrameEffect(callback, deps) {
+  const memoizedCallback = useCallback(callback, deps); // eslint-disable-line react-hooks/exhaustive-deps
+  useAnimationFrame(memoizedCallback);
+}
+
+/**
+ * @param {(now: number) => void} callback
+ */
+function useAnimationFrame(callback) {
   const animationFrameHandleRef = useRef(0);
   useEffect(() => {
     /** @param {number} now */
@@ -17,15 +25,6 @@ export function useAnimationFrame(callback, deps = [callback]) {
     return () => {
       cancelAnimationFrame(animationFrameHandleRef.current);
     };
-  }, [animationFrameHandleRef, ...deps]);
+  }, [animationFrameHandleRef, callback]);
   return animationFrameHandleRef;
-}
-
-/**
- * @param {(now: number) => void} callback
- * @param {import('react').DependencyList} deps
- */
-export function useAnimationFrameEffect(callback, deps) {
-  const memoizedCallback = useCallback(callback, deps);
-  useAnimationFrame(memoizedCallback);
 }

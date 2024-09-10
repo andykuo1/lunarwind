@@ -155,7 +155,14 @@ export function useOnDragMoveHandler(
       handlerStateRef.current = {};
       setGrabbing(false, element);
     };
-  }, [ref, containerRef, setPosition, setGrabbing]);
+  }, [
+    ref,
+    containerRef,
+    handlerStateRef,
+    originFixed,
+    setPosition,
+    setGrabbing,
+  ]);
 }
 
 /**

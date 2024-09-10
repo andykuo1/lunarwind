@@ -1,22 +1,13 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import { cn } from '@/libs/react';
 import { usePlayDispatch, usePlayStore } from '@/stores/play/PlayStore';
 import { CardFace } from './Card';
+import { PlayspaceProvider, usePlayspace } from './PlayspaceContext';
 import { useOnDragMoveHandler } from './UseOnDragMoveHandler';
 
 const DEBUG = false;
-
-const PlayspaceContext = createContext(
-  /** @type {ReturnType<usePlayspaceContextAPI>|null} */ (null)
-);
 
 /**
  * @param {object} props
@@ -34,40 +25,6 @@ export function Playspace({ className, playId, children }) {
       </PlayspaceContainer>
     </PlayspaceProvider>
   );
-}
-
-export function usePlayspace() {
-  let ctx = useContext(PlayspaceContext);
-  if (!ctx) {
-    throw new Error(
-      'Context not found for ancestor - are we missing the provider?'
-    );
-  }
-  return ctx;
-}
-
-/**
- * @param {object} props
- * @param {import('react').ReactNode} props.children
- */
-function PlayspaceProvider({ children }) {
-  const api = usePlayspaceContextAPI();
-  return (
-    <PlayspaceContext.Provider value={api}>
-      {children}
-    </PlayspaceContext.Provider>
-  );
-}
-
-function usePlayspaceContextAPI() {
-  const containerRef = useRef(/** @type {HTMLDivElement|null} */ (null));
-  const handlerStateRef = useRef(
-    /** @type {Partial<import('./UseOnDragMoveHandler').DragHandlerState>} */ ({})
-  );
-  return {
-    containerRef,
-    handlerStateRef,
-  };
 }
 
 /**
@@ -125,7 +82,7 @@ function PlayCard({ playId, playCardId }) {
   const setPosition = useCallback(
     /** @param {import('./UseOnDragMoveHandler').Position} pos */
     (pos) => movePlayCard(playId, playCardId, pos),
-    [playCardId, movePlayCard]
+    [playId, playCardId, movePlayCard]
   );
   const [grabbing, setGrabbing] = useState(false);
   useOnDragMoveHandler(

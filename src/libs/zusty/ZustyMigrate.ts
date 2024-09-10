@@ -37,13 +37,13 @@ export function createZustyMigrate<Store>(
       );
     }
     // Do all the migrations...
-    let prevStore = oldStore;
+    const prevStore = oldStore;
     let newStore = oldStore;
     for (let i = oldIndex; i <= newIndex; ++i) {
-      let migration = migrationPlan[i];
-      let prevVersion = i + firstVersion;
-      let nextVersion = prevVersion + 1;
-      let result = await migration(prevStore, prevVersion, nextVersion);
+      const migration = migrationPlan[i];
+      const prevVersion = i + firstVersion;
+      const nextVersion = prevVersion + 1;
+      const result = await migration(prevStore, prevVersion, nextVersion);
       if (typeof result !== 'object') {
         throw new Error('Migration result cannot be a non-object store.');
       }

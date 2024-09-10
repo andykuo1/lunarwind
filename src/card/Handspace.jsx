@@ -270,7 +270,7 @@ function useDragDropToMoveCardsThroughHand(
       // ...then actually move it.
       moveCardThroughHand(handId, fromHandIndex, handIndex, after);
     },
-    [handId, handIndex, moveCardThroughHand]
+    [containerRef, handId, handIndex, moveCardThroughHand]
   );
   useOnDragDropHandler(elementRef, containerRef, handlerStateRef, dropCallback);
 }
@@ -316,7 +316,7 @@ function useDragDropToMoveCardsToPlay(
       }
       playCardFromHand(handId, handIndex, playId, [x, y]);
     },
-    [handId, playId, playCardFromHand]
+    [containerRef, handId, playId, playCardFromHand]
   );
   useOnDragDropHandler(
     dropZoneRef,

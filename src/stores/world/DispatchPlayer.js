@@ -8,7 +8,7 @@ import { createPlayer } from './State';
 export function resolvePlayer(store, playerId, values) {
   let player = store.players[playerId];
   if (!player) {
-    let player = createPlayer(playerId);
+    player = createPlayer(playerId);
     store.players[playerId] = player;
   }
   Object.assign(player, values);
