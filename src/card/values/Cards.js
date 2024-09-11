@@ -1,12 +1,19 @@
 import Creature01 from '@/assets/cards/asparagusAlien.png';
+import BeakedSharkUrl from '@/assets/cards/beakedShark.png';
+import BeanDogUrl from '@/assets/cards/beanDog.png';
 import Creature02 from '@/assets/cards/beeWorm.png';
 import Creature03 from '@/assets/cards/bird.png';
 import Creature04 from '@/assets/cards/carrotPower.png';
 import Creature05 from '@/assets/cards/cat.png';
+import CatfishCatUrl from '@/assets/cards/catfishCat.png';
 import Creature06 from '@/assets/cards/chefRiddle.png';
+import DuckWizardUrl from '@/assets/cards/duckWizard.png';
+import ElectricSebsUrl from '@/assets/cards/electricSebs.png';
 import Creature07 from '@/assets/cards/elephant.png';
 import Creature08 from '@/assets/cards/frogFarmer.png';
 import Creature09 from '@/assets/cards/glyphMaze.png';
+import MantisPupUrl from '@/assets/cards/mantisPup.png';
+import RadioTofuUrl from '@/assets/cards/radioTofu.png';
 import Creature10 from '@/assets/cards/rugFlower.png';
 import Creature11 from '@/assets/cards/shadowMirror.png';
 import Creature12 from '@/assets/cards/shoreBush.png';
@@ -159,4 +166,46 @@ export const SUN_WORM = registerCard('sunWorm', {
   portraitUrl: Creature18,
   tastes: createTastePalette(TasteValues.SALTY),
   rarity: RarityValues.FABLED,
+});
+export const BEAN_DOG = registerCard('beanDog', {
+  title: 'Bean Dog',
+  portraitUrl: BeanDogUrl,
+  tastes: createTastePalette(TasteValues.SWEET),
+  rarity: RarityValues.COMMON,
+});
+export const DUCK_WIZARD = registerCard('duckWizard', {
+  title: 'Duck Wizard',
+  portraitUrl: DuckWizardUrl,
+  tastes: createTastePalette(TasteValues.SAVORY),
+  rarity: RarityValues.FABLED,
+});
+export const MANTIS_PUP = registerCard('mantisPup', {
+  title: 'Mantis Pup',
+  portraitUrl: MantisPupUrl,
+  tastes: createTastePalette(TasteValues.BITTER),
+  rarity: RarityValues.UNCOMMON,
+});
+export const CATFISH_CAT = registerCard('catfishCat', {
+  title: 'Catfish Cat',
+  portraitUrl: CatfishCatUrl,
+  tastes: createTastePalette(TasteValues.SWEET),
+  rarity: RarityValues.RARE,
+});
+export const ELECTRIC_SEBS = registerCard('electricSebs', {
+  title: 'Dark Angular',
+  portraitUrl: ElectricSebsUrl,
+  tastes: createTastePalette(TasteValues.SALTY),
+  rarity: RarityValues.UNCOMMON,
+});
+export const BEAKED_SHARK = registerCard('beakedShark', {
+  title: 'Beaked Shark Head',
+  portraitUrl: BeakedSharkUrl,
+  tastes: createTastePalette(TasteValues.SOUR, TasteValues.SWEET),
+  rarity: RarityValues.FABLED,
+});
+export const RADIO_TOFU = registerCard('radioTofu', {
+  title: 'Radioto',
+  portraitUrl: RadioTofuUrl,
+  tastes: createTastePalette(TasteValues.BLAND),
+  rarity: RarityValues.COMMON,
 });

@@ -2,7 +2,6 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 import { Search, ShoppingCart, Shrub, TreePine, Truck } from 'lucide-react';
 import { useRef, useState } from 'react';
 
-import { BoosterPack } from '@/card/BoosterPack';
 import { OpenPackScreen } from '@/card/OpenPackScreen';
 import { CoinJingleSound } from '@/card/sounds';
 import { openPack, PACKS } from '@/card/values';
@@ -21,8 +20,8 @@ export function StorePage() {
     setOpening(true);
   }
   return (
-    <div className="flex h-full w-full flex-col flex-nowrap">
-      <header className="col-span-1 flex flex-shrink-0 items-center gap-2 bg-blue-900 p-2">
+    <div className="flex h-full w-full flex-col">
+      <header className="flex items-center gap-2 bg-blue-900 p-2">
         <HomeButton />
         <h1>Ragú Factory</h1>
         <div className="flex-1" />
@@ -37,8 +36,8 @@ export function StorePage() {
           <ShoppingCart />
         </Button>
       </header>
-      <div className="flex-grow overflow-auto">
-        <div className="flex gap-8 overflow-auto p-8">
+      <div className="flex flex-1 overflow-x-auto px-4">
+        <div className="flex gap-8">
           <ShopItem
             onBuyNow={onBuyNow}
             title="Booster Pack"
@@ -84,7 +83,7 @@ export function StorePage() {
         </div>
       </div>
       <PackOpening opening={opening} setOpening={setOpening} />
-      <footer className="fixed bottom-0 left-0 right-0 flex-shrink-0">
+      <footer>
         <DeliveryMeter />
       </footer>
     </div>
@@ -93,11 +92,11 @@ export function StorePage() {
 
 function DeliveryMeter() {
   return (
-    <fieldset className="relative -mx-8 mb-2 bg-gradient-to-tr from-blue-300 to-blue-800">
+    <fieldset className="relative -mx-8 -mt-3 mb-2 bg-gradient-to-tr from-blue-300 to-blue-800">
       <legend className="mx-16 rounded-full bg-white px-4 text-black shadow">
         Awaiting Delivery...
       </legend>
-      <div className="absolute bottom-0 -mb-3 h-4 w-full border-2 border-white bg-gray-900" />
+      <div className="absolute bottom-0 -mb-3 h-4 w-full border-2 border-yellow-400 bg-green-500" />
       <div className="h-8 w-full" />
       <PassingTree offset={0} speed={0.01} />
       <PassingTree offset={20 - 7} speed={0.01} />
@@ -199,7 +198,9 @@ function PassingShrub({ offset: initialOffset = 100, speed, disabled }) {
 function ShopItem({ title, price, wasPrice, deliveryCost, onBuyNow }) {
   return (
     <div className="flex h-full min-w-min flex-col gap-4 rounded text-black">
-      <BoosterPack flipped={false} />
+      {/* NOTE: This used to be the image. */}
+      <div className="min-w-[3in]" />
+      {/* NOTE: This used to be the image. */}
       <div className="flex flex-col gap-4 rounded-xl bg-white p-4">
         <h2 className="text-xl">{title}</h2>
         <output className="text-4xl font-bold">

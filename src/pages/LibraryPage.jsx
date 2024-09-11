@@ -1,8 +1,9 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { useShallow } from 'zustand/react/shallow';
 
-import { getCardById } from '@/card/values';
+import { CardFace } from '@/card/Card';
 import { usePlayStore } from '@/stores/play/PlayStore';
+import { HomeButton } from './components/HomeButton';
 import { LAST_USER_ID_STORAGE_KEY } from './HomePage';
 
 export function LibraryPage() {
@@ -15,13 +16,15 @@ export function LibraryPage() {
     )
   );
   return (
-    <div className="flex flex-col overflow-hidden">
-      <header className="flex-1">
+    <div className="flex h-full w-full flex-col">
+      <header className="flex items-center gap-2 bg-blue-900 p-2">
+        <HomeButton />
         <h1>Library</h1>
       </header>
-      <div className="overflow-y-auto">
+      <div className="flex-1 overflow-y-auto bg-gray-900">
         <CardList collectionCards={ownedCards} />
       </div>
+      <footer className=""></footer>
     </div>
   );
 }
@@ -32,11 +35,18 @@ export function LibraryPage() {
  */
 function CardList({ collectionCards }) {
   return (
-    <ul>
+    <ul className="grid auto-rows-min grid-cols-3">
       {collectionCards.map((collectionCard) => (
-        <li key={collectionCard.cardId} className="flex gap-2">
-          <span>{getCardById(collectionCard.cardId).title}</span>
-          <span>x{collectionCard.cardCount}</span>
+        <li
+          key={collectionCard.cardId}
+          className="relative m-auto min-w-min p-4"
+        >
+          <CardFace cardId={collectionCard.cardId} />
+          <div className="absolute bottom-0 left-0 right-0 flex">
+            <div className="mx-auto min-w-min rounded-full bg-black p-2 text-center font-bold">
+              x{collectionCard.cardCount}
+            </div>
+          </div>
         </li>
       ))}
     </ul>

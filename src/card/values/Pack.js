@@ -10,7 +10,7 @@
 export function createPack(packId, lootTable) {
   return {
     packId,
-    packSize: 15,
+    packSize: 10,
     lootTable,
     lootTableTotalWeight: lootTable.reduce(
       (prev, curr) => prev + curr.weight,
