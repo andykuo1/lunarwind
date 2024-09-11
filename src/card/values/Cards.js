@@ -11,16 +11,20 @@ import DuckWizardUrl from '@/assets/cards/duckWizard.png';
 import ElectricSebsUrl from '@/assets/cards/electricSebs.png';
 import Creature07 from '@/assets/cards/elephant.png';
 import Creature08 from '@/assets/cards/frogFarmer.png';
+import GhastCrownUrl from '@/assets/cards/ghastCrown.png';
 import Creature09 from '@/assets/cards/glyphMaze.png';
 import MantisPupUrl from '@/assets/cards/mantisPup.png';
 import RadioTofuUrl from '@/assets/cards/radioTofu.png';
 import Creature10 from '@/assets/cards/rugFlower.png';
+import SeaFlowerUrl from '@/assets/cards/seaFlower.png';
 import Creature11 from '@/assets/cards/shadowMirror.png';
 import Creature12 from '@/assets/cards/shoreBush.png';
 import Creature13 from '@/assets/cards/slugHobo.png';
 import Creature14 from '@/assets/cards/spiderArrow.png';
 import Creature15 from '@/assets/cards/squiggleTablet.png';
 import Creature16 from '@/assets/cards/stagHead.png';
+import SubFishUrl from '@/assets/cards/subFish.png';
+import TapeLeechUrl from '@/assets/cards/tapeLeech.png';
 import Creature17 from '@/assets/cards/turtle.png';
 import Creature18 from '@/assets/cards/wormSun.png';
 import { createTastePalette } from './Card';
@@ -208,4 +212,28 @@ export const RADIO_TOFU = registerCard('radioTofu', {
   portraitUrl: RadioTofuUrl,
   tastes: createTastePalette(TasteValues.BLAND),
   rarity: RarityValues.COMMON,
+});
+export const TAPE_LEECH = registerCard('tapeLeech', {
+  title: 'Leeched Tape',
+  portraitUrl: TapeLeechUrl,
+  tastes: createTastePalette(TasteValues.BITTER),
+  rarity: RarityValues.COMMON,
+});
+export const SUB_FISH = registerCard('subFish', {
+  title: 'Sub Fish',
+  portraitUrl: SubFishUrl,
+  tastes: createTastePalette(TasteValues.SWEET),
+  rarity: RarityValues.COMMON,
+});
+export const SEA_FLOWER = registerCard('seaFlower', {
+  title: 'Seabulb Weeds',
+  portraitUrl: SeaFlowerUrl,
+  tastes: createTastePalette(TasteValues.SWEET, TasteValues.SWEET),
+  rarity: RarityValues.JUNK,
+});
+export const GHAST_CROWN = registerCard('ghastCrown', {
+  title: 'Ghast Crown',
+  portraitUrl: GhastCrownUrl,
+  tastes: createTastePalette(TasteValues.BLAND),
+  rarity: RarityValues.RARE,
 });
