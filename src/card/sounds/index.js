@@ -1,2 +1,3 @@
-export * from './Sounds';
-export * from './Sound';
+import * as Sounds from './Sounds';
+
+export { Sounds };

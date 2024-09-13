@@ -4,7 +4,7 @@ import { cn } from '@/libs/react';
 import FlyAnimationStyle from '@/libs/style/FlyAnimation.module.css';
 import { BoosterPack } from './BoosterPack';
 import OpenPackScreenStyle from './OpenPackScreen.module.css';
-import { CardTouchSound, PackOpenSound } from './sounds/Sounds';
+import { Sounds } from './sounds';
 import { Stack } from './Stack';
 
 /**
@@ -40,7 +40,7 @@ export function OpenPackScreen({ onOpen, onDone }) {
             cycled={false}
             onClick={() => {
               if (stackIndex < cardIds.length) {
-                CardTouchSound.play();
+                Sounds.CARD_TOUCH.play();
                 setStackIndex((prev) => prev + 1);
               }
               if (stackIndex + 1 === cardIds.length) {
@@ -67,7 +67,7 @@ export function OpenPackScreen({ onOpen, onDone }) {
             console.log(result);
             if (result && result.length > 0) {
               setCardIds(() => {
-                PackOpenSound.play();
+                Sounds.PACK_OPEN.play();
                 // NOTE: Animate with entrance...
                 setTimeout(() => setFlipped(true), 300);
                 setTimeout(() => setSplayed(true), 300 + 400);

@@ -3,7 +3,7 @@ import { Search, ShoppingCart, Shrub, TreePine, Truck } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 import { OpenPackScreen } from '@/card/OpenPackScreen';
-import { CoinJingleSound } from '@/card/sounds';
+import { Sounds } from '@/card/sounds';
 import { openPack, PACKS } from '@/card/values';
 import { cn } from '@/libs/react';
 import { useAnimationFrameEffect } from '@/libs/react/UseAnimationFrame';
@@ -16,7 +16,7 @@ import { LAST_USER_ID_STORAGE_KEY } from './HomePage';
 export function StorePage() {
   const [opening, setOpening] = useState(false);
   function onBuyNow() {
-    CoinJingleSound.play();
+    Sounds.COIN_JINGLE.play();
     setOpening(true);
   }
   return (

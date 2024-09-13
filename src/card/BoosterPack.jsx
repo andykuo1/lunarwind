@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
+import { Sounds } from '@/card/sounds';
 import { cn } from '@/libs/react';
-import { PackTouchSound } from './sounds/Sounds';
 import {
   useHoverTiltBackfaceStyleEffect,
   useHoverTiltGlareStyleEffect,
@@ -34,8 +34,8 @@ export function BoosterPack({ className, flipped, onClick, children }) {
     <div
       ref={containerRef}
       className={cn('relative w-min select-none py-8', className)}
-      onMouseEnter={() => PackTouchSound.play()}
-      onMouseLeave={() => PackTouchSound.play()}
+      onMouseEnter={() => Sounds.PACK_TOUCH.play()}
+      onMouseLeave={() => Sounds.PACK_TOUCH.play()}
       onClick={onClick}
     >
       <div className="absolute right-0 top-0 z-10 flex flex-col gap-2">
