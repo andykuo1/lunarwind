@@ -21,7 +21,7 @@ export function HomePage() {
       resolveUser(userId, {});
       setLastUserId(userId);
     }
-  }, [lastUserId]);
+  }, [lastUserId, resolveUser, setLastUserId]);
 
   return (
     <>
