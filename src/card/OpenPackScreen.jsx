@@ -9,7 +9,7 @@ import { Stack } from './Stack';
 
 /**
  * @param {object} props
- * @param {() => Array<import('./values').CardId>} props.onOpen
+ * @param {() => Array<import('./datas').CardId>} props.onOpen
  * @param {() => void} props.onDone
  */
 export function OpenPackScreen({ onOpen, onDone }) {
@@ -17,7 +17,7 @@ export function OpenPackScreen({ onOpen, onDone }) {
   const [splayed, setSplayed] = useState(false);
   const [stackIndex, setStackIndex] = useState(0);
   const [cardIds, setCardIds] = useState(
-    /** @type {Array<import('./values').CardId>} */ ([])
+    /** @type {Array<import('./datas').CardId>} */ ([])
   );
   return (
     <div

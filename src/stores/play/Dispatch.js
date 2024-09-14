@@ -241,7 +241,7 @@ export function moveCardThroughHand(
 /**
  * @param {import('./State').Store} store
  * @param {import('./State').CollectionId} collectionId
- * @param {Array<import('@/card/values').CardId>} cardIds
+ * @param {Array<import('@/card/datas').CardId>} cardIds
  */
 export function addCardsToCollection(store, collectionId, cardIds) {
   let collection = store.collections[collectionId];
@@ -265,5 +265,19 @@ export function addPacksToCollection(store, collectionId, packIds) {
       collection.ownedPacks[packId] ?? createCollectionPack(packId);
     ++collectedPack.packCount;
     collection.ownedPacks[packId] = collectedPack;
+  }
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').CollectionId} collectionId
+ */
+export function clearCollection(store, collectionId) {
+  let collection = store.collections[collectionId];
+  for (let ownedCardId of Object.keys(collection.ownedCards)) {
+    delete collection.ownedCards[ownedCardId];
+  }
+  for (let ownedPackId of Object.keys(collection.ownedPacks)) {
+    delete collection.ownedPacks[ownedPackId];
   }
 }

@@ -60,7 +60,7 @@ attachZustyUpgradeSchema(createStore, {
 export function createCollection(collectionId = cuid()) {
   return {
     collectionId,
-    /** @type {Record<import('@/card/values').CardId, CollectionCard>} */
+    /** @type {Record<import('@/card/datas').CardId, CollectionCard>} */
     ownedCards: {},
     /** @type {Record<import('@/card/values').PackId, CollectionPack>} */
     ownedPacks: {},
@@ -72,7 +72,7 @@ attachZustyUpgradeSchema(createCollection, {
 });
 
 /**
- * @param {import('@/card/values').CardId} cardId
+ * @param {import('@/card/datas').CardId} cardId
  */
 export function createCollectionCard(cardId = cuid()) {
   return {

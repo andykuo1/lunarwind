@@ -1,4 +1,12 @@
-import { AudioWaveform, Carrot, Cat } from 'lucide-react';
+import {
+  AudioWaveform,
+  Candy,
+  Carrot,
+  Cat,
+  Coins,
+  HandPlatter,
+  Soup,
+} from 'lucide-react';
 
 import BackgroundImageUrl from '@/assets/paper4.png';
 import { getCardDataById } from '@/card/datas';
@@ -56,7 +64,7 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
               alt={card.portraitAlt}
             />
             <figcaption className="absolute -bottom-4 left-0 right-0 flex px-1 text-xs">
-              <div className="flex-1">{card.portraitAlt}</div>
+              <div className="flex-1 uppercase">{card.layout}</div>
               <div>
                 <RaritySymbol rarity={card.rarity} />
               </div>
@@ -64,13 +72,14 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
           </figure>
         </div>
       </header>
-      <section className="relative m-3 mt-4 flex-1 p-4 text-black">
+      <section className="text font-sans-md relative m-3 mt-4 flex flex-1 flex-col p-4 text-black">
         <img
           className="absolute bottom-0 left-0 right-0 top-0 -z-10 h-full w-full"
           src={BackgroundImageUrl}
         />
-        <h3>There is more to be said here?</h3>
-        <p></p>
+        <CardText className="inline-block h-6 w-6" text={card.body} />
+        <div className="flex-1" />
+        <p className="text-xs italic">{card.portraitAlt}</p>
       </section>
       <div
         ref={overlayRef}
@@ -78,6 +87,63 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
       />
     </article>
   );
+}
+
+/**
+ * @param {object} props
+ * @param {string} props.className
+ * @param {string} props.text
+ */
+export function CardText({ className, text }) {
+  let result = [];
+  let lines = text.split('\n');
+  for (let line of lines) {
+    let p = [];
+    let savedIndex = 0;
+    for (let i = line.indexOf('{'); i >= 0; i = line.indexOf('{', savedIndex)) {
+      let j = line.indexOf('}', i);
+      if (j === -1) {
+        break;
+      }
+      let value = line.substring(i + 1, j);
+      p.push(line.substring(savedIndex, i));
+      p.push(
+        <CardTextReplacement
+          key={`${i}.${value}`}
+          className={className}
+          value={value}
+        />
+      );
+      savedIndex = j + 1;
+    }
+    if (savedIndex < line.length) {
+      let value = line.substring(savedIndex);
+      p.push(value);
+      savedIndex = line.length;
+    }
+    result.push(<p>{p}</p>);
+  }
+  return result;
+}
+
+/**
+ * @param {object} props
+ * @param {string} props.className
+ * @param {string} props.value
+ */
+function CardTextReplacement({ className, value }) {
+  switch (value) {
+    case 'ORDER':
+      return <HandPlatter className={className} />;
+    case 'SOUP':
+      return <Soup className={className} />;
+    case 'SWEET':
+      return <Candy className={className} />;
+    case 'COIN':
+      return <Coins className={className} />;
+    default:
+      return <Carrot className={className} />;
+  }
 }
 
 export function CardBack() {

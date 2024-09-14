@@ -2,12 +2,14 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 import { useShallow } from 'zustand/react/shallow';
 
 import { CardFace } from '@/card/Card';
-import { usePlayStore } from '@/stores/play/PlayStore';
+import { usePlayDispatch, usePlayStore } from '@/stores/play/PlayStore';
+import { Button } from './components/Button';
 import { HomeButton } from './components/HomeButton';
 import { LAST_USER_ID_STORAGE_KEY } from './HomePage';
 
 export function LibraryPage() {
   const [lastUserId, _] = useLocalStorage(LAST_USER_ID_STORAGE_KEY, '');
+  const clearCollection = usePlayDispatch((ctx) => ctx.clearCollection);
   const ownedCards = usePlayStore(
     useShallow((ctx) =>
       Object.values(
@@ -15,11 +17,19 @@ export function LibraryPage() {
       ).sort((a, b) => b.cardCount - a.cardCount)
     )
   );
+  const ownedCollectionId = usePlayStore(
+    (ctx) => ctx.users[lastUserId]?.ownedCollectionId
+  );
   return (
     <div className="flex h-full w-full flex-col">
       <header className="flex items-center gap-2 bg-blue-900 p-2">
         <HomeButton />
+        <div className="flex-1" />
         <h1>Library</h1>
+        <div className="flex-1" />
+        <Button onClick={() => clearCollection(ownedCollectionId)}>
+          Clear
+        </Button>
       </header>
       <div className="flex-1 overflow-y-auto bg-gray-900">
         <CardList collectionCards={ownedCards} />

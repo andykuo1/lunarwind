@@ -12,7 +12,7 @@ import {
 /**
  * @param {object} props
  * @param {string} [props.className]
- * @param {Array<import('./values').CardId>} props.cardIds
+ * @param {Array<import('./datas').CardId>} props.cardIds
  * @param {number} props.stackIndex
  * @param {boolean} props.splayed
  * @param {boolean} props.cycled
@@ -56,7 +56,7 @@ export function Stack({
 
 /**
  * @param {object} props
- * @param {Array<import('./values').CardId>} props.cardIds
+ * @param {Array<import('./datas').CardId>} props.cardIds
  * @param {number} props.index
  * @param {number} props.count
  * @param {boolean} props.splayed
@@ -95,7 +95,7 @@ function CycledStackCards({ cardIds, index, count, splayed }) {
 
 /**
  * @param {object} props
- * @param {Array<import('./values').CardId>} props.cardIds
+ * @param {Array<import('./datas').CardId>} props.cardIds
  * @param {number} props.index
  * @param {number} props.count
  * @param {boolean} props.splayed
@@ -128,7 +128,7 @@ function RemainingStackCards({ cardIds, index, count, splayed }) {
 
 /**
  * @param {object} props
- * @param {import('./values').CardId} props.cardId
+ * @param {import('./datas').CardId} props.cardId
  * @param {number} props.positionFromFront
  * @param {number} props.positionFromBack
  * @param {boolean} props.splayed

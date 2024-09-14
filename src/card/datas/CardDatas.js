@@ -18,7 +18,7 @@ export const PLEBIAN = add({
   portraitUrl: Portraits.BEAN_DOG,
   portraitAlt: 'A very-cute bean-shaped dog.',
   layout: 'customer',
-  body: '4 orders of any dish. Pays $8.',
+  body: '{ORDER} - 4x any dish.\nPays 8 {COIN}',
 });
 
 export const SNOOTY = add({
@@ -28,7 +28,7 @@ export const SNOOTY = add({
   portraitUrl: Portraits.CATFISH_CAT,
   portraitAlt: 'A snooty fish-like cat.',
   layout: 'customer',
-  body: '1 order of SOUP. Then 4 orders of any RARE dish. Then 2 orders of any SWEET dish. Pays $20 + $1 tip for every GREEN dish.',
+  body: '{ORDER} - 1x SOUP > 4x RARE DISH > 2x SWEET DISH.\nPays 20 {COIN} + 1 {COIN} tip for every GREEN dish',
 });
 
 export const DEPRESSED = add({
@@ -38,7 +38,7 @@ export const DEPRESSED = add({
   portraitUrl: Portraits.SUB_FISH,
   portraitAlt: 'A sad submarine fish.',
   layout: 'customer',
-  body: '8 orders of any BLAND dish. Then 1 order of SOUP. Pays $10. ',
+  body: '{ORDER} - 8x any BLAND DISH > 1x SOUP.\nPays 10 {COIN}',
 });
 
 export const ALIEN = add({
@@ -48,7 +48,7 @@ export const ALIEN = add({
   portraitUrl: Portraits.ASPARAGUS_ALIEN,
   portraitAlt: 'A curious and confused alien.',
   layout: 'customer',
-  body: '2 orders of SOUP. Pays $2 + $10 tip for every additional full-color dish.',
+  body: '{ORDER} - 2x SOUP.\nPays 2 {COIN} + 10 {COIN} tip for every additional full-color dish',
 });
 
 export const SPOOKY = add({
@@ -58,5 +58,5 @@ export const SPOOKY = add({
   portraitUrl: Portraits.MANTIS_PUP,
   portraitAlt: 'A scared mantis-dog looking for shelter.',
   layout: 'customer',
-  body: '4 orders of any SOUR dish. Pays $8 + $2 tip for 1 additional any dish.',
+  body: '{ORDER} - 4x any SOUR dish.\nPays 8 {COIN} + 2 {COIN} tip for 1 additional any dish',
 });
