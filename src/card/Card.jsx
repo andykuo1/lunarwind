@@ -1,11 +1,11 @@
 import { AudioWaveform, Carrot, Cat } from 'lucide-react';
 
 import BackgroundImageUrl from '@/assets/paper4.png';
-import { cn } from '../libs/react';
+import { getCardDataById } from '@/card/datas';
+import { cn } from '@/libs/react';
 import { CoinSymbol } from './symbols/CoinSymbol';
 import { RaritySymbol } from './symbols/RaritySymbol';
 import { TasteSymbol } from './symbols/TasteSymbol';
-import { getCardById } from './values/CardRegistry';
 
 /**
  * @param {object} props
@@ -13,10 +13,13 @@ import { getCardById } from './values/CardRegistry';
  * @param {import('react').CSSProperties} [props.style]
  * @param {import('react').RefObject<HTMLElement>} [props.innerRef]
  * @param {import('react').RefObject<HTMLDivElement>} [props.overlayRef]
- * @param {import('@/card/values').CardId} props.cardId
+ * @param {import('@/card/datas').CardId} props.cardId
  */
 export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
-  const card = getCardById(cardId);
+  const card = getCardDataById(cardId);
+  if (!card) {
+    return null;
+  }
   return (
     <article
       ref={innerRef}

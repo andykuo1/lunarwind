@@ -1,5 +1,6 @@
 import ASPARAGUS_ALIEN from '@/assets/portraits/asparagusAlien.png';
 import BEAKED_SHARK from '@/assets/portraits/beakedShark.png';
+import BEAN_DOG from '@/assets/portraits/beanDog.png';
 import BEE_WORM from '@/assets/portraits/beeWorm.png';
 import BIRD from '@/assets/portraits/bird.png';
 import CARROT_POWER from '@/assets/portraits/carrotPower.png';
@@ -30,6 +31,7 @@ import WORM_SUN from '@/assets/portraits/wormSun.png';
 export {
   ASPARAGUS_ALIEN,
   BEAKED_SHARK,
+  BEAN_DOG,
   BEE_WORM,
   BIRD,
   CARROT_POWER,

@@ -1,7 +1,7 @@
 /** @typedef {string} PackId */
 /** @typedef {ReturnType<createPack>} Pack */
 
-/** @typedef {ReturnType<createLootTableEntry>} LootTableEntry */
+/** @typedef {ReturnType<typeof createLootTableEntry>} LootTableEntry */
 
 /**
  * @param {PackId} packId

@@ -10,7 +10,7 @@ const RAND4 = cuid2.init({ length: 4 });
  * @template T
  * @param {Array<T>} array
  */
-function randChoose(array) {
+export function randChoose(array) {
   return array[Math.trunc(Math.random() * array.length)];
 }
 

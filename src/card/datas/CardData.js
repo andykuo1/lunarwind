@@ -1,13 +1,20 @@
+import { RarityValues } from '../values';
+
+/** @typedef {string} CardId */
 /** @typedef {ReturnType<createCardData>} CardData */
 
 export function createCardData() {
   return {
+    /** @type {CardId} */
     cardId: '',
     title: '???',
-    rarity: -1,
+    /** @type {import('../values').Rarity} */
+    rarity: RarityValues.JUNK,
     portraitUrl: '',
     portraitAlt: '???',
     layout: '',
-    body: 'Not much is known about this...',
+    body: '???',
+    // DEPRECATED!
+    tastes: [0, 0, 0, 0, 0, 0],
   };
 }

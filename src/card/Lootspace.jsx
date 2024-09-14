@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
+import { pickRandomCardId } from '@/card/datas';
 import { Stack } from './Stack';
-import { getRandomCardId } from './values';
 
 const CARD_IDS = [
-  getRandomCardId(),
-  getRandomCardId(),
-  getRandomCardId(),
-  getRandomCardId(),
-  getRandomCardId(),
-  getRandomCardId(),
-  getRandomCardId(),
-  getRandomCardId(),
+  pickRandomCardId(),
+  pickRandomCardId(),
+  pickRandomCardId(),
+  pickRandomCardId(),
+  pickRandomCardId(),
+  pickRandomCardId(),
+  pickRandomCardId(),
+  pickRandomCardId(),
 ];
 
 export function Lootspace() {

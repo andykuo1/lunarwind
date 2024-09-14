@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
+import { pickRandomCardId } from '@/card/datas';
 import { Sounds } from '@/card/sounds';
-import { getRandomCardId } from '@/card/values';
 import { cn } from '@/libs/react';
 import { usePlayDispatch } from '@/stores/play/PlayStore';
 import { CardBack } from './Card';
@@ -24,7 +24,7 @@ export function Deck({ handId, cardCount }) {
     }
     Sounds.CARD_TOUCH.play();
     timeoutHandleRef.current = setTimeout(() => {
-      drawCardToHand(handId, getRandomCardId());
+      drawCardToHand(handId, pickRandomCardId());
       element?.classList.toggle(DeckCardStyle.exit, false);
       timeoutHandleRef.current = null;
     }, 300);

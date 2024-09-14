@@ -2,9 +2,15 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 import { Search, ShoppingCart, Shrub, TreePine, Truck } from 'lucide-react';
 import { useRef, useState } from 'react';
 
+import { getAllCards } from '@/card/datas';
 import { OpenPackScreen } from '@/card/OpenPackScreen';
 import { Sounds } from '@/card/sounds';
-import { openPack, PACKS } from '@/card/values';
+import {
+  createLootTableEntry,
+  createPack,
+  openPack,
+  RarityValues,
+} from '@/card/values';
 import { cn } from '@/libs/react';
 import { useAnimationFrameEffect } from '@/libs/react/UseAnimationFrame';
 import FadeAnimationStyle from '@/libs/style/FadeAnimation.module.css';
@@ -215,10 +221,10 @@ function ShopItem({ title, price, wasPrice, deliveryCost, onBuyNow }) {
           </sub>
         </output>
         <p>
-          <div>
-            {!deliveryCost || deliveryCost <= 0 ? 'FREE' : `+$${deliveryCost}`}{' '}
-            delivery
-          </div>
+          {!deliveryCost || deliveryCost <= 0 ? 'FREE' : `+$${deliveryCost}`}{' '}
+          delivery
+        </p>
+        <p>
           <span className="font-bold">Tomorrow 10 AM - 3PM</span>
         </p>
         <button className="rounded-full bg-gray-300 p-2">Add to Cart</button>
@@ -254,7 +260,17 @@ function PackOpening({ opening, setOpening }) {
         >
           <OpenPackScreen
             onOpen={() => {
-              let result = openPack(PACKS.ALL);
+              let result = openPack(
+                createPack(
+                  'all',
+                  getAllCards().map((card) =>
+                    createLootTableEntry(
+                      card.cardId,
+                      Object.keys(RarityValues).length - card.rarity
+                    )
+                  )
+                )
+              );
               addCardsToCollection(collectionId, result);
               return result;
             }}
