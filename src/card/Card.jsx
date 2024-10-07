@@ -8,12 +8,10 @@ import {
   Soup,
 } from 'lucide-react';
 
-import BackgroundImageUrl from '@/assets/paper4.png';
 import { getCardDataById } from '@/card/datas';
 import { cn } from '@/libs/react';
-import { CoinSymbol } from './symbols/CoinSymbol';
-import { RaritySymbol } from './symbols/RaritySymbol';
-import { TasteSymbol } from './symbols/TasteSymbol';
+import { PokerLayout } from './layouts/PokerLayout';
+import { PortraitLayout } from './layouts/PortraitLayout';
 
 /**
  * @param {object} props
@@ -24,10 +22,6 @@ import { TasteSymbol } from './symbols/TasteSymbol';
  * @param {import('@/card/datas').CardId} props.cardId
  */
 export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
-  const card = getCardDataById(cardId);
-  if (!card) {
-    return null;
-  }
   return (
     <article
       ref={innerRef}
@@ -37,56 +31,48 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
       )}
       style={style}
     >
-      <header>
-        <h2 className="flex gap-1 px-4 py-1 font-bold">
-          <span className="flex-1">{card.title}</span>
-          {card.tastes.flatMap((count, i) =>
-            count > 0
-              ? new Array(count)
-                  .fill(0)
-                  .map((_, j) => (
-                    <TasteSymbol
-                      key={`${i}:${j}`}
-                      taste={/** @type {import('./values/Taste').Taste}*/ (i)}
-                    />
-                  ))
-              : null
-          )}
-        </h2>
-        <div className="flex gap-1">
-          <figure className="relative ml-4 mr-2 flex flex-col items-center">
-            <CoinSymbol coin={4} />
-          </figure>
-          <figure className="relative mr-4 h-[1.5in] w-full rounded-xl bg-white">
-            <img
-              className="mx-auto h-full"
-              src={card.portraitUrl}
-              alt={card.portraitAlt}
-            />
-            <figcaption className="absolute -bottom-4 left-0 right-0 flex px-1 text-xs">
-              <div className="flex-1 uppercase">{card.layout}</div>
-              <div>
-                <RaritySymbol rarity={card.rarity} />
-              </div>
-            </figcaption>
-          </figure>
-        </div>
-      </header>
-      <section className="text font-sans-md relative m-3 mt-4 flex flex-1 flex-col p-4 text-black">
-        <img
-          className="absolute bottom-0 left-0 right-0 top-0 -z-10 h-full w-full"
-          src={BackgroundImageUrl}
-        />
-        <CardText className="inline-block h-6 w-6" text={card.body} />
-        <div className="flex-1" />
-        <p className="text-xs italic">{card.portraitAlt}</p>
-      </section>
+      <CardFaceContent cardData={getCardDataById(cardId)} />
       <div
         ref={overlayRef}
         className="absolute bottom-0 left-0 right-0 top-0"
       />
     </article>
   );
+}
+
+/**
+ * @param {object} props
+ * @param {import('./datas/CardData').CardData|null} props.cardData
+ */
+function CardFaceContent({ cardData }) {
+  if (!cardData) {
+    return null;
+  }
+  const cardLayout = cardData?.layout ?? 'portrait';
+  switch (cardLayout) {
+    case 'poker':
+      return (
+        <PokerLayout
+          cardData={
+            /** @type {import('./datas/PokerCardData').PokerCardData} */ (
+              cardData
+            )
+          }
+        />
+      );
+    case 'customer':
+    case 'portrait':
+    default:
+      return (
+        <PortraitLayout
+          cardData={
+            /** @type {import('./datas/CustomerCardData').CustomerCardData} */ (
+              cardData
+            )
+          }
+        />
+      );
+  }
 }
 
 /**

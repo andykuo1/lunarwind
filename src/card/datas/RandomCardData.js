@@ -2,7 +2,7 @@ import cuid2 from '@paralleldrive/cuid2';
 
 import { Portraits } from '../portraits';
 import { RarityValues } from '../values/Rarity';
-import { createCardData } from './CardData';
+import { createCustomerCardData } from './CustomerCardData';
 
 const RAND4 = cuid2.init({ length: 4 });
 
@@ -27,7 +27,7 @@ function randRarity() {
 }
 
 export function createRandomCardData() {
-  let card = createCardData();
+  let card = createCustomerCardData();
   card.cardId = randCardId();
   card.title = card.cardId;
   card.portraitUrl = randPortraitUrl();

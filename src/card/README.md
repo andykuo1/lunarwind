@@ -95,11 +95,11 @@ Cabbage Patch Kids
 = Attach any Patch whenever a Kid enters.
 
 Suspicious Seeds
-= Grow a Fruit card after 3 Waters
+= Grow a Fruit card after 3 Waters.
 
 Big Red Tomato
-= Fruit
-= Chop into 4 Sweet-Sour Flavors
+= Fruit.
+= Chop into 4 Sweet-Sour Flavors.
 
 Wishing Well
 = Tap: Add 3 Water tokens.
@@ -208,3 +208,9 @@ or instead of by color, do by flavor?
 
 Common Pleb $4
 Main:
+
+--
+
+Chef Travis the Wanderer
+
+1. Noodles: 4x CRANK, 3x Green food, 1x Spaghetti

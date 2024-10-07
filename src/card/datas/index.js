@@ -1,10 +1,12 @@
 import * as CARD_DATAS from './CardDatas';
+import * as POKER_CARD_DATAS from './PokerCardDatas';
 import { randChoose } from './RandomCardData';
 
 export * from './CardData';
 
 /**
  * @param {import('./CardData').CardId} cardId
+ * @returns {import('./CardData').CardData|null}
  */
 export function getCardDataById(cardId) {
   for (let cardData of getAllCards()) {
@@ -20,5 +22,6 @@ export function pickRandomCardId() {
 }
 
 export function getAllCards() {
-  return Object.values(CARD_DATAS);
+  let allCards = { ...CARD_DATAS, ...POKER_CARD_DATAS };
+  return Object.values(allCards);
 }
