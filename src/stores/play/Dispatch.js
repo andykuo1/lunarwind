@@ -7,6 +7,7 @@ import {
   createHandCard,
   createPlay,
   createPlayCard,
+  createPlayStack,
   createSession,
   createUser,
 } from './State';
@@ -154,6 +155,9 @@ export function clearCards(store, _playId) {
     for (let key of Object.keys(play.playCards)) {
       delete play.playCards[key];
     }
+    for (let key of Object.keys(play.playStacks)) {
+      delete play.playStacks[key];
+    }
   }
   for (let handId of Object.keys(store.hands)) {
     let hand = store.hands[handId];
@@ -205,6 +209,48 @@ export function playCardFromHand(
     cardId: handCard.cardId,
     position: initialPosition,
   });
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').HandId} handId
+ * @param {number} handIndex
+ * @param {import('./State').PlayId} playId
+ * @param {import('./State').PlayStackId} playStackId
+ */
+export function dropCardFromHandIntoPlayStack(
+  store,
+  handId,
+  handIndex,
+  playId,
+  playStackId
+) {
+  let hand = store.hands[handId];
+  if (!hand) {
+    throw new Error(`Missing existing hand for id - got ${handId}.`);
+  }
+  // Remove it from hand.
+  const handCardId = hand.cardOrder[handIndex];
+  const handCard = hand.handCards[handCardId];
+  hand.cardOrder.splice(handIndex, 1);
+  delete hand.handCards[handCardId];
+  // Add it to play stack.
+  addCardToPlayStack(store, playId, playStackId, handCard.cardId);
+}
+
+/**
+ * @param {import('./State').Store} store
+ * @param {import('./State').PlayId} playId
+ * @param {import('./State').PlayStackId} playStackId
+ * @param {import('@/card/datas').CardId} cardId
+ */
+export function addCardToPlayStack(store, playId, playStackId, cardId) {
+  let result = store.plays[playId]?.playStacks[playStackId];
+  if (!result) {
+    result = createPlayStack(playStackId);
+    store.plays[playId].playStacks[playStackId] = result;
+  }
+  result.cardIds.unshift(cardId);
 }
 
 /**

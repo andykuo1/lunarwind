@@ -119,7 +119,7 @@ function PlayCard({ playId, playCardId }) {
  * @param {object} props
  * @param {import('@/stores/play/State').PlayId} props.playId
  */
-function ClearBoardButton({ playId }) {
+export function ClearBoardButton({ playId }) {
   const clearCards = usePlayDispatch((ctx) => ctx.clearCards);
   function onClick() {
     clearCards(playId);

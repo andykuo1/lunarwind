@@ -16,6 +16,7 @@ import {
  * @param {number} props.stackIndex
  * @param {boolean} props.splayed
  * @param {boolean} props.cycled
+ * @param {import('react').ReactNode} [props.children]
  * @param {import('react').MouseEventHandler} [props.onClick]
  */
 export function Stack({
@@ -24,14 +25,15 @@ export function Stack({
   stackIndex,
   cycled,
   splayed,
+  children,
   onClick,
 }) {
   const count = cardIds.length;
   const index = cycled ? stackIndex % count : Math.min(stackIndex, count);
-
   return (
     <div className={cn('flex w-min p-4', className)} onClick={onClick}>
       <div className="relative m-auto">
+        {children}
         {cycled ? (
           <CycledStackCards
             cardIds={cardIds}

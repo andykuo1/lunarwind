@@ -26,6 +26,7 @@ export function Handspace({ handId, playId }) {
   return (
     <>
       <HandspaceProvider>
+        {/* All interaction points from hand are here. */}
         <DropZoneToPlay
           className="absolute bottom-0 left-0 right-0 top-0"
           handId={handId}
@@ -40,6 +41,14 @@ export function Handspace({ handId, playId }) {
         </HandspaceContainer>
       </HandspaceProvider>
     </>
+  );
+}
+
+export function useDebuggingClassName() {
+  const { anyGrabbing } = useHandspace();
+  return cn(
+    anyGrabbing ? 'pointer-events-auto' : 'pointer-events-none',
+    DEBUG && anyGrabbing && 'bg-red-300/30'
   );
 }
 
@@ -76,7 +85,7 @@ function DropZoneToPlay({ className, handId, playId }) {
  * @param {string} props.className
  * @param {import('@/stores/play/State').HandId} props.handId
  */
-function DropZoneToHand({ className, handId }) {
+export function DropZoneToHand({ className, handId }) {
   const ref = useRef(null);
   const { containerRef, handlerStateRef, anyGrabbing } = useHandspace();
   useDragDropToSendCardsFrontBackThroughHand(
@@ -101,7 +110,7 @@ function DropZoneToHand({ className, handId }) {
  * @param {object} props
  * @param {import('@/stores/play/State').HandId} props.handId
  */
-function HandCards({ handId }) {
+export function HandCards({ handId }) {
   const cardOrder = usePlayStore(
     useShallow((ctx) => ctx.hands[handId]?.cardOrder ?? [])
   );

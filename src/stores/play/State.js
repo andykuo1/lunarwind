@@ -20,6 +20,9 @@ import { attachZustyUpgradeSchema } from '@/libs/zusty';
 /** @typedef {string} PlayCardId */
 /** @typedef {ReturnType<createPlayCard>} PlayCard */
 
+/** @typedef {string} PlayStackId */
+/** @typedef {ReturnType<createPlayStack>} PlayStack */
+
 /** @typedef {string} HandId */
 /** @typedef {ReturnType<createHand>} Hand */
 
@@ -127,11 +130,25 @@ export function createPlay(playId = cuid()) {
     playId,
     /** @type {Record<PlayCardId, PlayCard>} */
     playCards: {},
+    /** @type {Record<PlayStackId, PlayStack>} */
+    playStacks: {},
   };
 }
 attachZustyUpgradeSchema(createPlay, {
   playCards: (prev) => createPlayCard(prev.playCardId),
+  playStacks: (prev) => createPlayStack(prev.playStackId),
 });
+
+/**
+ * @param {PlayStackId} playStackId
+ */
+export function createPlayStack(playStackId = cuid()) {
+  return {
+    playStackId,
+    /** @type {Array<import('@/card/datas').CardId>} */
+    cardIds: [],
+  };
+}
 
 /**
  * @param {PlayCardId} playCardId

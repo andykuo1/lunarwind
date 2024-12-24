@@ -96,7 +96,7 @@ export function CardText({ className, text }) {
       p.push(value);
       savedIndex = line.length;
     }
-    result.push(<p>{p}</p>);
+    result.push(<p key={line}>{p}</p>);
   }
   return result;
 }
