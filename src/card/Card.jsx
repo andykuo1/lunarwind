@@ -25,11 +25,18 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
   return (
     <article
       ref={innerRef}
+      style={{
+        width: '15em' /* w-[2.5in] */,
+        minWidth: '15em' /* w-[2.5in] */,
+        height: '21em' /* h-[3.5in] */,
+        minHeight: '21em' /* min-h-[3.5in] */,
+        borderRadius: '0.75em' /* rounded-xl */,
+        ...(style ?? {}),
+      }}
       className={cn(
-        'relative z-0 flex h-[3.5in] min-h-[3.5in] w-[2.5in] min-w-[2.5in] select-none flex-col overflow-hidden rounded-xl bg-neutral-800 text-white',
+        'relative z-0 flex select-none flex-col overflow-hidden bg-neutral-800 text-white',
         className
       )}
-      style={style}
     >
       <CardFaceContent cardData={getCardDataById(cardId)} />
       <div
@@ -134,7 +141,16 @@ function CardTextReplacement({ className, value }) {
 
 export function CardBack() {
   return (
-    <div className="relative z-0 flex h-[3.5in] min-h-[3.5in] w-[2.5in] min-w-[2.5in] select-none flex-col overflow-hidden rounded-xl bg-neutral-800">
+    <div
+      style={{
+        width: '15em' /* w-[2.5in] */,
+        minWidth: '15em' /* w-[2.5in] */,
+        height: '21em' /* h-[3.5in] */,
+        minHeight: '21em' /* min-h-[3.5in] */,
+        borderRadius: '0.75em' /* rounded-xl */,
+      }}
+      className="relative z-0 flex select-none flex-col overflow-hidden bg-neutral-800"
+    >
       <div className="flex flex-1">
         <div className="m-auto flex flex-col">
           <Cat />

@@ -15,7 +15,13 @@ export function PortraitLayout({ cardData }) {
   return (
     <>
       <header>
-        <h2 className="flex gap-1 px-4 py-1 font-bold">
+        <h2
+          style={{
+            gap: '0.25em' /* gap-1 */,
+            padding: '0.25em 1em' /* px-4 py-1 */,
+          }}
+          className="flex font-bold"
+        >
           <span className="flex-1">{title}</span>
           {tastes.flatMap((count, i) =>
             count > 0
@@ -32,17 +38,37 @@ export function PortraitLayout({ cardData }) {
               : null
           )}
         </h2>
-        <div className="flex gap-1">
-          <figure className="relative ml-4 mr-2 flex flex-col items-center">
+        <div style={{ gap: '0.25em' /* gap-1 */ }} className="flex">
+          <figure
+            style={{
+              marginLeft: '1em' /* ml-4 */,
+              marginRight: '0.5em' /* mr-2 */,
+            }}
+            className="relative flex flex-col items-center"
+          >
             <CoinSymbol coin={4} />
           </figure>
-          <figure className="relative mr-4 h-[1.5in] w-full rounded-xl bg-white">
+          <figure
+            style={{
+              height: '9em' /* h-[1.5in] */,
+              marginRight: '1em' /* mr-4 */,
+              borderRadius: '0.75em' /* rounded-xl */,
+            }}
+            className="relative w-full bg-white"
+          >
             <img
               className="mx-auto h-full"
               src={portraitUrl}
               alt={portraitAlt}
             />
-            <figcaption className="absolute -bottom-4 left-0 right-0 flex px-1 text-xs">
+            <figcaption
+              style={{
+                fontSize: '0.75em' /* text-xs */,
+                padding: '0 0.25em' /* px-1 py-0 */,
+                bottom: '-1.5em' /* -bottom-4 */,
+              }}
+              className="absolute left-0 right-0 flex"
+            >
               <div className="flex-1 uppercase">{layout}</div>
               <div>
                 <RaritySymbol rarity={rarity} />
@@ -51,14 +77,27 @@ export function PortraitLayout({ cardData }) {
           </figure>
         </div>
       </header>
-      <section className="text font-sans-md relative m-3 mt-4 flex flex-1 flex-col p-4 text-black">
+      <section
+        style={{
+          padding: '1em' /* p-4 */,
+          margin: '0.75em' /* m-3 */,
+          marginTop: '1em' /* mt-4 */,
+        }}
+        className="relative flex flex-1 flex-col text-black"
+      >
         <img
           className="absolute bottom-0 left-0 right-0 top-0 -z-10 h-full w-full"
           src={BackgroundImageUrl}
         />
-        <CardText className="inline-block h-6 w-6" text={body} />
+        <CardText
+          style={{ width: '1.5em' /* w-6 */, height: '1.5em' /* h-6 */ }}
+          className="inline-block"
+          text={body}
+        />
         <div className="flex-1" />
-        <p className="text-xs italic">{portraitAlt}</p>
+        <p style={{ fontSize: '0.75em' /* text-xs */ }} className="italic">
+          {portraitAlt}
+        </p>
       </section>
     </>
   );
@@ -66,10 +105,11 @@ export function PortraitLayout({ cardData }) {
 
 /**
  * @param {object} props
+ * @param {import('react').CSSProperties} props.style
  * @param {string} props.className
  * @param {string} props.text
  */
-export function CardText({ className, text }) {
+export function CardText({ style, className, text }) {
   let result = [];
   let lines = text.split('\n');
   for (let line of lines) {
@@ -85,6 +125,7 @@ export function CardText({ className, text }) {
       p.push(
         <CardTextReplacement
           key={`${i}.${value}`}
+          style={style}
           className={className}
           value={value}
         />
@@ -104,19 +145,20 @@ export function CardText({ className, text }) {
 /**
  * @param {object} props
  * @param {string} props.className
+ * @param {import('react').CSSProperties} [props.style]
  * @param {string} props.value
  */
-function CardTextReplacement({ className, value }) {
+function CardTextReplacement({ className, style, value }) {
   switch (value) {
     case 'ORDER':
-      return <HandPlatter className={className} />;
+      return <HandPlatter style={style} className={className} />;
     case 'SOUP':
-      return <Soup className={className} />;
+      return <Soup style={style} className={className} />;
     case 'SWEET':
-      return <Candy className={className} />;
+      return <Candy style={style} className={className} />;
     case 'COIN':
-      return <Coins className={className} />;
+      return <Coins style={style} className={className} />;
     default:
-      return <Carrot className={className} />;
+      return <Carrot style={style} className={className} />;
   }
 }

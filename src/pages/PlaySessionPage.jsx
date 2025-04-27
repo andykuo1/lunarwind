@@ -1,4 +1,4 @@
-import { WarGame } from '@/card/rules/WarGame';
+import { CassinoGame } from '@/card/rules/CassinoGame';
 
 /**
  * @param {object} props
@@ -26,7 +26,7 @@ function SessionContainer({ sessionId }) {
         id="workspace"
         className="h-full w-full overflow-hidden bg-green-300/30"
       >
-        <WarGame sessionId={sessionId} />
+        <CassinoGame sessionId={sessionId} />
       </main>
     </>
   );

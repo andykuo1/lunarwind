@@ -13,7 +13,7 @@ import { useAsHandDropTarget } from '../UseAsHandDropTarget';
  * @param {object} props
  * @param {string} props.sessionId
  */
-export function WarGame({ sessionId }) {
+export function CassinoGame({ sessionId }) {
   const localHandId = usePlayStore(
     (ctx) => ctx.sessions[sessionId]?.localHandId
   );
@@ -23,11 +23,34 @@ export function WarGame({ sessionId }) {
   return (
     <HandspaceProvider>
       <ClearBoardButton playId={localPlayId} />
-      <CardPile
-        playId={localPlayId}
-        playStackId="center"
-        sessionId={sessionId}
-      />
+      <div className="flex w-32">
+        <CardPile
+          className="w-20"
+          playId={localPlayId}
+          playStackId="center.1"
+          sessionId={sessionId}
+        />
+        <CardPile
+          playId={localPlayId}
+          playStackId="center.2"
+          sessionId={sessionId}
+        />
+        <CardPile
+          playId={localPlayId}
+          playStackId="center.3"
+          sessionId={sessionId}
+        />
+        <CardPile
+          playId={localPlayId}
+          playStackId="center.4"
+          sessionId={sessionId}
+        />
+        <CardPile
+          playId={localPlayId}
+          playStackId="center.5"
+          sessionId={sessionId}
+        />
+      </div>
       <Deck handId={localHandId} cardCount={10} />
       <HandspaceContainer>
         <DropZoneToHand
@@ -42,11 +65,12 @@ export function WarGame({ sessionId }) {
 
 /**
  * @param {object} props
+ * @param {string} [props.className]
  * @param {import('@/stores/play/State').PlayId} props.playId
  * @param {import('@/stores/play/State').PlayStackId} props.playStackId
  * @param {import('@/stores/play/State').SessionId} props.sessionId
  */
-function CardPile({ playId, playStackId, sessionId }) {
+function CardPile({ className, playId, playStackId, sessionId }) {
   const ref = useRef(null);
   const localHandId = useLocalHandId(sessionId);
   const playStack = usePlayStore(
@@ -55,7 +79,7 @@ function CardPile({ playId, playStackId, sessionId }) {
   let currentStackIndex = 0;
   let cardIds = playStack.cardIds ?? [];
 
-  const className = useDebuggingClassName();
+  const debuggingClassName = useDebuggingClassName();
   const dropCardFromHandIntoPlayStack = usePlayDispatch(
     (ctx) => ctx.dropCardFromHandIntoPlayStack
   );
@@ -73,20 +97,21 @@ function CardPile({ playId, playStackId, sessionId }) {
   );
   useAsHandDropTarget(ref, localHandId, onDrop);
   return (
-    <div className="absolute left-0 right-0 top-10 z-0">
-      <div ref={ref} className={cn('relative mx-auto h-fit w-fit', className)}>
-        <Stack
-          className="rounded-2xl border-2 border-white/10 hover:border-white/30"
-          cardIds={cardIds}
-          stackIndex={currentStackIndex}
-          cycled={true}
-          splayed={true}
-        >
-          <div className="absolute bottom-0 left-0 right-0 top-0 flex items-center text-center">
-            <label className="flex-1 text-2xl">stack-in-play</label>
-          </div>
-        </Stack>
-      </div>
+    <div
+      ref={ref}
+      className={cn('relative h-min w-min', debuggingClassName, className)}
+    >
+      <Stack
+        className="rounded-2xl border-2 border-white/10 hover:border-white/30"
+        cardIds={cardIds}
+        stackIndex={currentStackIndex}
+        cycled={true}
+        splayed={true}
+      >
+        <div className="absolute bottom-0 left-0 right-0 top-0 flex items-center text-center">
+          <label className="flex-1">stack-in-play</label>
+        </div>
+      </Stack>
     </div>
   );
 }

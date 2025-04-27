@@ -1,0 +1,10 @@
+.grid {
+  background-size: var(--item-unit-size, 4rem) var(--item-unit-size, 4rem);
+  background-position: -1px -1px;
+  background-image: linear-gradient(
+      to right,
+      var(--grid-color, #000000),
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--grid-color, #000000), transparent 1px);
+}

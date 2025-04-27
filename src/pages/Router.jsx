@@ -1,6 +1,7 @@
 import { createRouter } from '@swan-io/chicane';
 import { match } from 'ts-pattern';
 
+import { TradewindPage } from '@/tradewind/TradewindPage';
 import { HomePage } from './HomePage';
 import { LibraryPage } from './LibraryPage';
 import { PlayListPage } from './PlayListPage';
@@ -13,6 +14,7 @@ export const Router = createRouter({
   Library: '/lib',
   PlayList: '/play',
   PlaySession: '/play/:sessionId',
+  Tradewind: '/tradewind',
 });
 
 export function Routes() {
@@ -22,6 +24,7 @@ export function Routes() {
     'PlayList',
     'PlaySession',
     'Store',
+    'Tradewind',
   ]);
   return match(route)
     .with({ name: 'Home' }, () => <HomePage />)
@@ -31,5 +34,6 @@ export function Routes() {
     .with({ name: 'PlaySession' }, ({ params: { sessionId } }) => (
       <PlaySessionPage sessionId={sessionId} />
     ))
+    .with({ name: 'Tradewind' }, () => <TradewindPage />)
     .otherwise(() => <h1>No Page Availabe :(</h1>);
 }

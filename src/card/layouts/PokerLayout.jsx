@@ -7,18 +7,34 @@ import { getPokerSymbolUrl } from '../datas/PokerCardData';
 export function PokerLayout({ cardData }) {
   return (
     <>
-      <header className="mr-auto p-2 text-left">
+      <header
+        style={{
+          padding: '0.5em' /* p-2 */,
+        }}
+        className="mr-auto text-left"
+      >
         <img
-          className="inline-block w-10"
+          style={{
+            width: '2.5em' /* w-10 */,
+          }}
+          className="inline-block"
           src={getPokerSymbolUrl(cardData.symbol)}
         />
       </header>
       <div className="flex-1 text-center">
         <h2>{cardData.title}</h2>
       </div>
-      <footer className="ml-auto p-2 text-right">
+      <footer
+        style={{
+          padding: '0.5em' /* p-2 */,
+        }}
+        className="ml-auto text-right"
+      >
         <img
-          className="inline-block w-10"
+          style={{
+            width: '2.5em' /* w-10 */,
+          }}
+          className="inline-block"
           src={getPokerSymbolUrl(cardData.symbol)}
         />
       </footer>
