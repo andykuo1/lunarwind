@@ -24,10 +24,9 @@ Magic - Silver
 Rare - Gold
 Epic - Purple
 Legendary - Orange
-Godly - Pink
+Zenith - Pink
 
-Dark Gray
-White
+Dark Gray - Petty
 Light Blue
 (Green) -- Special
 Yellow
@@ -214,3 +213,23 @@ Main:
 Chef Travis the Wanderer
 
 1. Noodles: 4x CRANK, 3x Green food, 1x Spaghetti
+
+---
+
+maybe this is a matching game. You form poker hands from teh community chest.
+so, i think a matching game. You match categories to make your recipe. So if other players are
+using the same ingredients, everyone will be slower (take more turns) since they will
+all be using the same cards out of the community chest.
+
+Versatility should probably go up with rarity
+
+A deck of customer and events.
+
+- Each customer comes in and has a turn timer.
+- If fail, you get penalty.
+- If succeed, like golf, if you succeed within the recommended number, you get TIPS.
+
+# Event Cards
+
+- Kitchen Fire
+- Drain is clogged!

@@ -14,7 +14,7 @@ export function TradewindPage() {
           <InvContainer rows={7} cols={5} />
         </div>
       </div>
-      <DialogueScreen />
+      {/*<DialogueScreen />*/}
     </>
   );
 }
