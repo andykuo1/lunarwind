@@ -22,10 +22,10 @@
 
 - Action: Burn the logs: +2 Heat
 
-- Supply: Matcha Powder
-- Supply: Black Tea Leaves
-- Supply: Water
-- Supply: Milk
+- Supply: Matcha Powder (green)
+- Supply: Black Tea Leaves (green)
+- Supply: Water (blue)
+- Supply: Milk (white)
 
 - Tool: Kettle (Boiler)
   - When -1 Heat, -1 any Water for +1 Hot Water.
@@ -60,7 +60,7 @@
 - Tool: Matchstick => Must have another tool, then +1 Heat.
 
 - Recipe: Black Tea
-  - 1 Water, 1 Tea Leaf
+  - 1 Water (blue), 1 Tea Leaf (green)
   - Consume 1 Heat and wait 1 turn.
   - Consume 1 Heat and wait 1 turn.
   - DONE!
@@ -68,7 +68,7 @@
 - ...
 
 - Recipe: Bubble Tea
-  - 1 Tea, 1 Milk, 1 Sweetner
+  - 1 Tea (green), 1 Milk (white), 1 Sweetner (pink)
   - Mix 2 Times
   - DONE!
   - Can add Ice or Toppings.
@@ -302,3 +302,122 @@ Power
 - Credit Card, $20 and next game start with same amount. Must be payed-off or cannot leave deck.
 
 > Should you graduate tools? As in when you start a deck, you must play a LEVEL 1, and work your way up?
+
+---
+
+Recipe book: 15 card deck?
+
+Customers-- they have a theme, and maybe tell a story? This is the challenge deck, so like how the challenge runs and flavors should be completely handled in this deck.
+
+So like a Boba Rush Hour?
+
+Supply deck-- maybe this is just tokens in a crate? Should there be flavor here? Maybe this is the resource section?
+
+Chef deck-- this has a theme, and it's all about how you contribute to the team.
+
+Like the micro-managing chef!
+
+> I really like the locations from Arkham Horror-- they give so much flavor, beyond the "monsters". It's like I'm exploring. ... maybe there are pre-built stations? These give power, etc. and chefs must move between these stations to interact with them. The stations can really give a venue its flavor-- like a boba shop may have a blending station, with like a seating area for games, the cash register, the neon signage, the tea station... maybe there are seats? Each seat determines how many customers can be served at one time, etc. And for fine-dining there could be fine tables! It could be fun to build your own challenge :D Decorations should have effects on front-of-house. So the challenge deck can be positive or negative things? Or maybe chefs bring their own decor?
+
+So what does a boba shop challenge look like?
+
+... what if all supplies are just colored cubes?
+
+White
+Pink
+Red
+Orange
+Brown
+Yellow
+Green
+Blue
+Purple
+Gray
+Black
+
+That means there are only ever 10 ingredients?
+
+Maybe you "buy" the placement of the crate. Like you have to have it next to your station to use it?
+
+Or maybe each station has like a supply and prep station. And that is where you put one of the Supply Crates.
+
+Station Cards.
+
+Prep Station - Holds 1 Supply Crate and 1 Bowl.
+
+Mixing Station - Holds 2 Supply Crates and 1 Bowl.
+
+> Cold/Hot coins (and cubes are placed on top)
+
+You can pass around a bowl as the Dish (or maybe order?)! They go along with the set of cards that make that dish.
+
+For example, a tool:
+
+- Boba Blender
+  - (can only mix cold things)
+  - Cannot mix boba (black)
+  - Can mix at most 3 things.
+  - Otherwise, will overflow (remove any cubes until 3) and cause a mess.
+- ...
+
+Night of the Sweet Moon Festival
+
+The night has just started and our boba stall already has a queue forming up! We gotta get all these thirsty customers satisfied before the unveiling of the Sweet Moon cake at MIDNIGHT!
+
+- Crusted Tayaki Pan
+- Rusty Fridge on Wheels
+- Moonlit Brewing Station
+- Messy Mixing Station
+- Scattered Topping Station
+- Pearling Station
+- Run-down Sealing Station
+- The Sweet Moon Festival Boba Stall
+
+Any blocks that fall out of the bowl is dirty :D
+
+Maybe bowls can be different shape for the food.
+
+> 30% sugar could be like must have exactly 3 white cubes? And each blue cube cancels out a white cube?
+
+> All wasted cubes return to the middle (and only re-dispersed on re-supply).
+
+Tool Slot Sizes: Handy, Small, Medium, Large
+
+- Gray Plastic of Moving
+  - Holds 4 foods
+  - Spend 1 Stress to move 1 away
+- ...
+
+- Ancient Jugs on a Wagon
+  - Holds 1 Heavy Crate
+  - Spend 1 energy to take 1 or 2 foods
+- ...
+
+- Rusty Fridge on Wheels
+  - Holds 1 Crate
+  - May be frozen
+  - May be moved 1 away per turn
+  - 1 Handy Slot
+- ...
+
+- Hot Griddle Station
+  - Holds 3 food
+  - 1 Medium Heating Slot (comes with Crusted Tayaki Pan)
+- ...
+
+- Crusted Tayaki Pan
+  - Holds 1 food
+  - Spend 1 energy to flip
+  - Requires 2 HEAT per turn to cook
+- ...
+
+- Slippery Brewing Station
+  - Holds 6 water
+  - 1 Medium Heating Slot
+  - Chance: spill on the floor.
+- ...
+
+- Messy Wooden Table
+  - Holds 6 food
+  - 1 Medium Slot
+- ...

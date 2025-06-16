@@ -1,0 +1,52 @@
+TYPE,NAME,STAT,MAIN,NOTE
+
+Scenario,An asian mom,,"1 Bubble Tea (+COLD), 1 Pastry",ALLERGIC: Lactose
+Scenario,A wandering couple,,"2 Bubble Tea (+COLD)",
+Scenario,A mom and kid,,"2 Bubble Tea (+COLD, +SWEET > 4), 1 Sweet",ALLERGIC: Lactose
+Scenario,A sour customer,,"1 Bubble Tea (-SWEET, +COLD), 1 Bitter",
+Scenario,A trio of friends,,3 Bubble Tea,
+Scenario,An elderly couple,,2 Tea,ALLERGIC: Sweet
+
+Recipe,Black Tea,,"[1] ADD, [2] STEEP, [3] DONE",OVERSTEEP: +1 Bitter
+Recipe (step),Black Tea [1] ADD,,"1 Water, 1 Cured Leaf",
+Recipe (step),Black Tea [2] STEEP,,"2 Time, 2 Heat",
+Recipe,Bubble Tea,,"[1] ADD, [2] MIX, [3] DONE",
+Recipe (step),Bubble Tea [1] ADD,,"1 Tea, 1 Milk, 1 Sweetner",
+Recipe (step),Bubble Tea [2] MIX,2 Time,
+Recipe,Mango Lassi,,"[1] BLEND, [2] ADD [3] DONE",OVERBLEND: +1 Slimy
+Recipe (step),Mango Lassi [1] BLEND,,"1 Mango, 1 Milk, 1 Sweetner, 1/4 Cardamom",
+Recipe (step),Mango Lassi [2] ADD,,1 Yogurt,
+
+Supply,Mango,,+1 Sweet,
+Supply,Dahi,,+1 Creamy,
+Supply,Greek Yogurt,,+1 Creamy,
+Supply,Maple Syrup,,+1 Sweet,
+Supply,Cardamom,Spice,,
+Supply,White Sugar,,+2 Sweet,
+Supply,Brown Sugar,,+1 Sweet,NO WET: +1 Grainy
+Supply,Honey,,+1 Sweet,NO HEAT: +1 Gooey
+Supply,Whole Milk,Wet,+1 Creamy (lactose),
+Supply,Cured Leaf,Spice,,
+Supply,Soy Milk,Wet,+1 Creamy,
+Supply,Oat Milk,Wet,+1 Creamy,
+Supply,Whole Milk,Wet,+1 Creamy (lactose),
+Supply,Ice,,+1 Cold,
+Supply,Half & Half,Wet,+2 Creamy (lactose),
+
+Tool,Blender,Mixer3,,
+Tool,Cocktail Shaker,Mixer2,"+1 Stress to you, then mix 1 time; wash after use.",
+Tool,Kettle,Heater,"When played, must -2 heat | any mix with 1 time and 1 water, can also give 1 heat, then become dirty",
+Tool,Egg Timer,Timer,"When played, +6 Time | When depleted, +1 hour and shuffle back in deck",
+Action,Wipe Dishes,Cleaner,"+1 Stress, -1 Time, to clean 1 dirty tool, then shuffle back in deck",
+Tool,Matchstick,Heater,"When played, must have another tool | +1 heat then discard.",
+Tool,Toaster,Heater,,
+
+# 
+# 
+# 
+
+Station, Prep Station, , "1 Crate, 1 Countertop, 1 Cutting Board"
+Station, Mixing Station, , "2 Crates, 1 Countertop, 1 Blender"
+
+
+
