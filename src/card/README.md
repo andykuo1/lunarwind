@@ -221,6 +221,8 @@ so, i think a matching game. You match categories to make your recipe. So if oth
 using the same ingredients, everyone will be slower (take more turns) since they will
 all be using the same cards out of the community chest.
 
+Each turn it replaces only 1 card on the table.
+
 Versatility should probably go up with rarity
 
 A deck of customer and events.
@@ -233,3 +235,58 @@ A deck of customer and events.
 
 - Kitchen Fire
 - Drain is clogged!
+
+Customer cards (pulled every turn)?
+Ingredient cards (placed every turn)
+
+---
+
+Let's run a cafe!
+
+- Set the vibe
+- Prepare the orders!
+
+Customer/Challenge cards (pulled every turn)?
+Hero cards (per deck)
+Ingredient/Tool/Action cards
+
+What are the feelings?
+
+- Ordered Chaos-- being able to find the efficient system quickly and adapt!
+- The feeling where you found the flow yourself, by managing time.
+
+---
+
+Archetypes
+
+- Master Chef - Precision and perfection.
+- Mad Scientist - Experimental and synergy.
+- Street-food Hustler - Fast and aggressive.
+- Pastry Prodigy - Build slow, with payoff (dessert finishers)
+- BBQ Pitmaster - Smoking mechanic
+- Sushi Sensei - Elegance
+- Chaos Cook - Randomness
+
+- Fresh Produce
+- Meats - high-cost, high-reward
+- Spices - control/enhancement
+- Dairy - utility and combo enabler
+- Seafood - ???
+- Breads - Defensive
+
+- Saute / Stir Fry / Grill - Quick with BURST effects
+- Slow cook / Ferment - Delay-based with power over time
+- Flambe / Deep Fry - Risk/Reward high-damage
+- Plating / Garnish - Add style points
+
+- Fine Dining
+- Food Truck
+- Fusion Bistro
+- Fast Food
+- Underground Supper Club
+
+- Serve Orders
+- Style points
+- Sabotage Opponents
+- Rush
+- Signature dish

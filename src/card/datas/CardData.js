@@ -1,2 +1,3 @@
 /** @typedef {string} CardId */
-/** @typedef {import('./PokerCardData').PokerCardData|import('./CustomerCardData').CustomerCardData} CardData */
+
+/** @typedef {{ cardId: CardId, layout: string }} CardData */

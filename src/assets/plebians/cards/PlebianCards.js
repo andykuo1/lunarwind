@@ -1,17 +1,20 @@
-import { Portraits } from '../portraits';
-import { RarityValues } from '../values/Rarity';
-import { createRandomCardData } from './RandomCardData';
+import { createCustomerCardData } from '../CustomerCardData';
+import * as Portraits from '../Portraits';
+import { RarityValues } from '../Rarity';
+
+/** @typedef {ReturnType<create>} PlebianCard */
 
 /**
- * @param {Partial<import('./CardData').CardData>} values
+ * @param {object} opts
  */
-function add(values) {
-  let card = createRandomCardData();
-  Object.assign(card, values);
-  return card;
+function create(opts) {
+  return {
+    ...createCustomerCardData(),
+    ...opts,
+  };
 }
 
-export const PLEBIAN = add({
+export const PLEBIAN = create({
   cardId: 'core.plebian',
   title: 'Common Plebian',
   rarity: RarityValues.COMMON,
@@ -21,7 +24,7 @@ export const PLEBIAN = add({
   body: '{ORDER} - 4x any dish.\nPays 8 {COIN}',
 });
 
-export const SNOOTY = add({
+export const SNOOTY = create({
   cardId: 'core.snooty',
   title: 'Snooty Catfish',
   rarity: RarityValues.UNCOMMON,
@@ -31,7 +34,7 @@ export const SNOOTY = add({
   body: '{ORDER} - 1x SOUP > 4x RARE DISH > 2x SWEET DISH.\nPays 20 {COIN} + 1 {COIN} tip for every GREEN dish',
 });
 
-export const DEPRESSED = add({
+export const DEPRESSED = create({
   cardId: 'core.depressed',
   title: 'Depressed Subfish',
   rarity: RarityValues.UNCOMMON,
@@ -41,7 +44,7 @@ export const DEPRESSED = add({
   body: '{ORDER} - 8x any BLAND DISH > 1x SOUP.\nPays 10 {COIN}',
 });
 
-export const ALIEN = add({
+export const ALIEN = create({
   cardId: 'core.alien',
   title: 'Alien-Outta-Space',
   rarity: RarityValues.RARE,
@@ -51,7 +54,7 @@ export const ALIEN = add({
   body: '{ORDER} - 2x SOUP.\nPays 2 {COIN} + 10 {COIN} tip for every additional full-color dish',
 });
 
-export const SPOOKY = add({
+export const SPOOKY = create({
   cardId: 'core.spooky',
   title: 'Spooked Mantis-dog',
   rarity: RarityValues.COMMON,

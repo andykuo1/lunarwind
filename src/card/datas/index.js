@@ -1,8 +1,15 @@
-import * as CARD_DATAS from './CardDatas';
-import * as POKER_CARD_DATAS from './PokerCardDatas';
+import { Plebians } from '@/assets/plebians/Plebians';
+import { Poker } from '@/assets/pokers/Poker';
 import { randChoose } from './RandomCardData';
 
 export * from './CardData';
+
+const POKER_CARD_DATAS = Poker.Cards.values().map((card) => ({
+  cardId: card.id,
+  layout: 'poker',
+}));
+const PLEBIAN_CARD_DATAS = Object.values(Plebians.Cards);
+const ALL_DATAS = [...POKER_CARD_DATAS, ...PLEBIAN_CARD_DATAS];
 
 /**
  * @param {import('./CardData').CardId} cardId
@@ -22,6 +29,5 @@ export function pickRandomCardId() {
 }
 
 export function getAllCards() {
-  let allCards = { ...CARD_DATAS, ...POKER_CARD_DATAS };
-  return Object.values(allCards);
+  return ALL_DATAS;
 }

@@ -1,4 +1,7 @@
-// Diamond
+import { capitalizeFirst } from '@/libs/string';
+import { isRank, of as rankOf } from '../ranks/PokerRanks';
+import { isSuit } from '../suits/PokerSuits';
+// Diamonds
 import PokerCard01 from './poker1.png';
 import PokerCard02 from './poker2.png';
 import PokerCard03 from './poker3.png';
@@ -12,7 +15,7 @@ import PokerCard10 from './poker10.png';
 import PokerCard11 from './poker11.png';
 import PokerCard12 from './poker12.png';
 import PokerCard13 from './poker13.png';
-// Club
+// Clubs
 import PokerCard14 from './poker14.png';
 import PokerCard15 from './poker15.png';
 import PokerCard16 from './poker16.png';
@@ -26,7 +29,7 @@ import PokerCard23 from './poker23.png';
 import PokerCard24 from './poker24.png';
 import PokerCard25 from './poker25.png';
 import PokerCard26 from './poker26.png';
-// Heart
+// Hearts
 import PokerCard27 from './poker27.png';
 import PokerCard28 from './poker28.png';
 import PokerCard29 from './poker29.png';
@@ -40,7 +43,7 @@ import PokerCard36 from './poker36.png';
 import PokerCard37 from './poker37.png';
 import PokerCard38 from './poker38.png';
 import PokerCard39 from './poker39.png';
-// Spade
+// Spades
 import PokerCard40 from './poker40.png';
 import PokerCard41 from './poker41.png';
 import PokerCard42 from './poker42.png';
@@ -55,90 +58,186 @@ import PokerCard50 from './poker50.png';
 import PokerCard51 from './poker51.png';
 import PokerCard52 from './poker52.png';
 
-/** @type {Record<import('@/card/datas/PokerCardData').PokerSymbols, Array<string>>} */
-const POKER_CARDS = {
-  diamonds: [
-    PokerCard01,
-    PokerCard02,
-    PokerCard03,
-    PokerCard04,
-    PokerCard05,
-    PokerCard06,
-    PokerCard07,
-    PokerCard08,
-    PokerCard09,
-    PokerCard10,
-    PokerCard11,
-    PokerCard12,
-    PokerCard13,
-  ],
-  clubs: [
-    PokerCard14,
-    PokerCard15,
-    PokerCard16,
-    PokerCard17,
-    PokerCard18,
-    PokerCard19,
-    PokerCard20,
-    PokerCard21,
-    PokerCard22,
-    PokerCard23,
-    PokerCard24,
-    PokerCard25,
-    PokerCard26,
-  ],
-  hearts: [
-    PokerCard27,
-    PokerCard28,
-    PokerCard29,
-    PokerCard30,
-    PokerCard31,
-    PokerCard32,
-    PokerCard33,
-    PokerCard34,
-    PokerCard35,
-    PokerCard36,
-    PokerCard37,
-    PokerCard38,
-    PokerCard39,
-  ],
-  spades: [
-    PokerCard40,
-    PokerCard41,
-    PokerCard42,
-    PokerCard43,
-    PokerCard44,
-    PokerCard45,
-    PokerCard46,
-    PokerCard47,
-    PokerCard48,
-    PokerCard49,
-    PokerCard50,
-    PokerCard51,
-    PokerCard52,
-  ],
-  wild: [
-    PokerCard27,
-    PokerCard28,
-    PokerCard29,
-    PokerCard30,
-    PokerCard31,
-    PokerCard32,
-    PokerCard33,
-    PokerCard34,
-    PokerCard35,
-    PokerCard36,
-    PokerCard37,
-    PokerCard38,
-    PokerCard39,
-  ],
-};
+export const ACE_OF_HEARTS = create('hearts', 1, PokerCard27);
+export const TWO_OF_HEARTS = create('hearts', 2, PokerCard28);
+export const THREE_OF_HEARTS = create('hearts', 3, PokerCard29);
+export const FOUR_OF_HEARTS = create('hearts', 4, PokerCard30);
+export const FIVE_OF_HEARTS = create('hearts', 5, PokerCard31);
+export const SIX_OF_HEARTS = create('hearts', 6, PokerCard32);
+export const SEVEN_OF_HEARTS = create('hearts', 7, PokerCard33);
+export const EIGHT_OF_HEARTS = create('hearts', 8, PokerCard34);
+export const NINE_OF_HEARTS = create('hearts', 9, PokerCard35);
+export const TEN_OF_HEARTS = create('hearts', 10, PokerCard36);
+export const JACK_OF_HEARTS = create('hearts', 11, PokerCard37);
+export const QUEEN_OF_HEARTS = create('hearts', 12, PokerCard38);
+export const KING_OF_HEARTS = create('hearts', 13, PokerCard39);
+
+export const ACE_OF_DIAMONDS = create('diamonds', 1, PokerCard01);
+export const TWO_OF_DIAMONDS = create('diamonds', 2, PokerCard02);
+export const THREE_OF_DIAMONDS = create('diamonds', 3, PokerCard03);
+export const FOUR_OF_DIAMONDS = create('diamonds', 4, PokerCard04);
+export const FIVE_OF_DIAMONDS = create('diamonds', 5, PokerCard05);
+export const SIX_OF_DIAMONDS = create('diamonds', 6, PokerCard06);
+export const SEVEN_OF_DIAMONDS = create('diamonds', 7, PokerCard07);
+export const EIGHT_OF_DIAMONDS = create('diamonds', 8, PokerCard08);
+export const NINE_OF_DIAMONDS = create('diamonds', 9, PokerCard09);
+export const TEN_OF_DIAMONDS = create('diamonds', 10, PokerCard10);
+export const JACK_OF_DIAMONDS = create('diamonds', 11, PokerCard11);
+export const QUEEN_OF_DIAMONDS = create('diamonds', 12, PokerCard12);
+export const KING_OF_DIAMONDS = create('diamonds', 13, PokerCard13);
+
+export const ACE_OF_SPADES = create('spades', 1, PokerCard40);
+export const TWO_OF_SPADES = create('spades', 2, PokerCard41);
+export const THREE_OF_SPADES = create('spades', 3, PokerCard42);
+export const FOUR_OF_SPADES = create('spades', 4, PokerCard43);
+export const FIVE_OF_SPADES = create('spades', 5, PokerCard44);
+export const SIX_OF_SPADES = create('spades', 6, PokerCard45);
+export const SEVEN_OF_SPADES = create('spades', 7, PokerCard46);
+export const EIGHT_OF_SPADES = create('spades', 8, PokerCard47);
+export const NINE_OF_SPADES = create('spades', 9, PokerCard48);
+export const TEN_OF_SPADES = create('spades', 10, PokerCard49);
+export const JACK_OF_SPADES = create('spades', 11, PokerCard50);
+export const QUEEN_OF_SPADES = create('spades', 12, PokerCard51);
+export const KING_OF_SPADES = create('spades', 13, PokerCard52);
+
+export const ACE_OF_CLUBS = create('clubs', 1, PokerCard14);
+export const TWO_OF_CLUBS = create('clubs', 2, PokerCard15);
+export const THREE_OF_CLUBS = create('clubs', 3, PokerCard16);
+export const FOUR_OF_CLUBS = create('clubs', 4, PokerCard17);
+export const FIVE_OF_CLUBS = create('clubs', 5, PokerCard18);
+export const SIX_OF_CLUBS = create('clubs', 6, PokerCard19);
+export const SEVEN_OF_CLUBS = create('clubs', 7, PokerCard20);
+export const EIGHT_OF_CLUBS = create('clubs', 8, PokerCard21);
+export const NINE_OF_CLUBS = create('clubs', 9, PokerCard22);
+export const TEN_OF_CLUBS = create('clubs', 10, PokerCard23);
+export const JACK_OF_CLUBS = create('clubs', 11, PokerCard24);
+export const QUEEN_OF_CLUBS = create('clubs', 12, PokerCard25);
+export const KING_OF_CLUBS = create('clubs', 13, PokerCard26);
+
+const VALUES = [
+  // Diamonds
+  ACE_OF_DIAMONDS,
+  TWO_OF_DIAMONDS,
+  THREE_OF_DIAMONDS,
+  FOUR_OF_DIAMONDS,
+  FIVE_OF_DIAMONDS,
+  SIX_OF_DIAMONDS,
+  SEVEN_OF_DIAMONDS,
+  EIGHT_OF_DIAMONDS,
+  NINE_OF_DIAMONDS,
+  TEN_OF_DIAMONDS,
+  JACK_OF_DIAMONDS,
+  QUEEN_OF_DIAMONDS,
+  KING_OF_DIAMONDS,
+  // Clubs
+  ACE_OF_CLUBS,
+  TWO_OF_CLUBS,
+  THREE_OF_CLUBS,
+  FOUR_OF_CLUBS,
+  FIVE_OF_CLUBS,
+  SIX_OF_CLUBS,
+  SEVEN_OF_CLUBS,
+  EIGHT_OF_CLUBS,
+  NINE_OF_CLUBS,
+  TEN_OF_CLUBS,
+  JACK_OF_CLUBS,
+  QUEEN_OF_CLUBS,
+  KING_OF_CLUBS,
+  // Hearts
+  ACE_OF_HEARTS,
+  TWO_OF_HEARTS,
+  THREE_OF_HEARTS,
+  FOUR_OF_HEARTS,
+  FIVE_OF_HEARTS,
+  SIX_OF_HEARTS,
+  SEVEN_OF_HEARTS,
+  EIGHT_OF_HEARTS,
+  NINE_OF_HEARTS,
+  TEN_OF_HEARTS,
+  JACK_OF_HEARTS,
+  QUEEN_OF_HEARTS,
+  KING_OF_HEARTS,
+  // Spades
+  ACE_OF_SPADES,
+  TWO_OF_SPADES,
+  THREE_OF_SPADES,
+  FOUR_OF_SPADES,
+  FIVE_OF_SPADES,
+  SIX_OF_SPADES,
+  SEVEN_OF_SPADES,
+  EIGHT_OF_SPADES,
+  NINE_OF_SPADES,
+  TEN_OF_SPADES,
+  JACK_OF_SPADES,
+  QUEEN_OF_SPADES,
+  KING_OF_SPADES,
+];
+
+/** @typedef {ReturnType<create>} PokerCard */
 
 /**
- * @param {import('@/card/datas/PokerCardData').PokerSymbols} suit
- * @param {number} rank
+ * @param {import('../suits/PokerSuits').SuitType} suitType
+ * @param {import('../ranks/PokerRanks').RankNumber} rankNumber
+ * @param {string} imageSrc
  */
-export function getPokerFaceUrl(suit, rank) {
-  const ranks = POKER_CARDS[suit] ?? {};
-  return ranks[rank - 1] ?? '';
+function create(suitType, rankNumber, imageSrc) {
+  const rank = rankOf(rankNumber);
+  const name = `${capitalizeFirst(rank.name)} of ${capitalizeFirst(suitType)}`;
+  const id = `poker.${suitType.charAt(0)}${rank.number}`;
+  return {
+    id,
+    suit: suitType,
+    rank: rankNumber,
+    imageSrc,
+    name,
+  };
+}
+
+export function values() {
+  return VALUES;
+}
+
+/**
+ * @param {string} id
+ */
+export function ofId(id) {
+  for (let card of VALUES) {
+    if (card.id === id) {
+      return card;
+    }
+  }
+  throw new Error(`No card with id '${id}'.`);
+}
+
+/**
+ * @param {import('../suits/PokerSuits').SuitType} suit
+ * @param {import('../ranks/PokerRanks').RankNumber} rank
+ */
+export function of(suit, rank) {
+  if (!isSuit(suit) || suit === 'wild') {
+    throw new Error('Invalid poker suit.');
+  }
+  if (!isRank(rank) || rank === 0) {
+    throw new Error('Invalid poker rank.');
+  }
+  let suitOffset;
+  switch (suit) {
+    case 'diamonds':
+      suitOffset = 0;
+      break;
+    case 'clubs':
+      suitOffset = 13;
+      break;
+    case 'hearts':
+      suitOffset = 26;
+      break;
+    case 'spades':
+      suitOffset = 39;
+      break;
+  }
+  let result = VALUES[suitOffset + rank - 1];
+  if (!result) {
+    throw new Error(`No card exists for this suit and rank '${suit} ${rank}'.`);
+  }
+  return result;
 }

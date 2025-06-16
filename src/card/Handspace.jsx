@@ -204,7 +204,7 @@ function HandCard({ handId, handCardId, handIndex, handCount }) {
       <div
         className={cn(
           'pointer-events-none',
-          !localGrabbing && '-ml-20',
+          !localGrabbing && '-ml-10',
           DEBUG && 'opacity-50'
         )}
         style={{

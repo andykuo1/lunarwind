@@ -1,39 +1,43 @@
-import { getPokerFaceUrl } from '@/assets/pokers/cards/PokerCards';
-import { getPokerRankUrl } from '@/assets/pokers/ranks/PokerRanks';
+import { Poker } from '@/assets/pokers/Poker';
+import { cn } from '@/libs/react';
 
 /**
  * @param {object} props
- * @param {import('../datas/PokerCardData').PokerCardData} props.cardData
+ * @param {import('../datas').CardData} props.cardData
  */
 export function PokerLayout({ cardData }) {
-  const pokerRankUrl = getPokerRankUrl(cardData.numeral);
-  const pokerFaceUrl = getPokerFaceUrl(cardData.symbol, cardData.numeral);
+  const card = Poker.Cards.ofId(cardData.cardId);
+  const pokerSuitUrl = Poker.Suits.of(card.suit).imageSrc;
   return (
     <>
       <header
         style={{
           padding: '0.5em' /* p-2 */,
+          color: Poker.Suits.of(card.suit).color,
         }}
-        className="absolute left-0 right-0 top-0 text-black"
+        className={cn('absolute left-0 top-0')}
       >
-        {cardData.numeral}
-        <img
-          style={{
-            width: '2em',
-          }}
-          className="inline-block"
-          src={pokerRankUrl}
-        />
+        <div className="flex flex-col items-center rounded-full bg-white pr-2">
+          <div className="font-mono text-4xl font-bold">
+            {Poker.Ranks.of(card.rank).char}
+          </div>
+          <img
+            style={{
+              width: '2em',
+            }}
+            className="inline-block"
+            src={pokerSuitUrl}
+          />
+        </div>
       </header>
-      <div className="flex-1 text-center">
+      <div className="flex flex-1 items-center bg-white text-center">
         <img
           style={{
             width: '100%' /* w-10 */,
-            height: '100%',
             backgroundColor: 'white',
           }}
           className="inline-block"
-          src={pokerFaceUrl}
+          src={Poker.Suits.of(card.suit).imageSrc}
         />
       </div>
       <footer

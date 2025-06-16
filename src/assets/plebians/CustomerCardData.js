@@ -1,13 +1,13 @@
-import { RarityValues } from '../values';
+import { RarityValues } from '../../card/values';
 
 /** @typedef {ReturnType<createCustomerCardData>} CustomerCardData */
 
 export function createCustomerCardData() {
   return {
-    /** @type {import('./CardData').CardId} */
+    /** @type {import('../../card/datas/CardData').CardId} */
     cardId: '',
     title: '???',
-    /** @type {import('../values').Rarity} */
+    /** @type {import('../../card/values').Rarity} */
     rarity: RarityValues.JUNK,
     portraitUrl: '',
     portraitAlt: '???',

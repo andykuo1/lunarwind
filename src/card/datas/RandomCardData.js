@@ -1,8 +1,8 @@
 import cuid2 from '@paralleldrive/cuid2';
 
-import { Portraits } from '../portraits';
-import { RarityValues } from '../values/Rarity';
-import { createCustomerCardData } from './CustomerCardData';
+import { createCustomerCardData } from '../../assets/plebians/CustomerCardData';
+import * as Portraits from '../../assets/plebians/Portraits';
+import { RarityValues } from '../../assets/plebians/Rarity';
 
 const RAND4 = cuid2.init({ length: 4 });
 

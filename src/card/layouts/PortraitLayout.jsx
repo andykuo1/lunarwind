@@ -7,7 +7,7 @@ import { TasteSymbol } from '../symbols/TasteSymbol';
 
 /**
  * @param {object} props
- * @param {import('../datas/CustomerCardData').CustomerCardData} props.cardData
+ * @param {import('../../assets/plebians/CustomerCardData').CustomerCardData} props.cardData
  */
 export function PortraitLayout({ cardData }) {
   const { title, tastes, portraitAlt, portraitUrl, layout, rarity, body } =
@@ -31,7 +31,9 @@ export function PortraitLayout({ cardData }) {
                     <TasteSymbol
                       key={`${i}:${j}`}
                       taste={
-                        /** @type {import('@/card/values/Taste').Taste}*/ (i)
+                        /** @type {import('@/assets/plebians/Taste').Taste}*/ (
+                          i
+                        )
                       }
                     />
                   ))

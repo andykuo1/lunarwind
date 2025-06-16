@@ -34,7 +34,7 @@ export function CardFace({ className, style, innerRef, overlayRef, cardId }) {
         ...(style ?? {}),
       }}
       className={cn(
-        'relative z-0 flex select-none flex-col overflow-hidden bg-neutral-800 text-white',
+        'relative z-0 flex select-none flex-col overflow-hidden bg-neutral-800 text-white shadow',
         className
       )}
     >
@@ -58,22 +58,14 @@ function CardFaceContent({ cardData }) {
   const cardLayout = cardData?.layout ?? 'portrait';
   switch (cardLayout) {
     case 'poker':
-      return (
-        <PokerLayout
-          cardData={
-            /** @type {import('./datas/PokerCardData').PokerCardData} */ (
-              cardData
-            )
-          }
-        />
-      );
+      return <PokerLayout cardData={cardData} />;
     case 'customer':
     case 'portrait':
     default:
       return (
         <PortraitLayout
           cardData={
-            /** @type {import('./datas/CustomerCardData').CustomerCardData} */ (
+            /** @type {import('../assets/plebians/CustomerCardData').CustomerCardData} */ (
               cardData
             )
           }
